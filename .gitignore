@@ -1,0 +1,16 @@
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OneDrive temp
+~*.tmp
+
+# Logs
+*.log

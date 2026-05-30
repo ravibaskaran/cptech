@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+set -u
+
+branch="$(git branch --show-current 2>/dev/null || true)"
+
+if [ -z "$branch" ]; then
+  echo "post-commit: no current branch; skipping auto-push" >&2
+  exit 0
+fi
+
+if ! git remote get-url origin >/dev/null 2>&1; then
+  echo "post-commit: origin remote not configured; skipping auto-push" >&2
+  exit 0
+fi
+
+echo "post-commit: pushing $branch to origin"
+if ! git push origin "HEAD:$branch"; then
+  echo "post-commit: auto-push failed; commit remains local" >&2
+fi
+
+exit 0

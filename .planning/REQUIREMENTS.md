@@ -1,7 +1,7 @@
-# Requirements: Justo CP App BRD
+# Requirements: Justo CP App Planning
 
 **Defined:** 2026-05-30  
-**Core Value:** The BRD must make the CP network lifecycle explicit enough that Justo can scope, compare, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
+**Core Value:** The planning artifacts must make the CP network lifecycle explicit enough that Justo can scope, compare, design, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
 
 ## v1 Requirements
 
@@ -68,6 +68,35 @@
 - [ ] **REV-02**: Stakeholder can use the BRD to run an internal review with Justo leadership, CP sourcing, sales/admin ops, finance, and product/technology stakeholders.
 - [ ] **REV-03**: Stakeholder can identify the next artifact after the BRD: SoW annexure, vendor scorecard, CP interview guide, or product requirements document.
 
+### Product Requirements Document
+
+- [ ] **PRD-01**: Stakeholder can review product goals, users, roles, permissions, workflows, integrations, data/source-of-truth rules, non-functional requirements, and acceptance criteria derived from the approved BRD.
+- [ ] **PRD-02**: Stakeholder can review user stories and functional requirements for CP onboarding, CP employee management, project catalog, lead ownership, site visits, booking visibility, payout visibility, sourcing/RM dashboard, admin/support, and analytics.
+- [ ] **PRD-03**: Stakeholder can review role-based access and responsibility boundaries for Justo users, CP owner, CP employee, finance, developer/project team, and support/compliance users.
+- [ ] **PRD-04**: Stakeholder can review integrations and source-of-truth ownership across Manthan CRM, communication tools, KYC/payment providers, accounting/payout systems, and future AI/campaign tooling.
+- [ ] **PRD-05**: Stakeholder can review acceptance criteria and release-readiness conditions for product capabilities.
+
+### Product Roadmap And Phases
+
+- [ ] **ROAD-01**: Stakeholder can review product delivery phases derived from PRD capabilities rather than BRD document sections.
+- [ ] **ROAD-02**: Stakeholder can see MVP, v2, and deferred capabilities mapped to phases.
+- [ ] **ROAD-03**: Stakeholder can see dependencies, risks, success criteria, and decision gates for each product phase.
+- [ ] **ROAD-04**: Stakeholder can identify which phase each journey map and UI screen spec belongs to.
+
+### Journey Maps
+
+- [ ] **JOUR-01**: Stakeholder can review journey maps for CP firm onboarding, CP employee activation, lead registration/ownership, site visit, booking, payout, Justo CP sourcing/RM operations, and support/dispute handling.
+- [ ] **JOUR-02**: Stakeholder can see app actions, outside-app actions, system events, pain points, decisions, and success measures for each journey.
+- [ ] **JOUR-03**: Stakeholder can map each journey to product phases and personas.
+- [ ] **JOUR-04**: Stakeholder can identify journey gaps that require BRD/PRD updates before UI specification.
+
+### UI Screen Specs And Prototype
+
+- [ ] **UI-01**: Stakeholder can review screen inventory by product phase and persona.
+- [ ] **UI-02**: Stakeholder can review screen-level purpose, user action, data shown, source system, validation, empty/error states, and acceptance criteria.
+- [ ] **UI-03**: Stakeholder can review clickable prototype guidance or low-fidelity prototype structure for critical phase flows.
+- [ ] **UI-04**: Stakeholder can trace every proposed screen back to a journey, PRD requirement, and product phase.
+
 ## v2 Requirements
 
 ### Field Validation
@@ -89,11 +118,11 @@
 
 | Feature | Reason |
 |---------|--------|
-| Building the Android/iOS app | This project is currently for BRD and planning artifacts. |
+| Building the Android/iOS app | This project is currently for BRD, PRD, roadmap, journey, and UI/prototype planning artifacts. |
 | Final vendor selection | BRD can support decision-making, but procurement requires stakeholder approval. |
 | Low-level API specification | Needs technical discovery after BRD agreement. |
-| Detailed UX wireframes | BRD should define business flows and capability needs first. |
-| Production delivery roadmap for app implementation | Should follow BRD approval and SoW/vendor decisions. |
+| High-fidelity visual design system | Screen specs/prototype guidance comes before polished visual design. |
+| Production delivery execution | Should follow BRD/PRD approval and SoW/vendor decisions. |
 
 ## Traceability
 
@@ -101,47 +130,64 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DOC-01 | TBD | Pending |
-| DOC-02 | TBD | Pending |
-| DOC-03 | TBD | Pending |
-| DOC-04 | TBD | Pending |
-| BUS-01 | TBD | Pending |
-| BUS-02 | TBD | Pending |
-| BUS-03 | TBD | Pending |
-| BUS-04 | TBD | Pending |
-| MANT-01 | TBD | Pending |
-| MANT-02 | TBD | Pending |
-| MANT-03 | TBD | Pending |
-| MANT-04 | TBD | Pending |
-| PERS-01 | TBD | Pending |
-| PERS-02 | TBD | Pending |
-| PERS-03 | TBD | Pending |
-| LIFE-01 | TBD | Pending |
-| LIFE-02 | TBD | Pending |
-| LIFE-03 | TBD | Pending |
-| LIFE-04 | TBD | Pending |
-| LIFE-05 | TBD | Pending |
-| LIFE-06 | TBD | Pending |
-| PAIN-01 | TBD | Pending |
-| PAIN-02 | TBD | Pending |
-| PAIN-03 | TBD | Pending |
-| PAIN-04 | TBD | Pending |
-| CAP-01 | TBD | Pending |
-| CAP-02 | TBD | Pending |
-| CAP-03 | TBD | Pending |
-| CAP-04 | TBD | Pending |
-| VEND-01 | TBD | Pending |
-| VEND-02 | TBD | Pending |
-| VEND-03 | TBD | Pending |
-| VEND-04 | TBD | Pending |
-| REV-01 | TBD | Pending |
-| REV-02 | TBD | Pending |
-| REV-03 | TBD | Pending |
+| DOC-01 | Phase 1 | Pending |
+| DOC-02 | Phase 1 | Pending |
+| DOC-03 | Phase 1 | Pending |
+| DOC-04 | Phase 1 | Pending |
+| BUS-01 | Phase 1 | Pending |
+| BUS-02 | Phase 1 | Pending |
+| BUS-03 | Phase 1 | Pending |
+| BUS-04 | Phase 1 | Pending |
+| MANT-01 | Phase 1 | Pending |
+| MANT-02 | Phase 1 | Pending |
+| MANT-03 | Phase 1 | Pending |
+| MANT-04 | Phase 1 | Pending |
+| PERS-01 | Phase 1 | Pending |
+| PERS-02 | Phase 1 | Pending |
+| PERS-03 | Phase 1 | Pending |
+| LIFE-01 | Phase 1 | Pending |
+| LIFE-02 | Phase 1 | Pending |
+| LIFE-03 | Phase 1 | Pending |
+| LIFE-04 | Phase 1 | Pending |
+| LIFE-05 | Phase 1 | Pending |
+| LIFE-06 | Phase 1 | Pending |
+| PAIN-01 | Phase 1 | Pending |
+| PAIN-02 | Phase 1 | Pending |
+| PAIN-03 | Phase 1 | Pending |
+| PAIN-04 | Phase 1 | Pending |
+| CAP-01 | Phase 1 | Pending |
+| CAP-02 | Phase 1 | Pending |
+| CAP-03 | Phase 1 | Pending |
+| CAP-04 | Phase 1 | Pending |
+| VEND-01 | Phase 1 | Pending |
+| VEND-02 | Phase 1 | Pending |
+| VEND-03 | Phase 1 | Pending |
+| VEND-04 | Phase 1 | Pending |
+| REV-01 | Phase 1 | Pending |
+| REV-02 | Phase 1 | Pending |
+| REV-03 | Phase 1 | Pending |
+| PRD-01 | Phase 2 | Pending |
+| PRD-02 | Phase 2 | Pending |
+| PRD-03 | Phase 2 | Pending |
+| PRD-04 | Phase 2 | Pending |
+| PRD-05 | Phase 2 | Pending |
+| ROAD-01 | Phase 3 | Pending |
+| ROAD-02 | Phase 3 | Pending |
+| ROAD-03 | Phase 3 | Pending |
+| ROAD-04 | Phase 3 | Pending |
+| JOUR-01 | Phase 4 | Pending |
+| JOUR-02 | Phase 4 | Pending |
+| JOUR-03 | Phase 4 | Pending |
+| JOUR-04 | Phase 4 | Pending |
+| UI-01 | Phase 5 | Pending |
+| UI-02 | Phase 5 | Pending |
+| UI-03 | Phase 5 | Pending |
+| UI-04 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 36 total
-- Mapped to phases: 0
-- Unmapped: 36
+- v1 requirements: 53 total
+- Mapped to phases: 53
+- Unmapped: 0
 
 ## User Stories
 
@@ -153,7 +199,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ## Acceptance Criteria
 
-- The BRD draft includes all v1 requirement categories.
+- The BRD draft includes all Phase 1 BRD requirement categories.
 - The BRD draft separates facts, inferences, and open questions.
 - The BRD draft includes a vendor matrix for Auum, TSPL, and I9.
 - The BRD draft includes at least one lifecycle diagram or structured lifecycle table for Justo CP sourcing, CP firm, CP employee, lead ownership, site visit, and payout.
@@ -163,7 +209,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 ## Definition of Done
 
 - BRD draft is written in Markdown.
-- All v1 requirements are addressed or explicitly marked as unresolved.
+- Phase 1 requirements are addressed or explicitly marked as unresolved.
 - Open questions and assumptions are listed.
 - Source documents are referenced.
 - Stakeholder review checklist is included.

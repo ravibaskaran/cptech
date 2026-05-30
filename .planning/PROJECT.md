@@ -1,14 +1,14 @@
-# Justo CP App BRD
+# Justo CP App Planning
 
 ## What This Is
 
-This project creates a business requirements document for Justo's Channel Partner app and operating model. The app is intended to sit on top of Project Manthan's CRM and help Justo become a large regional channel partner in Maharashtra first, then expand across India.
+This project creates the business and product planning artifacts for Justo's Channel Partner app and operating model. The app is intended to sit on top of Project Manthan's CRM and help Justo become a large regional channel partner in Maharashtra first, then expand across India.
 
-The BRD must translate the existing Manthan scope, the Phase 1/2/2.4/3 SoWs, the Auum/TSPL/I9 vendor proposals, and CP market pain-point research into a clear business, persona, lifecycle, capability, and gap-analysis document that Justo can use for vendor alignment and product scoping.
+The artifact sequence is: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype. The BRD must translate the existing Manthan scope, the Phase 1/2/2.4/3 SoWs, the Auum/TSPL/I9 vendor proposals, and CP market pain-point research into a clear business, persona, lifecycle, capability, and gap-analysis document that Justo can use for vendor alignment and product scoping.
 
 ## Core Value
 
-The BRD must make the CP network lifecycle explicit enough that Justo can scope, compare, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
+The planning artifacts must make the CP network lifecycle explicit enough that Justo can scope, compare, design, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
 
 ## Requirements
 
@@ -26,10 +26,14 @@ The BRD must make the CP network lifecycle explicit enough that Justo can scope,
 - [ ] Compare the Auum, TSPL, and I9 proposals against the required CP lifecycle and technology capabilities.
 - [ ] Identify what Project Manthan already covers, what must be configured or extended, and what should be added to any future SoW annexure.
 - [ ] Produce a decision-useful structure that can support vendor negotiation, internal stakeholder review, and product scoping.
+- [ ] Translate the approved BRD into a PRD with product requirements, roles, permissions, workflows, integrations, source-of-truth rules, non-functional requirements, and acceptance criteria.
+- [ ] Convert the PRD into product delivery phases and capability sequencing.
+- [ ] Produce journey maps aligned to the product phases.
+- [ ] Produce UI screen specs/prototype guidance aligned to the product phases.
 
 ### Out of Scope
 
-- Implementing the CP app - this project is for the BRD and planning artifacts first.
+- Implementing the CP app - this project is for BRD, PRD, product roadmap, journey maps, and UI specs/prototype artifacts first.
 - Selecting a final vendor without stakeholder review - the BRD can recommend evaluation criteria and gaps, but procurement needs a separate decision process.
 - Treating AI voice/campaign automation as mandatory MVP scope - these are second-wave unless they directly support CP activation, conversion, or trust.
 - Rewriting Project Manthan architecture - the BRD should identify integration and source-of-truth needs, not redesign Manthan end to end.
@@ -69,7 +73,8 @@ External market review indicates recurring CP pain points around stale inventory
 | Treat the CP app as a CP operating system, not only a mobile CRM shell | Justo's goal depends on CP acquisition, trust, lifecycle, payouts, and operating controls, not only lead entry | - Pending |
 | Use I9 as the baseline integration comparator | I9 owns or understands the current Manthan implementation and submitted a Manthan-linked CP app proposal | - Pending |
 | Keep AI voice/campaign automation as second-wave unless directly tied to activation/conversion/trust | The brief identifies onboarding, lead lock, inventory, site visit, booking visibility, and payout ledger as higher-confidence MVP needs | - Pending |
-| Produce a BRD before SoW annexure or implementation planning | Stakeholders need agreement on personas, lifecycle, scope, vendor gaps, and acceptance criteria first | - Pending |
+| Produce a BRD before PRD, roadmap, journey maps, and UI specs | Stakeholders need agreement on personas, lifecycle, scope, vendor gaps, and acceptance criteria first | - Pending |
+| Use Vertical MVP for GSD roadmap structure | Each phase should produce a stakeholder-reviewable artifact in the sequence BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype | - Pending |
 
 ## Evolution
 
@@ -89,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-30 after initialization*
+*Last updated: 2026-05-30 after artifact-chain goal update*

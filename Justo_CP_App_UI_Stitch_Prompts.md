@@ -298,3 +298,374 @@ Use these rules in every Stitch generation:
 ## Open Stitch Action
 
 [high] Prompt 06 Finance still needs manual execution in the Stitch UI because the MCP generation timed out and the Stitch MCP instruction prohibits retrying a timed-out `generate_screen_from_text` call. The Finance prompt remains part of this artifact and must not be removed or de-scoped; full payout processing is a core product differentiator.
+
+---
+
+## Expanded Screen Flows: Full Journey Coverage
+
+The following sections expand each persona's screen flow to ~12 screens, covering the complete end-to-end journey from entry to goal completion, including variants (empty, error, loading, success states) and edge cases. New screens are marked `[NEW]`. Existing screens are marked `[EXISTING]`.
+
+---
+
+### Expanded Screens: Shared App Foundation (Prompt 01)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Shared_01_Login` | [EXISTING] | Android mobile login screen with CP Tech logo, Text Field: Mobile Number or Email (Required), Text Field: Password or OTP (Required), Button: Sign in, Link: Forgot password, error state for invalid credentials, suspended access message. |
+| 2 | `Shared_02_OTP_Verification` | [NEW] | OTP input screen with 6-digit code field, countdown timer (60s), Resend OTP link, masked mobile/email display, error state for invalid/expired OTP, Button: Verify. |
+| 3 | `Shared_03_Password_Reset` | [NEW] | Password reset flow with mobile/email input, OTP verification step, new password field with strength meter, confirm password, success confirmation, Button: Reset Password. |
+| 4 | `Shared_04_Role_Selector` | [EXISTING] | Card-based role picker after one credential login. Show roles: CP Owner, CP Employee, RM, Finance. Include active firm/project context, Badge: Multiple roles, Button: Continue, access-denied state for deactivated role. |
+| 5 | `Shared_05_Role_Switcher_Active` | [NEW] | In-app role switcher showing current active role, available roles, firm context switch, confirmation when switching roles changes project access, Button: Switch Role. |
+| 6 | `Shared_06_Notification_Center` | [EXISTING] | List of notifications with read/unread state, category chips for Lead, Visit, Payout, Document, Support, safe preview text, timestamp `31/05/2026`, deep-link row, empty state. |
+| 7 | `Shared_07_Notification_Empty` | [NEW] | Empty notification state with illustration, "No notifications yet" message, pull-to-refresh indicator, category chip: All (disabled when empty). |
+| 8 | `Shared_08_Deep_Link_Resolver` | [EXISTING] | Transition screen showing permission check, allowed target preview, blocked target message, Button: Back to Home, Button: Contact Support. |
+| 9 | `Shared_09_Offline_Sync_Queue` | [EXISTING] | Queue list with Lead draft, Document upload, Visit note. Status chips: Queued, Syncing, Failed, Conflict. Buttons: Retry, Cancel, Delete. Show cached timestamp and no-network banner. |
+| 10 | `Shared_10_Profile_Management` | [NEW] | User profile screen with avatar, name, mobile, email, firm name, role, last login, Button: Edit Profile, Button: Change Password, privacy notice link. |
+| 11 | `Shared_11_Settings` | [NEW] | Settings screen with toggles: Push Notifications, Email Notifications, Language (EN/HI/MR), Dark Mode, Data Saver, About, Version, Logout button, privacy policy link. |
+| 12 | `Shared_12_Session_Expired` | [NEW] | Session expired overlay with message "Your session has expired for security", last activity timestamp, Button: Sign In Again, offline-safe cached data indicator. |
+
+#### Journey Flow
+```
+Login → OTP Verification → Password Reset (if needed) → Role Selector → Role Switcher (in-app)
+→ [Persona Home] → Notification Center → Notification Empty (variant)
+→ Deep Link Resolver → Offline Sync Queue → Profile Management → Settings → Session Expired
+```
+
+---
+
+### Expanded Screens: Justo Leadership (Prompt 02)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Leadership_01_Dashboard` | [EXISTING] | Aggregate KPI dashboard with cards for Active CPs, Accepted Leads, Verified Visits, Bookings, Payout SLA, Open Disputes, Compliance Exceptions. Include date filter `01/05/2026 - 31/05/2026`, city filter Mumbai/Pune/Nagpur, and stale data chip. |
+| 2 | `Leadership_02_Dashboard_Loading` | [NEW] | Skeleton loading state for dashboard KPI cards, shimmer animation on charts, "Loading latest data..." message, stale data timestamp visible. |
+| 3 | `Leadership_03_Dashboard_Empty` | [NEW] | Empty dashboard state with "No data available for selected period" message, date range selector, Button: Adjust Filters, onboarding hint for new users. |
+| 4 | `Leadership_04_Filtered_Performance_View` | [EXISTING] | Filter panel for City, Cluster, RM, Project, CP Segment, Date Range. Input: Date Range (Required), Multi-select Chips: City/Cluster/RM/Project, Button: Apply Filters. |
+| 5 | `Leadership_05_Drill_Down_Region` | [NEW] | Drill-down view by region/city showing CP count, lead volume, visit rate, booking conversion, payout status per city. Tap row to expand to cluster level. |
+| 6 | `Leadership_06_Drill_Down_Project` | [NEW] | Project-level drill-down showing project name, developer, assigned CPs, lead pipeline, visit proof rate, booking status, collateral freshness. |
+| 7 | `Leadership_07_CP_Network_Health` | [NEW] | CP network health summary: Active CPs, Stalled CPs, New CPs (30d), Compliance Complete %, Avg Activation Time. Sortable list with status chips. |
+| 8 | `Leadership_08_Trend_Comparison` | [NEW] | Trend chart comparing current period vs previous period for leads, visits, bookings, payouts. Toggle: Week/Month/Quarter. Export button. |
+| 9 | `Leadership_09_Risk_Exception_Queue` | [EXISTING] | Ranked list of risks with severity, owner team, SLA, linked entity count. Include examples: payout delay `₹2.4 lakh`, failed sync, document expiry, lead dispute. |
+| 10 | `Leadership_10_Risk_Exception_Detail` | [EXISTING] | Summary-only detail view with accountable team, current SLA, allowed drill-down, privacy-safe evidence summary, audit timestamp, Button: Escalate. |
+| 11 | `Leadership_11_Export_Share` | [NEW] | Export/share panel with format selector (PDF, Excel), date range, entity filter, privacy warning checkbox, Button: Generate Export, status: Generating/Ready/Sent. |
+| 12 | `Leadership_12_Error_State` | [NEW] | Error state for dashboard with "Unable to load data" message, retry button, offline cached data timestamp, contact support link. |
+
+#### Journey Flow
+```
+Dashboard → Dashboard Loading (variant) → Dashboard Empty (variant) → Filtered Performance View
+→ Drill Down Region → Drill Down Project → CP Network Health → Trend Comparison
+→ Risk Exception Queue → Risk Exception Detail → Export/Share → Error State (variant)
+```
+
+---
+
+### Expanded Screens: CP Sourcing Head (Prompt 03)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `SourcingHead_01_Dashboard` | [EXISTING] | Funnel cards for New Prospects, Assigned to RM, Docs Pending, Under Review, Activated, Stalled. Include RM workload list, activation blockers, Button: Add CP Prospect. |
+| 2 | `SourcingHead_02_Dashboard_Loading` | [NEW] | Skeleton loading state for funnel cards and RM workload list, shimmer animation, "Syncing CP network data..." message. |
+| 3 | `SourcingHead_03_CP_Prospect_List` | [NEW] | Searchable CP prospect list with filters: Status (All/New/Assigned/Pending/Activated/Stalled), RM, Territory, Source. Sort by: Newest, Name, Status. Bulk actions: Assign RM, Export. |
+| 4 | `SourcingHead_04_CP_Prospect_Create` | [EXISTING] | Form with Text Field: CP Firm Name (Required), Text Field: Owner Mobile (Required, tel), Text Field: RERA Number (Optional), Dropdown: Source (Required), Dropdown: Territory (Required), Dropdown: Assign RM (Required), duplicate warning panel. |
+| 5 | `SourcingHead_05_CP_Prospect_Detail` | [NEW] | CP prospect detail view with firm profile, owner info, RERA status, assigned RM, onboarding progress, document checklist, activation blockers, action buttons: Edit, Assign RM, Escalate. |
+| 6 | `SourcingHead_06_Onboarding_Governance_Queue` | [EXISTING] | List of CPs by status: Missing Docs, Under Review, Rejected, Blocked, Approved. Show CP name, RM, ageing, next action. |
+| 7 | `SourcingHead_07_Activation_Detail` | [EXISTING] | Checklist for first login, employee added, project access assigned, first lead, first visit. Show RM notes, blocker chip, Button: Escalate. |
+| 8 | `SourcingHead_08_Activation_Progress` | [NEW] | Detailed activation timeline showing each milestone date, RM actions taken, pending items, SLA countdown, Button: Send Reminder to CP, Button: Mark Stalled. |
+| 9 | `SourcingHead_09_RM_Workload_View` | [NEW] | RM workload dashboard showing assigned CPs per RM, pending docs per RM, activation rate, average time to activation. Sortable list with performance indicators. |
+| 10 | `SourcingHead_10_Inactive_CP_Management` | [NEW] | List of inactive CPs (no leads/visits in 60 days) with last activity date, reason chip, action buttons: Reactivate, Deactivate, Reassign. |
+| 11 | `SourcingHead_11_Escalation_Modal` | [EXISTING] | Bottom sheet with linked CP, Category (Lead, Compliance, Payout, RM), Severity, Owner Team, Notes (Required multiline), Button: Create Ticket. |
+| 12 | `SourcingHead_12_Bulk_Import` | [NEW] | Bulk CP prospect import screen with file upload (CSV/Excel), field mapping preview, validation errors list, Button: Import, progress indicator, success/failure summary. |
+
+#### Journey Flow
+```
+Dashboard → Dashboard Loading (variant) → CP Prospect List → CP Prospect Create → CP Prospect Detail
+→ Onboarding Governance Queue → Activation Detail → Activation Progress → RM Workload View
+→ Inactive CP Management → Escalation Modal → Bulk Import
+```
+
+---
+
+### Expanded Screens: RM / Sourcing Employee (Prompt 04)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `RM_01_Home` | [EXISTING] | Today view with assigned CP prospects, pending documents, stalled CPs, escalations, offline sync banner, FAB: Add CP Prospect. |
+| 2 | `RM_02_Home_Loading` | [NEW] | Skeleton loading state for today view cards, shimmer animation on lists, offline indicator if no network. |
+| 3 | `RM_03_CP_Prospect_Form` | [EXISTING] | Text Field: CP Firm Name (Required), Owner Name (Required), Mobile (Required tel), Territory (Required), Source (Required dropdown), Next Follow-up Date (Required, dd/mm/yyyy), Button: Save Online / Queue Offline. |
+| 4 | `RM_04_CP_Prospect_Detail` | [NEW] | CP prospect detail with firm info, owner contact, RERA status, document checklist progress, onboarding stage, assigned projects (if activated), action buttons: Edit, Upload Doc, Schedule Visit. |
+| 5 | `RM_05_Assisted_Onboarding` | [EXISTING] | CP checklist with Firm Profile, PAN/GST, RERA, Bank Details, KYC. Include upload rows with queued/uploading/failed states and Button: Add Document. |
+| 6 | `RM_06_Queued_Document_Upload` | [EXISTING] | Upload detail with File Picker (Required), Document Type (Required dropdown), File Size Limit note, Buttons: Retry, Cancel, Delete, Status: Pending server validation. |
+| 7 | `RM_07_Meeting_Log` | [NEW] | Meeting log for CP prospect with date, location, notes, next action, follow-up date. Button: Add Meeting, Button: Mark Contacted. Empty state for no meetings yet. |
+| 8 | `RM_08_Task_List` | [NEW] | Task list for assigned CPs: Follow-up due, Document pending, Visit to schedule, Escalation to create. Priority chips: High/Medium/Low. Filter: Today/This Week/Overdue. |
+| 9 | `RM_09_Site_Visit_Support` | [EXISTING] | Schedule visit screen with Lead, Buyer Mobile, Project, Slot Date/Time, Proof Method chips: QR, OTP, Geofence, Site Desk, Admin Fallback; Button: Schedule Visit. |
+| 10 | `RM_10_Visit_History` | [NEW] | Visit history list for assigned CPs with date, project, buyer (masked), proof status, outcome. Filter: All/Verified/Pending/Failed. Sort by date. |
+| 11 | `RM_11_Performance_View` | [NEW] | RM performance summary: CPs assigned, CPs activated, leads generated, visits verified, bookings. Comparison to target. Period selector. |
+| 12 | `RM_12_Escalation_Detail` | [NEW] | Escalation detail for CP issue with category, severity, owner team, timeline, actions taken, Button: Update Status, Button: Close Escalation. |
+
+#### Journey Flow
+```
+Home → Home Loading (variant) → CP Prospect Form → CP Prospect Detail → Assisted Onboarding
+→ Queued Document Upload → Meeting Log → Task List → Site Visit Support → Visit History
+→ Performance View → Escalation Detail
+```
+
+---
+
+### Expanded Screens: Sales / Admin Ops (Prompt 05)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `AdminOps_01_Admin_Queue` | [EXISTING] | Tabbed queue with Setup, Collateral, Conflicts, Exceptions, Audit. Show counts, failed notifications, blocked changes, and priority chips. |
+| 2 | `AdminOps_02_Queue_Loading` | [NEW] | Skeleton loading state for queue tabs, shimmer animation on list items, "Loading admin tasks..." message. |
+| 3 | `AdminOps_03_Project_List` | [NEW] | Searchable project list with status chips: Active/Paused/Expired. Show project name, developer, assigned CPs, collateral freshness. Button: Add Project. |
+| 4 | `AdminOps_04_Project_Access_Config` | [EXISTING] | Searchable list of CP firms and projects. Controls: CP Selector (Required), Project Selector (Required), Access Toggle, Reason (Required text), Button: Save Access. |
+| 5 | `AdminOps_05_Lead_Rule_Config` | [NEW] | Lead conflict rule configuration with rule name, priority window (days), attribution logic (First/Last/Override), auto-resolve toggle, Button: Save Rule. |
+| 6 | `AdminOps_06_Collateral_Manager` | [EXISTING] | Collateral list with version, expiry date, approval state, preview thumbnail, actions Approve, Replace, Expire, Reject, audit note. |
+| 7 | `AdminOps_07_Visit_Proof_Config` | [NEW] | Visit proof method configuration per project: enable/disable QR, OTP, Geofence, Site Desk, Admin Fallback. Geofence radius input, consent text preview. |
+| 8 | `AdminOps_08_Lead_Conflict_Resolution` | [EXISTING] | Evidence screen with duplicate leads, timestamps, CP owner, employee attribution, source, policy rule, restricted PII masking, decision buttons: Accept, Reject, Override. |
+| 9 | `AdminOps_09_User_Role_Management` | [NEW] | User/role management list with name, role, firm, status (Active/Suspended), last login. Actions: Edit Role, Suspend, Reset Password. Button: Invite User. |
+| 10 | `AdminOps_10_Audit_Log_View` | [NEW] | Audit log list with action type, user, timestamp, entity affected, IP address. Filters: Date Range, User, Action Type. Button: Export Audit. |
+| 11 | `AdminOps_11_Exception_Action_Modal` | [EXISTING] | Bottom sheet requiring Action Type, Reason (Required multiline), affected users/leads summary, confirmation checkbox, Button: Apply and Audit. |
+| 12 | `AdminOps_12_Bulk_Operations` | [NEW] | Bulk operation screen for project access, collateral expiry, user suspension. File upload or multi-select, preview changes, confirmation checkbox, Button: Apply Bulk. |
+
+#### Journey Flow
+```
+Admin Queue → Queue Loading (variant) → Project List → Project Access Config → Lead Rule Config
+→ Collateral Manager → Visit Proof Config → Lead Conflict Resolution → User Role Management
+→ Audit Log View → Exception Action Modal → Bulk Operations
+```
+
+---
+
+### Expanded Screens: Finance (Prompt 06)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Finance_01_Payout_Queue` | [EXISTING] | Status tabs: Eligible, Invoice Pending, Under Review, Approved, Scheduled, Paid, Failed, Disputed, Clawback. Show CP name, project, amount `₹2.4 lakh`, SLA, priority. |
+| 2 | `Finance_02_Queue_Loading` | [NEW] | Skeleton loading state for payout queue tabs, shimmer animation on list items, "Loading payout data..." message. |
+| 3 | `Finance_03_Payout_SLA_Dashboard` | [NEW] | Payout SLA summary: Due Today, Overdue, Scheduled This Week, Failed Pending Retry. SLA breach count, average processing time. Export button. |
+| 4 | `Finance_04_Payout_Detail` | [EXISTING] | Detail screen with booking milestone, CP eligibility, invoice, GST/TDS, bank/KYC, cancellation risk, validation checklist. |
+| 5 | `Finance_05_Invoice_List` | [NEW] | Invoice list for CP payouts with invoice number, CP name, amount, GST, TDS, status (Received/Pending/Rejected), upload date. Button: Upload Invoice. |
+| 6 | `Finance_06_GST_TDS_Detail` | [NEW] | GST/TDS detail for payout with GSTIN, invoice match status, TDS rate, TDS amount, deduction summary, Button: Request Correction from CP. |
+| 7 | `Finance_07_Approval_Action` | [EXISTING] | Maker-checker panel with Buttons: Approve, Reject, Request Correction. Text Field: Reason (Required for reject/correction), Checkbox: I confirm policy checks. |
+| 8 | `Finance_08_Payment_Scheduling` | [EXISTING] | Inputs for Scheduled Date (Required dd/mm/yyyy), Payment Reference (Required when paid), Amount (Required currency), Failure Reason (Required when failed). |
+| 9 | `Finance_09_Bank_Reconciliation` | [NEW] | Bank reconciliation screen with payment reference, bank statement match status, amount variance, Button: Mark Reconciled, Button: Flag Discrepancy. |
+| 10 | `Finance_10_Dispute_Detail` | [NEW] | Payout dispute detail with dispute reason, raised by, evidence attachments, linked booking, status timeline, Button: Resolve Dispute, Button: Escalate. |
+| 11 | `Finance_11_Reconciliation_Clawback` | [EXISTING] | Reconciliation status panel with source reference, paid/reconciled/disputed/clawback state, reason field, immutable audit timeline. |
+| 12 | `Finance_12_Payment_History` | [NEW] | Payment history list with date, CP name, amount, reference, status (Success/Failed/Reversed). Filters: Date Range, Status, CP. Export button. |
+
+#### Journey Flow
+```
+Payout Queue → Queue Loading (variant) → Payout SLA Dashboard → Payout Detail → Invoice List
+→ GST/TDS Detail → Approval Action → Payment Scheduling → Bank Reconciliation
+→ Dispute Detail → Reconciliation/Clawback → Payment History
+```
+
+---
+
+### Expanded Screens: Developer / Project Team (Prompt 07)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Developer_01_Project_Console` | [EXISTING] | Assigned projects list with stale data flags, inventory updates due, collateral approvals, visit outcome items. Include search and status chips. |
+| 2 | `Developer_02_Console_Loading` | [NEW] | Skeleton loading state for project console, shimmer animation on project cards, "Loading project data..." message. |
+| 3 | `Developer_03_Project_List` | [NEW] | Full project list with filters: Active/Paused/Expired, City, Developer. Sort by: Name, Last Updated, Stale Flag. Show project thumbnail, location, CP count. |
+| 4 | `Developer_04_Project_Facts_Form` | [EXISTING] | Inputs for Project Name (Read-only), Inventory Status (Required dropdown), Offer Text (Optional), RERA Details (Required), Site Instructions (Required multiline), Freshness Timestamp. |
+| 5 | `Developer_05_Inventory_Management` | [NEW] | Inventory management screen with unit type, available/total count, price range, possession date, Button: Update Inventory. Show last updated timestamp. |
+| 6 | `Developer_06_Offer_Scheme` | [NEW] | Offer/scheme management with offer title, description, validity dates, applicable units, Button: Add Offer, Button: Expire Offer. Preview how offer appears to CPs. |
+| 7 | `Developer_07_Collateral_List` | [NEW] | Collateral list with file type, version, approval status, expiry date, Button: Upload New, Button: Request Approval. Filter: Approved/Pending/Expired. |
+| 8 | `Developer_08_Collateral_Review` | [EXISTING] | Preview card with file, version, expiry, claim-safe fields, buttons Approve, Reject, Expire, Replace, Reason field. |
+| 9 | `Developer_09_Visit_Slot_Management` | [NEW] | Visit slot configuration with date, time slots, max visitors per slot, site contact, Button: Add Slot, Button: Close Slot. Show booked/available count. |
+| 10 | `Developer_10_Visit_Outcome` | [EXISTING] | Visit detail with proof status, buyer masked phone, lead, project, outcome selector, note field, Button: Save Outcome. |
+| 11 | `Developer_11_Visit_Outcome_Detail` | [NEW] | Detailed visit outcome with proof method used, timestamp, geofence status (if applicable), buyer feedback (if any), lead status update, Button: Edit Outcome. |
+| 12 | `Developer_12_Project_Performance` | [NEW] | Project performance dashboard: leads received, visits verified, booking rate, CP activity, collateral views. Period selector, export button. |
+
+#### Journey Flow
+```
+Project Console → Console Loading (variant) → Project List → Project Facts Form → Inventory Management
+→ Offer Scheme → Collateral List → Collateral Review → Visit Slot Management → Visit Outcome
+→ Visit Outcome Detail → Project Performance
+```
+
+---
+
+### Expanded Screens: CP Owner / Org Leader (Prompt 08)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `CPOwner_01_Home` | [EXISTING] | Firm status, compliance status, team alerts, leads summary, visits, bookings, payout summary `₹3.6 lakh due`, disputes, notification bell, sync queue chip. |
+| 2 | `CPOwner_02_Home_Loading` | [NEW] | Skeleton loading state for home dashboard cards, shimmer animation, offline indicator if no network, cached data timestamp. |
+| 3 | `CPOwner_03_Firm_Profile` | [NEW] | Firm profile with firm name, RERA number, PAN/GST, bank details, compliance status, Button: Edit Profile, Button: Upload Document. Show compliance checklist progress. |
+| 4 | `CPOwner_04_Team_Management` | [EXISTING] | Employee list with roles, project access, active work counts, Button: Invite Employee, actions Deactivate/Reassign. Input: Employee Mobile (Required tel), Role (Required dropdown), Project Access (Required multi-select). |
+| 5 | `CPOwner_05_Employee_Detail` | [NEW] | Employee detail with name, role, project access, leads submitted, visits completed, performance summary, Button: Edit Access, Button: Deactivate. |
+| 6 | `CPOwner_06_Lead_Quick_Submit` | [EXISTING] | Phone-first lead form with Buyer Mobile (Required tel), Buyer Name (Optional), Project (Required), Budget (Optional currency), Button: Submit Lead. Result states: Accepted, Conflict, Rejected, Pending Sync, Pending Review. |
+| 7 | `CPOwner_07_Firm_Lead_Detail` | [EXISTING] | Lead timeline with owner/employee attribution, follow-up, visit, conflict/dispute CTA, booking link if available, restricted buyer data labels. |
+| 8 | `CPOwner_08_Visit_List` | [NEW] | Visit list for firm with date, project, buyer (masked), proof status, outcome. Filter: All/Verified/Pending/Failed. Sort by date. Button: Schedule Visit. |
+| 9 | `CPOwner_09_Booking_Status` | [NEW] | Booking status screen with booking ID, project, buyer (masked), milestone timeline (Booked → Documentation → Payment → Completed), expected date, Button: View Details. |
+| 10 | `CPOwner_10_Payout_Ledger` | [EXISTING] | Payout list and detail with status timeline, deductions GST/TDS, payment reference, expected date, Button: Raise Dispute, linked evidence. |
+| 11 | `CPOwner_11_Dispute_Detail` | [NEW] | Dispute detail with dispute reason, raised date, status, evidence attachments, linked payout, resolution timeline, Button: Add Evidence, Button: Close Dispute. |
+| 12 | `CPOwner_12_Support_Ticket` | [NEW] | Support ticket list and detail with category, priority, status, timeline, Button: Raise Ticket, Button: Add Comment. Filter: Open/Closed/All. |
+
+#### Journey Flow
+```
+Home → Home Loading (variant) → Firm Profile → Team Management → Employee Detail
+→ Lead Quick Submit → Firm Lead Detail → Visit List → Booking Status → Payout Ledger
+→ Dispute Detail → Support Ticket
+```
+
+---
+
+### Expanded Screens: CP Employee / Agent (Prompt 09)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `CPEmployee_01_Agent_Home` | [EXISTING] | Assigned project shortcuts, lead quick submit CTA, due follow-ups, upcoming visits, sync status, bottom nav Home/Search/Leads/Profile. |
+| 2 | `CPEmployee_02_Home_Loading` | [NEW] | Skeleton loading state for agent home, shimmer animation on project cards and lead list, offline indicator. |
+| 3 | `CPEmployee_03_Project_Catalog` | [EXISTING] | Search and filters for location, budget `₹80 lakh - ₹1.5 crore`, BHK, possession. Project card with freshness, inventory, offer, RERA, approved collateral indicator. |
+| 4 | `CPEmployee_04_Project_Detail` | [NEW] | Detailed project view with full description, amenities, floor plans, location map, price breakdown, RERA details, Button: Share, Button: Submit Lead. |
+| 5 | `CPEmployee_05_Share_Kit` | [EXISTING] | Approved assets list, expired-share blocked state, channel selector WhatsApp/SMS/Copy Link, buyer context selector, Button: Share Approved Kit. |
+| 6 | `CPEmployee_06_Lead_Quick_Submit` | [EXISTING] | Buyer Mobile (Required tel), Buyer Name (Optional), Project (Required), Source (Required), Consent Checkbox, Button: Register Lead; result chip accepted/conflict/rejected/pending sync. |
+| 7 | `CPEmployee_07_Lead_List` | [NEW] | Lead list with status chips: New/Follow-up/Visit Scheduled/Booked/Lost. Filter: Today/This Week/All. Sort by: Newest, Follow-up Due, Status. |
+| 8 | `CPEmployee_08_Lead_Detail_Timeline` | [NEW] | Lead detail with full timeline: submitted, follow-ups, visits, booking status. Buyer info (masked), project, attribution, Button: Add Follow-up, Button: Schedule Visit. |
+| 9 | `CPEmployee_09_Follow_Up_List` | [NEW] | Follow-up task list with due date, lead name, project, action type (Call/Visit/Message), Button: Mark Done, Button: Reschedule. Filter: Today/Overdue/Upcoming. |
+| 10 | `CPEmployee_10_Visit_Proof` | [EXISTING] | Visit schedule with slot, proof method, geofence consent, QR/OTP entry, fallback selector, outcome note, next follow-up date. |
+| 11 | `CPEmployee_11_Visit_List` | [NEW] | Visit list with date, project, buyer (masked), proof status, outcome. Filter: Upcoming/Completed/Failed. Sort by date. Button: Schedule New Visit. |
+| 12 | `CPEmployee_12_Profile_Settings` | [NEW] | Profile and settings screen with name, mobile, role, project access (read-only), performance summary, Button: Change Password, notification preferences, logout. |
+
+#### Journey Flow
+```
+Agent Home → Home Loading (variant) → Project Catalog → Project Detail → Share Kit
+→ Lead Quick Submit → Lead List → Lead Detail Timeline → Follow-Up List → Visit Proof
+→ Visit List → Profile/Settings
+```
+
+---
+
+### Expanded Screens: CP Telecaller (Prompt 10)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Telecaller_01_Queue` | [EXISTING] | Assigned leads list with project, due time, status, basic priority label, overdue chip, no AI score. Filters: Due Today, Overdue, Completed. |
+| 2 | `Telecaller_02_Queue_Loading` | [NEW] | Skeleton loading state for telecaller queue, shimmer animation on lead rows, "Loading assigned leads..." message. |
+| 3 | `Telecaller_03_Queue_Empty` | [NEW] | Empty queue state with illustration, "No leads assigned" message, pull-to-refresh indicator, Button: Check Back Later. |
+| 4 | `Telecaller_04_Lead_Call_Detail` | [EXISTING] | Lead detail with masked buyer phone, project, prior timeline, Button: Start Call, Button: Add Disposition. |
+| 5 | `Telecaller_05_Lead_Detail_Full` | [NEW] | Full lead detail with buyer name (masked), project, budget, location, source, lead age, prior call history, notes, Button: Edit Lead (limited fields). |
+| 6 | `Telecaller_06_Call_History` | [NEW] | Call history list with date, time, duration, outcome, lead name. Filter: Today/This Week/All. Sort by date. Button: Log Manual Call. |
+| 7 | `Telecaller_07_Disposition_Form` | [EXISTING] | Inputs for Call Outcome (Required dropdown), Budget (Optional currency), Location (Optional), Urgency (Optional dropdown), Objection (Optional text), Visit Intent (Required yes/no), Next Follow-up Date (Required dd/mm/yyyy). |
+| 8 | `Telecaller_08_Follow_Up_List` | [NEW] | Follow-up list with due date, lead name, project, last call outcome, Button: Call Now, Button: Mark Done. Filter: Today/Overdue/Upcoming. |
+| 9 | `Telecaller_09_Schedule_Escalate` | [EXISTING] | Action panel to schedule follow-up, request site visit, or escalate hot lead. Include Notify RM toggle and Button: Save Action. |
+| 10 | `Telecaller_10_Visit_Schedule_Detail` | [NEW] | Visit schedule detail with slot date/time, site address, buyer confirmation status, proof method, Button: Confirm Visit, Button: Reschedule. |
+| 11 | `Telecaller_11_Escalation_Detail` | [NEW] | Escalation detail with lead, escalation reason, RM notified status, escalation date, Button: Update Status, Button: Close Escalation. |
+| 12 | `Telecaller_12_Performance_View` | [NEW] | Telecaller performance summary: calls made, dispositions logged, visits scheduled, conversion rate. Period selector, comparison to target. |
+
+#### Journey Flow
+```
+Queue → Queue Loading (variant) → Queue Empty (variant) → Lead Call Detail → Lead Detail Full
+→ Call History → Disposition Form → Follow-Up List → Schedule/Escalate → Visit Schedule Detail
+→ Escalation Detail → Performance View
+```
+
+---
+
+### Expanded Screens: Buyer / Customer (Prompt 11)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Buyer_01_Project_Link` | [EXISTING] | Approved project facts only: project name, location, price range `₹85 lakh - ₹1.4 crore`, BHK, RERA number, offer, CP/Justo attribution, freshness date `31/05/2026`. |
+| 2 | `Buyer_02_Project_Gallery` | [NEW] | Project image gallery with swipeable photos, floor plans, amenities icons, location map thumbnail. Button: Request More Photos. |
+| 3 | `Buyer_03_Price_Calculator` | [NEW] | Price calculator with base price, floor rise, parking, GST estimate, registration estimate, total estimate. Disclaimer: "Estimates only, final price from developer." |
+| 4 | `Buyer_04_Interest_Callback_Form` | [EXISTING] | Inputs for Name (Required), Mobile (Required tel), Preferred Callback Date (Optional dd/mm/yyyy), Consent Checkbox (Required), Buttons: Request Callback, Request Site Visit. |
+| 5 | `Buyer_05_Callback_Confirmation` | [NEW] | Callback request confirmation with "We'll call you back" message, expected callback time, CP/Justo contact info, Button: Modify Request, Button: Cancel Request. |
+| 6 | `Buyer_06_Visit_Confirmation` | [EXISTING] | Visit slot detail, site address, CP/Justo contact, OTP/QR instructions, Button: Confirm Visit, fallback info. |
+| 7 | `Buyer_07_Visit_Reminder` | [NEW] | Visit reminder screen with countdown, site address, directions link, what to bring list, contact number, Button: Reschedule, Button: Cancel Visit. |
+| 8 | `Buyer_08_Visit_Proof_Result` | [EXISTING] | Success/failure state with OTP verified, QR scanned, geofence confirmed, or fallback used. Show next step and privacy-safe confirmation. |
+| 9 | `Buyer_09_Visit_History` | [NEW] | Visit history list with date, project, status (Scheduled/Completed/No-Show), proof status. Button: Schedule New Visit. |
+| 10 | `Buyer_10_KYC_Form` | [NEW] | KYC form with Name (Required), PAN (Required), Aadhaar (Optional), Address (Required), Button: Submit KYC. Show privacy notice, data usage consent. |
+| 11 | `Buyer_11_Support_Contact` | [NEW] | Support/contact screen with CP contact (masked), Justo support number, FAQ link, Button: Call Support, Button: Email Support, Button: Chat (if available). |
+| 12 | `Buyer_12_Error_State` | [NEW] | Error state for project link with "Link expired or invalid" message, Button: Contact CP, Button: Browse Projects (if available), privacy notice. |
+
+#### Journey Flow
+```
+Project Link → Project Gallery → Price Calculator → Interest/Callback Form → Callback Confirmation
+→ Visit Confirmation → Visit Reminder → Visit Proof Result → Visit History → KYC Form
+→ Support/Contact → Error State (variant)
+```
+
+---
+
+### Expanded Screens: Compliance / Support (Prompt 12)
+
+#### Full Ordered Screen Sequence (12 screens)
+
+| # | Screen Name | Status | Description |
+|---|---|---|---|
+| 1 | `Compliance_01_Queue` | [EXISTING] | Tabs: Documents, Expiries, Disputes, Payout Issues, Lead Conflicts, Collateral Issues. Show SLA, owner, severity, ageing, and queue count. |
+| 2 | `Compliance_02_Queue_Loading` | [NEW] | Skeleton loading state for compliance queue tabs, shimmer animation on list items, "Loading compliance data..." message. |
+| 3 | `Compliance_03_Dashboard` | [NEW] | Compliance dashboard with SLA compliance %, open items by category, items resolved this period, average resolution time, breach alerts. |
+| 4 | `Compliance_04_Document_List` | [NEW] | Document list with filters: Status (Pending/Approved/Rejected/Expired), Document Type, CP Firm. Sort by: Upload Date, Expiry Date. Bulk actions: Approve, Reject. |
+| 5 | `Compliance_05_Document_Review` | [EXISTING] | Document preview card, metadata, CP profile summary, upload status, validation state, prior rejection reason, buttons Approve, Reject, Request Clarification, Flag. |
+| 6 | `Compliance_06_Dispute_List` | [NEW] | Dispute list with category (Lead/Payout/Booking), status (Open/Under Review/Resolved/Escalated), raised by, date, SLA. Sort by severity, date. |
+| 7 | `Compliance_07_Evidence_Bundle` | [EXISTING] | Linked lead/visit/booking/payout/document, entity timeline, attachments, SLA, owner team, resolution status, comment field. |
+| 8 | `Compliance_08_Support_Ticket_Detail` | [NEW] | Support ticket detail with ticket ID, category, priority, status, raised by, timeline, comments, attachments, Button: Update Status, Button: Resolve. |
+| 9 | `Compliance_09_SLA_Monitoring` | [NEW] | SLA monitoring dashboard with items by SLA status: On Track/At Risk/Breached. SLA countdown per item, Button: Escalate Breached. |
+| 10 | `Compliance_10_Resolution_Action` | [EXISTING] | Action bottom sheet with Resolution Type (Required), Reason (Required multiline), Notify Originator toggle, Button: Resolve and Audit. |
+| 11 | `Compliance_11_Audit_Log_Detail` | [NEW] | Detailed audit log with action, user, timestamp, entity, before/after values, IP address. Filters: Date Range, User, Entity Type. Button: Export. |
+| 12 | `Compliance_12_Audit_Export` | [EXISTING] | Filters for Entity Type, Date Range, CP Firm, Privacy Warning checkbox, Button: Generate Export, statuses Preview/Generating/Ready/Blocked/Failed. |
+
+#### Journey Flow
+```
+Queue → Queue Loading (variant) → Dashboard → Document List → Document Review → Dispute List
+→ Evidence Bundle → Support Ticket Detail → SLA Monitoring → Resolution Action → Audit Log Detail
+→ Audit Export
+```
+
+---
+
+## Summary: Screen Count per Persona
+
+| Persona | Existing Screens | New Screens | Total Screens |
+|---|---|---|---|
+| Shared App Foundation | 5 | 7 | 12 |
+| Justo Leadership | 4 | 8 | 12 |
+| CP Sourcing Head | 5 | 7 | 12 |
+| RM / Sourcing Employee | 5 | 7 | 12 |
+| Sales / Admin Ops | 5 | 7 | 12 |
+| Finance | 5 | 7 | 12 |
+| Developer / Project Team | 4 | 8 | 12 |
+| CP Owner / Org Leader | 5 | 7 | 12 |
+| CP Employee / Agent | 5 | 7 | 12 |
+| CP Telecaller | 4 | 8 | 12 |
+| Buyer / Customer | 4 | 8 | 12 |
+| Compliance / Support | 5 | 7 | 12 |
+| **TOTAL** | **56** | **88** | **144** |
+
+---
+
+## Next Steps
+
+1. **Generate Prompt 06 (Finance)** manually in Stitch UI — this is the only P0 blocker.
+2. **Generate new screens** for each persona using the expanded screen specifications above.
+3. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
+4. **Validate journey completeness** by walking through each persona's flow from entry to completion.

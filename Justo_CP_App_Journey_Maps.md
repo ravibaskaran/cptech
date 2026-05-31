@@ -116,6 +116,10 @@ Goal: Monitor CP business health and risk without operational detail overload.
 | JL-002 | Executive Review | Filters by city, cluster, RM, project, CP segment, or date. | Query permitted aggregate metrics; suppress restricted PII. | Dashboard refreshes with scoped metrics. | Filter bar, saved view, empty/stale data state. | Yes | PRD-FR-065, PRD-NFR-008 |
 | JL-003 | Risk Control | Opens risk exceptions. | Fetch dispute, payout delay, compliance expiry, failed sync, and collateral exception counts. | Shows ranked exception list. | Risk queue with severity, owner team, SLA, linked entity count. | Yes | PRD-FR-060 to PRD-FR-064 |
 | JL-004 | Risk Control | Opens a high-severity exception. | Check leadership detail permission and privacy rules. | Shows summary and accountable team, not restricted raw data. | Exception detail summary with owner, status, escalation note, allowed drill-down. | Yes | PRD-FR-052, PRD-FR-062 |
+| JL-005 | Cross-Persona Review | Opens cross-persona performance dashboard. | Check leadership role, metric permissions, persona-level aggregation access. | Shows KPIs per persona (Sourcing, RM, CP Owner, Telecaller, Compliance, Finance) with bar charts, line trends, heatmaps. | Cross-persona dashboard with persona cards, trend charts, heatmap grid, period selector. | Yes | PRD-FR-085, PRD-FR-088 |
+| JL-006 | Persona Drill-Down | Taps a persona KPI card to drill into team member list. | Check drill-down permission, team hierarchy access, privacy rules. | Shows team member list with individual performance metrics for selected persona. | Persona detail screen with team member table, rank, score, trend, comparison to average. | Yes | PRD-FR-086 |
+| JL-007 | Period Comparison | Selects period comparison (current vs previous). | Query permitted aggregate metrics for both periods; compute deltas. | Dashboard refreshes with delta indicators and trend visualization. | Period comparison toggle, delta chips (↑/↓/→), trend sparklines. | Yes | PRD-FR-088 |
+| JL-008 | Export Report | Taps export to generate board report. | Check export permission, configure date range, persona filter, entity scope. | Export job is queued; user sees status (Generating/Ready/Failed). | Export panel with format selector (PDF/PNG), scope config, privacy warning, status. | Yes | PRD-FR-087, PRD-NFR-019 |
 
 ## Persona Journey: CP Sourcing Head
 
@@ -128,6 +132,11 @@ Goal: Build, activate, and govern the CP network through RM-owned execution.
 | CSH-003 | Onboarding Governance | Reviews onboarding queue. | Fetch CPs pending docs, under review, rejected, blocked, approved. | Shows blockers by CP and RM. | Onboarding queue with CP, RM, missing docs, ageing, next action. | Yes | PRD-FR-009, PRD-FR-020 |
 | CSH-004 | Activation Governance | Opens inactive or stalled CP. | Check activation signals: first login, employee, project access, first lead, first visit. | Shows activation gap and owner. | Activation detail with checklist, RM notes, escalation CTA. | Yes | PRD-FR-019, PRD-FR-021, PRD-FR-022 |
 | CSH-005 | Escalation | Escalates lead, compliance, payout, or RM issue. | Validate category, linked entity, owner team, SLA. | Support/escalation ticket is created or updated. | Escalation modal with linked CP, category, severity, notes, owner team. | Reuse | PRD-FR-060, PRD-FR-061 |
+| CSH-006 | CP Owner Meeting | Logs meeting with CP owner (field or office). | Validate CP prospect/active status, RM assignment, meeting note fields, offline state. | Meeting record is saved with timestamp, location, notes, next action. | Meeting log form with CP selector, date, location, notes, next action, follow-up date. | Yes | PRD-FR-022 |
+| CSH-007 | CP Onboarding Oversight | Opens CP onboarding assistant to guide RM through onboarding workflow. | Check CP prospect status, required documents, RM assignment, onboarding stage. | Shows guided onboarding workflow with checklist, document collection, verification steps. | CP onboarding assistant with step-by-step guide, document checklist, verification status, RM actions. | Yes | PRD-FR-083 |
+| CSH-008 | Document First-Verification | Reviews first-level verification queue for uploaded CP documents. | Fetch documents pending first-level verification by RM/sourcing head before compliance review. | Shows queue with document preview, CP name, upload date, basic validation checks. | Document first-verification queue with preview, metadata, basic checks (file type, size, readability), approve/reject/escalate actions. | Yes | PRD-FR-082 |
+| CSH-009 | Sourcing Leaderboard | Opens gamified sourcing leaderboard. | Check sourcing-head role, leaderboard permission, time period filter. | Shows ranked list of RMs and sourcing employees by CP onboarding count, documents verified, activation rate. | Sourcing leaderboard with rank, name/avatar, score, trend (↑/↓/→), time filter (day/week/month/quarter), team average comparison. | Yes | PRD-FR-080, PRD-FR-081, PRD-NFR-018 |
+| CSH-010 | RM Performance Detail | Taps an RM on the leaderboard to view detailed performance. | Check drill-down permission, RM identity, metric access. | Shows individual RM metrics: CPs onboarded, documents verified, CP employees added, activation rate, comparison to team. | Sourcing employee performance detail with metric cards, trend chart, comparison to team average, recent activity. | Yes | PRD-FR-084 |
 
 ## Persona Journey: RM / Sourcing Employee
 
@@ -141,6 +150,11 @@ Goal: Recruit, onboard, activate, and support CPs in the field.
 | RM-004 | Activation | Assigns projects or triggers activation checklist. | Check CP approval/compliance state, project access, role permissions. | Projects or activation tasks are assigned where allowed. | Activation checklist with project access, first login, first employee, first lead, first visit. | Yes | PRD-FR-019, PRD-FR-020, PRD-FR-023 |
 | RM-005 | Support | Opens CP escalation for lead, visit, payout, or compliance. | Validate linked CP/lead/visit/payout and RM access. | Shows status and allowed action/escalation path. | Escalation detail with linked evidence, owner team, SLA, comment/action. | Reuse | PRD-FR-060 to PRD-FR-062 |
 | RM-006 | Visit Support | Schedules or supports a site visit. | Check accepted lead, slot rules, project/site rules, buyer details. | Visit request/status is created or updated. | Visit scheduling screen with lead, buyer, project, slot, proof method status. | Reuse | PRD-FR-044, PRD-FR-045, PRD-FR-049 |
+| RM-007 | CP Owner Meeting | Logs meeting with CP owner during field visit. | Validate CP prospect/active status, meeting note fields, offline state, geotag. | Meeting record is saved with timestamp, geotag, notes, documents promised, next action. | Meeting log form with CP selector, date, geotag, notes, documents promised, next follow-up date. | Yes | PRD-FR-022 |
+| RM-008 | CP Onboarding Assistant | Opens guided onboarding workflow for a specific CP. | Check CP prospect status, required documents, onboarding stage, offline state. | Shows step-by-step onboarding guide with document collection, verification, and activation triggers. | CP onboarding assistant with checklist, document upload, verification status, activation trigger, offline queue. | Yes | PRD-FR-083 |
+| RM-009 | Document First-Verification | Performs first-level verification of uploaded CP documents. | Check document upload status, file type/size, readability, basic validation, RM permission. | Document moves to first-verified state or is rejected with reason for CP/resubmission. | Document first-verification screen with preview, metadata, basic checks, approve/reject/escalate, reason field. | Yes | PRD-FR-082 |
+| RM-010 | Sourcing Leaderboard | Opens personal position on sourcing leaderboard. | Check RM role, leaderboard permission, time period filter. | Shows own rank, score, trend, and comparison to team average. | Sourcing leaderboard with own rank highlighted, team ranking, time filter, score breakdown. | Yes | PRD-FR-080, PRD-FR-081, PRD-NFR-018 |
+| RM-011 | Self Performance Detail | Opens own performance detail view. | Check RM role, metric access, time period. | Shows individual metrics: CPs onboarded, documents verified, activation rate, trend, comparison to team. | Sourcing employee performance detail with metric cards, trend chart, comparison to team average, recent activity timeline. | Yes | PRD-FR-084 |
 
 ## Persona Journey: Sales/Admin Ops
 
@@ -192,6 +206,10 @@ Goal: Run CP firm operations with clear team control, lead ownership, booking st
 | CPO-007 | Booking Visibility | Opens booking status. | Check CP attribution, RBAC, buyer data exposure, booking source. | Shows CP-safe booking milestone and payout impact. | Booking status card/detail with restricted fields, next action, payout impact. | Yes | PRD-FR-050 to PRD-FR-053 |
 | CPO-008 | Payout Visibility | Opens payout ledger/detail or raises dispute. | Check finance policy, payout state machine, GST/TDS, reference, dispute rules. | Shows payout state and allows permitted dispute. | Payout ledger/detail with state timeline, deductions, references, dispute CTA. | Yes | PRD-FR-054 to PRD-FR-059, PRD-FR-078 |
 | CPO-009 | Support/Audit | Opens support ticket or audit timeline. | Check linked entity, evidence, ticket SLA, audit visibility. | Ticket/timeline shows status, owner, evidence, allowed details. | Support form/detail and audit timeline panel. | Reuse | PRD-FR-060 to PRD-FR-064 |
+| CPO-010 | Firm Dashboard | Opens dedicated CP Owner dashboard (firm-wide performance). | Check CP owner role, firm permission, metric access. | Shows firm-wide performance: leads generated, visits completed, bookings closed, payout earned, team activity, compliance status. | CP Owner dashboard with KPI cards, trend charts, team activity summary, compliance status, payout summary. | Yes | PRD-FR-089 |
+| CPO-011 | Project Leaderboard | Opens per-project leaderboard filtered to own firm. | Check CP owner role, project permission, leaderboard access. | Shows ranked list of CP employees within firm by leads, visits, bookings, payout. | Project leaderboard with rank, employee name, score breakdown (leads/visits/bookings/payout), trend, time filter. | Yes | PRD-FR-090, PRD-NFR-018 |
+| CPO-012 | Performance Comparison | Opens performance comparison view. | Check CP owner role, comparison permission, anonymization rules. | Shows firm metrics compared to project average, city average, or top performers (anonymized). | Performance comparison view with firm metrics, benchmark lines, delta indicators, period selector. | Yes | PRD-FR-093 |
+| CPO-013 | Employee Performance Detail | Taps an employee on the leaderboard to view detailed performance. | Check CP owner role, employee identity, metric access. | Shows individual employee metrics: leads submitted, visits scheduled, bookings attributed, follow-up completion, comparison to firm average. | Employee performance detail with metric cards, trend chart, recent activity, comparison to firm average. | Yes | PRD-FR-084 |
 
 ## Persona Journey: CP Employee / Agent
 
@@ -206,6 +224,10 @@ Goal: Sell projects quickly using current information, protected lead registrati
 | CPE-005 | Follow-Up | Adds note, task, reminder, or disposition. | Check lead access, reminder policy, offline queue. | Timeline updates online or queues sync. | Lead timeline with notes/tasks/reminders/disposition and sync state. | Yes | PRD-FR-037, PRD-FR-038, PRD-FR-073 |
 | CPE-006 | Visit Proof | Schedules visit or captures permitted proof. | Check accepted lead, visit window, location permission, QR/OTP/site-desk/admin fallback. | Visit proof is verified or fallback recorded. | Visit schedule/proof screen with geofence status, fallback, outcome. | Yes | PRD-FR-044 to PRD-FR-049, PRD-FR-077 |
 | CPE-007 | Status Review | Reviews assigned lead booking/payout visibility if permitted. | Check CP owner policy, employee permission, buyer/finance data exposure. | Shows allowed assigned lead status only. | Assigned lead detail with booking milestone and payout milestone if allowed. | Reuse | PRD-FR-050 to PRD-FR-056 |
+| CPE-008 | Personal Dashboard | Opens dedicated CP Employee dashboard (personal performance). | Check employee role, firm permission, metric access. | Shows personal performance: leads submitted, visits scheduled, bookings attributed, follow-up completion rate, comparison to firm average. | CP Employee dashboard with KPI cards, trend chart, follow-up completion, comparison to firm average. | Yes | PRD-FR-091 |
+| CPE-009 | Project Leaderboard | Opens per-project leaderboard (global or firm-scoped). | Check employee role, project permission, leaderboard access, anonymization rules. | Shows ranked list of CP employees (within firm or globally per policy) by leads, visits, bookings. | Project leaderboard with rank, name/avatar, score breakdown, trend, time filter, own rank highlighted. | Yes | PRD-FR-090, PRD-NFR-018 |
+| CPE-010 | Performance Comparison | Opens performance comparison view. | Check employee role, comparison permission, anonymization rules. | Shows personal metrics compared to firm average, project average, or top performers (anonymized). | Performance comparison view with personal metrics, benchmark lines, delta indicators, period selector. | Yes | PRD-FR-093 |
+| CPE-011 | Self Performance Detail | Opens own detailed performance view. | Check employee role, metric access, time period. | Shows detailed metrics: leads by project, visits by proof method, booking conversion, follow-up completion, trend over time. | Self performance detail with metric breakdown, trend charts, recent activity timeline, goal progress. | Yes | PRD-FR-084 |
 
 ## Persona Journey: CP Telecaller
 
@@ -217,6 +239,10 @@ Goal: Preserve basic qualification/nurture flow without building advanced call i
 | TEL-002 | Call/Disposition | Records call outcome/disposition. | Check lead access, allowed disposition fields, next action rules. | Timeline updates with disposition and next action. | Disposition form with budget, location, urgency, objection, visit intent, next follow-up. | Yes | PRD-FR-037, PRD-FR-038 |
 | TEL-003 | Schedule/Escalate | Schedules follow-up/visit or escalates hot lead. | Check accepted lead, visit rules, notification target. | Task/visit/escalation is created and relevant users notified. | Follow-up/visit action panel and escalation CTA. | Reuse | PRD-FR-038, PRD-FR-041, PRD-FR-044 |
 | TEL-004 | Excluded Automation | Attempts AI/call intelligence workflow. | Feature is deferred by PRD. | Do not generate AI scoring/call intelligence screens. | No screen. Preserve as deferred note only. | No | PRD alternatives and launch classification |
+| TEL-005 | Telecaller Dashboard | Opens dedicated telecaller dashboard. | Check telecaller role, metric access, time period. | Shows call volume, dispositions logged, conversion to visit/lead, follow-up completion rate, escalation count. | Telecaller dashboard with KPI cards, call volume chart, conversion funnel, follow-up completion, escalation count. | Yes | PRD-FR-092 |
+| TEL-006 | Call Performance Detail | Opens detailed call performance view. | Check telecaller role, metric access, time period. | Shows detailed metrics: calls by outcome, dispositions by category, visit intent rate, escalation rate, trend over time. | Call performance detail with metric breakdown, outcome distribution chart, trend lines, goal progress. | Yes | PRD-FR-084 |
+| TEL-007 | Performance Comparison | Opens performance comparison view. | Check telecaller role, comparison permission, anonymization rules. | Shows personal metrics compared to team average or top performers (anonymized). | Performance comparison view with personal metrics, benchmark lines, delta indicators, period selector. | Yes | PRD-FR-093 |
+| TEL-008 | Leaderboard Position | Opens personal position on telecaller leaderboard (if configured). | Check telecaller role, leaderboard permission, time period filter. | Shows own rank, score, trend, and comparison to team average. | Telecaller leaderboard with own rank highlighted, team ranking, time filter, score breakdown (calls/dispositions/visits). | Yes | PRD-FR-080, PRD-FR-081, PRD-NFR-018 |
 
 ## Persona Journey: Buyer / Customer
 
@@ -278,6 +304,18 @@ Use this as the starting screen list for UI screen spec generation.
 | Compliance Queue / Document Review | Compliance/Support | Pending docs, expiries, preview, approve/reject/reason, validation state. |
 | Evidence Bundle / Support Ticket | Compliance/Support, CP Owner, RM | Linked entity, category, evidence, SLA, owner, resolution timeline. |
 | Audit Export | Compliance/Support | Entity/date filters, privacy warning, export status. |
+| Sourcing Leaderboard | CP Sourcing Head, RM | Rank, name/avatar, score, trend (↑/↓/→), time filter (day/week/month/quarter), team average. |
+| Sourcing Employee Performance Detail | CP Sourcing Head, RM | Individual metrics: CPs onboarded, documents verified, activation rate, trend, comparison to team. |
+| Document First-Verification Queue | CP Sourcing Head, RM | Document preview, metadata, basic checks, approve/reject/escalate actions. |
+| CP Onboarding Assistant | CP Sourcing Head, RM | Step-by-step guide, document checklist, verification status, activation triggers. |
+| Leadership Cross-Persona Dashboard | Justo Leadership | Persona KPI cards, bar charts, line trends, heatmaps, period selector. |
+| Persona Detail with Team List | Justo Leadership | Team member table, rank, score, trend, comparison to average. |
+| Performance Export Screen | Justo Leadership | Format selector (PDF/PNG), scope config, privacy warning, export status. |
+| CP Owner Dashboard | CP Owner | Firm-wide KPIs, trend charts, team activity, compliance status, payout summary. |
+| CP Employee Dashboard | CP Employee | Personal KPIs, trend chart, follow-up completion, comparison to firm average. |
+| Telecaller Dashboard | CP Telecaller | Call volume, dispositions, conversion funnel, follow-up completion, escalation count. |
+| Project Leaderboard | CP Owner, CP Employee | Rank, name/avatar, score breakdown (leads/visits/bookings/payout), trend, time filter. |
+| Performance Comparison View | CP Owner, CP Employee, CP Telecaller | Personal/firm metrics, benchmark lines, delta indicators, period selector. |
 
 ## Screen Data And State Contract
 
@@ -323,15 +361,15 @@ This map prevents Stitch from overbuilding persona-specific duplicates. Use shar
 
 | Persona | Build-Specific Screens | Reuse Screens |
 |---|---|---|
-| Justo Leadership | Leadership Dashboard | Risk Exception Detail, Notification Center |
-| CP Sourcing Head | Sourcing Dashboard, CP Prospect Create/Import | Onboarding Queue/Assisted Onboarding, Evidence Bundle |
-| RM / Sourcing Employee | RM Home, CP Prospect Create/Import, Assisted Onboarding | Site Visit Schedule / Proof, Evidence Bundle, Sync Queue |
+| Justo Leadership | Leadership Dashboard, Leadership Cross-Persona Dashboard, Persona Detail with Team List, Performance Export Screen | Risk Exception Detail, Notification Center |
+| CP Sourcing head | Sourcing Dashboard, CP Prospect Create/Import, Sourcing Leaderboard, Sourcing Employee Performance Detail, Document First-Verification Queue, CP Onboarding Assistant | Onboarding Queue/Assisted Onboarding, Evidence Bundle |
+| RM / Sourcing Employee | RM Home, CP Prospect Create/Import, Assisted Onboarding, Document First-Verification Queue, CP Onboarding Assistant, Sourcing Leaderboard (own rank), Sourcing Employee Performance Detail (own) | Site Visit Schedule / Proof, Evidence Bundle, Sync Queue |
 | Sales/Admin Ops | Admin Queue, Project Access Config, Lead Conflict Resolution | Collateral Manager, Evidence Bundle |
 | Finance | Payout Queue, Payout Detail / Processing | Evidence Bundle, Notification Center |
 | Developer / Project Team | Project Console | Collateral Manager, Visit Outcome |
-| CP Owner / Org Leader | CP Owner Home, Team Management | Assisted Onboarding, Project Catalog, Lead Quick Submit, Lead Detail, Visit Detail, Booking Status, Payout Ledger, Support Ticket |
-| CP Employee / Agent | CP Employee Home, Follow-Up/Disposition | Project Catalog, Share Kit, Lead Quick Submit, Site Visit Proof, Lead Detail |
-| CP Telecaller | Basic Telecaller Queue, Disposition Form | Follow-Up/Visit Action Panel |
+| CP Owner / Org Leader | CP Owner Home, Team Management, CP Owner Dashboard, Project Leaderboard (firm filter), Performance Comparison View | Assisted Onboarding, Project Catalog, Lead Quick Submit, Lead Detail, Visit Detail, Booking Status, Payout Ledger, Support Ticket |
+| CP Employee / Agent | CP Employee Home, Follow-Up/Disposition, CP Employee Dashboard, Project Leaderboard (global/firm), Performance Comparison View | Project Catalog, Share Kit, Lead Quick Submit, Site Visit Proof, Lead Detail |
+| CP Telecaller | Basic Telecaller Queue, Disposition Form, Telecaller Dashboard, Call Performance Detail, Performance Comparison View, Telecaller Leaderboard | Follow-Up/Visit Action Panel |
 | Buyer / Customer | Buyer Project Link, Buyer Visit Confirmation | Existing buyer KYC/payment handoff |
 | Compliance / Support | Compliance Queue / Document Review, Evidence Bundle / Support Ticket, Audit Export | Notification Center |
 
@@ -342,7 +380,7 @@ This map prevents Stitch from overbuilding persona-specific duplicates. Use shar
 | AI voice calling, AI assistant, KHOJ/Gemini, AI scoring | Deferred in PRD and not required for the MVP trust loop. |
 | CP microsites or CP-branded public pages | Excluded from launch scope in PRD. |
 | Advanced telecaller call intelligence or sentiment dashboard | Deferred specialist scope; only basic telecaller queue/disposition is mapped. |
-| Advanced gamification, loyalty, CP health scoring | Deferred until reliable source data exists. |
+| Advanced gamification, loyalty, CP health scoring | Basic leaderboards and performance dashboards are now in scope (PRD-FR-080 to PRD-FR-094). Advanced gamification (points, badges, rewards, loyalty programs) and CP health scoring remain deferred until reliable source data exists. |
 | Workforce tracking outside scheduled site-visit proof | Explicitly excluded; geofencing is limited to visit proof. |
 | New full buyer portal | Buyer flow is app-linked and should reuse existing buyer/KYC/payment flows where applicable. |
 

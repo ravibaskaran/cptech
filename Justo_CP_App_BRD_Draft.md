@@ -43,7 +43,7 @@ The launch MVP objective is narrower than the full CP operating-system vision: p
 | AI voice calling, AI assistant, KHOJ/Gemini workflows, AI campaign generation | Core lead, visit, and payout workflows are stable and measurable. |
 | CP microsites and CP-branded public pages | Leadership explicitly funds a marketing-distribution workstream after the trust loop works. |
 | Advanced telecaller queue, call intelligence, sentiment, and automated scoring | Manual follow-up timeline and basic dispositions are already adopted. |
-| Advanced analytics, CP health scoring, gamification, and loyalty | Basic KPI reporting proves reliable source data. |
+| Advanced analytics, CP health scoring, advanced gamification, loyalty | Basic leaderboards and performance dashboards for sourcing, leadership, CP owner/employee/telecaller are now in scope (PRD-FR-080 to PRD-FR-094). Advanced gamification (points, badges, rewards, loyalty programs) and CP health scoring remain deferred until basic KPI reporting proves reliable source data. |
 | Workforce geo-tracking outside site-visit proof | Legal/HR review approves location capture beyond a buyer visit context. |
 | Multi-tenant/white-label platform architecture | Justo first proves its own CP network operating model. |
 | Full buyer portal expansion | Existing buyer portal can be linked safely; buyer-facing CP app scope stays limited to approved project links and visit confirmation. |
@@ -687,6 +687,7 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | Commission/payout processing | Money drives CP loyalty | CP sees eligibility/status/reason while finance can approve, reject, schedule, mark paid, reconcile, and dispute with audit |
 | Justo sourcing/RM activation view | Justo needs scalable CP acquisition | RM sees CP prospects, activation tasks, pending docs, and escalations |
 | Admin/audit/support foundation | Scale requires controls | Admin can manage core policies, exceptions, audit logs, and evidence-backed tickets |
+| Basic gamification and performance dashboards | Motivation and visibility for sourcing, leadership, and CP field roles | Sourcing leaderboard, cross-persona dashboard, per-project leaderboard, personal performance dashboards with trend and comparison |
 
 ### 10.2 v2 / Deferred Capabilities
 
@@ -697,7 +698,7 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 - Full marketing budget optimization.
 - CP marketplace/network effects.
 - Advanced workforce intelligence and geo-tracking.
-- Advanced leadership analytics, gamification, loyalty, and CP health scoring beyond simple KPI reporting.
+- Advanced leadership analytics, advanced gamification (points, badges, rewards, loyalty programs), and CP health scoring beyond basic leaderboards and performance dashboards. Basic leaderboards and dashboards are now in MVP scope (PRD-FR-080 to PRD-FR-094).
 - Workforce geo-tracking beyond scheduled site-visit proof.
 - Full buyer portal expansion beyond safe project links, visit confirmation, and reuse of existing buyer flows.
 - Multi-tenant/white-label platform architecture beyond Justo's own CP network.

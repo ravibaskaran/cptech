@@ -97,7 +97,7 @@ This PRD defines the first complete product requirement draft for the Justo CP A
 | AI voice calling, AI assistant, KHOJ/Gemini, AI summaries, AI scoring | Does not unlock the core trust loop; adds integration and operating risk. |
 | CP microsites and CP-branded public pages | Marketing/distribution feature, not required to prove CP trust. |
 | Advanced telecaller queue, call intelligence, sentiment, automated scoring | Follow-up can launch through basic timeline, tasks, and notes. |
-| Advanced analytics, gamification, loyalty, CP health scoring | Requires reliable event data first. |
+| Advanced analytics, CP health scoring, advanced gamification, loyalty | Requires reliable event data first. Basic leaderboards and performance dashboards for sourcing, leadership, CP owner/employee/telecaller are now in scope (see PRD-FR-080 to PRD-FR-094). |
 | Workforce tracking outside scheduled visit proof | High legal/privacy risk and not required for launch trust loop. |
 | Full buyer portal expansion | Reuse existing buyer flows; launch only safe project links and visit confirmation where needed. |
 | Multi-tenant/white-label architecture | Not needed for Justo's first Maharashtra CP operating model. |
@@ -378,6 +378,7 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | Payout ledger | G4, G6 |
 | Support, disputes, audit | G3, G4, G5, G6 |
 | Analytics | G1, G5 |
+| Gamification, performance dashboards, and leaderboards | G1, G2, G4, G5 |
 | Offline-first sync | G2, G7 |
 
 ### Functional Requirements
@@ -526,6 +527,26 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | PRD-FR-076 | Lead lock and duplicate detection shall be confirmed by server sync before ownership is final; offline lead submissions shall show pending sync until confirmed. | Must | G3, G7 |
 | PRD-FR-079 | Queued document uploads shall show file-level upload state, support retry/resume/cancel/delete before sync, preserve local encryption, enforce allowed file types and size limits, and require server-side validation before changing compliance status. | Must | G1, G6, G7 |
 
+#### 7.14 Gamification, Performance Dashboards, And Leaderboards
+
+| ID | Requirement | Priority | Goals |
+|---|---|---|---|
+| PRD-FR-080 | The system shall provide a gamified leaderboard for CP Sourcing Head and RM / Sourcing Employee showing CP onboarding count, document verification count, CP employees added, and activation rate. | Should | G1, G5 |
+| PRD-FR-081 | The sourcing leaderboard shall be filterable by time period (day, week, month, quarter) and show rank, name, score, and trend indicator (up/down/stable). | Should | G1, G5 |
+| PRD-FR-082 | The system shall provide a document first-level verification queue for RM / Sourcing Employee to perform initial validation of uploaded CP documents before compliance review. | Must | G1, G5 |
+| PRD-FR-083 | The system shall provide a CP onboarding assistant screen guiding RM through meeting CP owners, collecting documents, and triggering onboarding workflows. | Should | G1, G5 |
+| PRD-FR-084 | The system shall provide a sourcing employee performance detail screen showing individual RM metrics: CPs onboarded, documents verified, activation rate, and comparison to team average. | Should | G1, G5 |
+| PRD-FR-085 | The system shall provide a cross-persona performance dashboard for Justo Leadership showing KPIs per persona (Sourcing, RM, CP Owner, Telecaller, Compliance, Finance) with bar charts, line trends, and heatmaps. | Should | G1, G5 |
+| PRD-FR-086 | The leadership cross-persona dashboard shall support drill-down from persona KPI to detailed team member list with individual performance metrics. | Should | G1, G5 |
+| PRD-FR-087 | The system shall support exporting leadership performance reports to PDF and PNG formats with configurable date range, persona filter, and entity scope. | Should | G5 |
+| PRD-FR-088 | The system shall support period comparison for leadership dashboards (current vs previous period) with delta indicators and trend visualization. | Should | G1, G5 |
+| PRD-FR-089 | The system shall provide a dedicated CP Owner dashboard (distinct from CP Owner Home) showing firm-wide performance: leads generated, visits completed, bookings closed, payout earned, team activity, and compliance status. | Should | G1, G4 |
+| PRD-FR-090 | The system shall provide a per-project leaderboard accessible to CP Owner (filtered to own firm) and CP Employee (global or firm-scoped) comparing CP firms or employees on leads generated, visits completed, bookings closed, and payout earned. | Should | G1, G2 |
+| PRD-FR-091 | The system shall provide a dedicated CP Employee dashboard showing personal performance: leads submitted, visits scheduled, bookings attributed, follow-up completion rate, and comparison to firm average. | Should | G1, G2 |
+| PRD-FR-092 | The system shall provide a dedicated CP Telecaller dashboard showing call volume, dispositions logged, conversion to visit/lead, follow-up completion rate, and escalation count. | Should | G1, G2 |
+| PRD-FR-093 | The system shall provide a performance comparison view allowing CP Owner, CP Employee, and Telecaller to compare their metrics against firm average, project average, or top performers (anonymized where policy requires). | Should | G1, G5 |
+| PRD-FR-094 | Leaderboard and dashboard data shall refresh at configurable intervals (default: every 5 minutes for real-time views, daily for aggregate views) and show last-updated timestamp. | Should | G5, G7 |
+
 ### Non-Functional Requirements
 
 | ID | Category | Requirement | Target / Notes |
@@ -547,6 +568,9 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | PRD-NFR-015 | Location privacy | Geofencing must be limited to scheduled/active site-visit proof and must not become continuous workforce tracking. | Requires consent, permission checks, retention policy, and fallback path. |
 | PRD-NFR-016 | File security | Queued document uploads must use secure local storage, encrypted transport, retry-safe upload, and server-side validation before status changes. | Prevents false compliance completion and data leakage. |
 | PRD-NFR-017 | Financial controls | Payout processing must support auditability, maker-checker controls where configured, immutable status history, and reconciliation against the authoritative finance/payment source. | Prevents payout errors and finance leakage. |
+| PRD-NFR-018 | Performance | Leaderboard and dashboard data must refresh at configurable intervals (default 5 minutes for real-time, daily for aggregate) without blocking user interaction. | Target: leaderboard data visible within 5 minutes of source event; aggregate dashboards within 1 hour. |
+| PRD-NFR-019 | Export | Performance reports must be exportable to PDF and PNG with configurable scope, date range, and persona filter. Export must respect RBAC and privacy controls. | Export generation target: under 30 seconds for standard reports. |
+| PRD-NFR-020 | Gamification fairness | Leaderboard scoring must use transparent, auditable metrics. Rankings must not expose restricted PII. Anonymization must be applied where policy requires (e.g., buyer data in CP employee comparisons). | Prevents gaming and privacy violations. |
 
 ### Acceptance Criteria
 

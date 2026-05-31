@@ -353,12 +353,17 @@ Login → OTP Verification → Password Reset (if needed) → Role Selector → 
 | 10 | `Leadership_10_Risk_Exception_Detail` | [EXISTING] | Summary-only detail view with accountable team, current SLA, allowed drill-down, privacy-safe evidence summary, audit timestamp, Button: Escalate. |
 | 11 | `Leadership_11_Export_Share` | [NEW] | Export/share panel with format selector (PDF, Excel), date range, entity filter, privacy warning checkbox, Button: Generate Export, status: Generating/Ready/Sent. |
 | 12 | `Leadership_12_Error_State` | [NEW] | Error state for dashboard with "Unable to load data" message, retry button, offline cached data timestamp, contact support link. |
+| 13 | `Leadership_13_Cross_Persona_Dashboard` | [NEW] | Cross-persona performance dashboard with KPI cards per persona (Sourcing, RM, CP Owner, Telecaller, Compliance, Finance). Each card shows primary metric, trend sparkline, and delta vs previous period. Include bar chart comparing persona performance, heatmap grid by city/project, period selector (Week/Month/Quarter). PRD Trace: PRD-FR-085, PRD-FR-088. |
+| 14 | `Leadership_14_Persona_Detail_Team` | [NEW] | Drill-down from persona KPI card showing team member list. Table columns: Rank, Name/Avatar, Role, Score, Trend (↑/↓/→), Comparison to Average. Tap row to expand to individual detail. Include persona selector at top, time filter, sort options. PRD Trace: PRD-FR-086. |
+| 15 | `Leadership_15_Performance_Export` | [NEW] | Export panel with format selector (PDF/PNG), date range picker, persona filter chips, entity scope selector (All/Region/City/Project), privacy warning checkbox, Button: Generate Export. Show export status: Queued/Generating/Ready/Failed. Include download link when ready. PRD Trace: PRD-FR-087, PRD-NFR-019. |
+| 16 | `Leadership_16_Period_Comparison` | [NEW] | Period comparison view with toggle: Current vs Previous Week/Month/Quarter. Show delta indicators (↑ green, ↓ red, → gray) for each KPI. Include trend sparklines, percentage change labels, and comparison bar charts. PRD Trace: PRD-FR-088. |
 
 #### Journey Flow
 ```
 Dashboard → Dashboard Loading (variant) → Dashboard Empty (variant) → Filtered Performance View
 → Drill Down Region → Drill Down Project → CP Network Health → Trend Comparison
 → Risk Exception Queue → Risk Exception Detail → Export/Share → Error State (variant)
+→ Cross-Persona Dashboard → Persona Detail with Team → Performance Export → Period Comparison
 ```
 
 ---
@@ -381,12 +386,17 @@ Dashboard → Dashboard Loading (variant) → Dashboard Empty (variant) → Filt
 | 10 | `SourcingHead_10_Inactive_CP_Management` | [NEW] | List of inactive CPs (no leads/visits in 60 days) with last activity date, reason chip, action buttons: Reactivate, Deactivate, Reassign. |
 | 11 | `SourcingHead_11_Escalation_Modal` | [EXISTING] | Bottom sheet with linked CP, Category (Lead, Compliance, Payout, RM), Severity, Owner Team, Notes (Required multiline), Button: Create Ticket. |
 | 12 | `SourcingHead_12_Bulk_Import` | [NEW] | Bulk CP prospect import screen with file upload (CSV/Excel), field mapping preview, validation errors list, Button: Import, progress indicator, success/failure summary. |
+| 13 | `SourcingHead_13_Sourcing_Leaderboard` | [NEW] | Gamified leaderboard for sourcing managers (head + employees). Show rank, name/avatar initials, score breakdown (CPs onboarded, documents verified, CP employees added, activation rate), trend indicator (↑/↓/→), time filter chips (Day/Week/Month/Quarter). Highlight own rank if viewing as RM. Include team average comparison line. PRD Trace: PRD-FR-080, PRD-FR-081, PRD-NFR-018. |
+| 14 | `SourcingHead_14_RM_Performance_Detail` | [NEW] | Individual RM performance detail screen. Metric cards: CPs Onboarded, Documents Verified, CP Employees Added, Activation Rate. Trend chart over time. Comparison to team average with delta indicators. Recent activity timeline. Button: View CPs Assigned. PRD Trace: PRD-FR-084. |
+| 15 | `SourcingHead_15_Document_First_Verification` | [NEW] | First-level verification queue for uploaded CP documents. List with document thumbnail, CP name, document type, upload date, file size, basic validation status (file type OK, size OK, readable). Action buttons: Approve (first-level), Reject (with reason), Escalate to Compliance. Filter: Pending/Approved/Rejected. PRD Trace: PRD-FR-082. |
+| 16 | `SourcingHead_16_CP_Onboarding_Assistant` | [NEW] | Guided onboarding workflow for a specific CP. Step-by-step checklist: Firm Profile → PAN/GST → RERA → Bank Details → KYC → First Employee → First Project → First Lead. Each step shows status (Pending/In Progress/Complete), required documents, RM actions. Include document upload CTA, verification status, activation trigger. PRD Trace: PRD-FR-083. |
 
 #### Journey Flow
 ```
 Dashboard → Dashboard Loading (variant) → CP Prospect List → CP Prospect Create → CP Prospect Detail
 → Onboarding Governance Queue → Activation Detail → Activation Progress → RM Workload View
 → Inactive CP Management → Escalation Modal → Bulk Import
+→ Sourcing Leaderboard → RM Performance Detail → Document First-Verification → CP Onboarding Assistant
 ```
 
 ---
@@ -409,12 +419,17 @@ Dashboard → Dashboard Loading (variant) → CP Prospect List → CP Prospect C
 | 10 | `RM_10_Visit_History` | [NEW] | Visit history list for assigned CPs with date, project, buyer (masked), proof status, outcome. Filter: All/Verified/Pending/Failed. Sort by date. |
 | 11 | `RM_11_Performance_View` | [NEW] | RM performance summary: CPs assigned, CPs activated, leads generated, visits verified, bookings. Comparison to target. Period selector. |
 | 12 | `RM_12_Escalation_Detail` | [NEW] | Escalation detail for CP issue with category, severity, owner team, timeline, actions taken, Button: Update Status, Button: Close Escalation. |
+| 13 | `RM_13_Document_First_Verification` | [NEW] | First-level verification screen for uploaded CP documents. Show document preview thumbnail, file type, size, upload date. Basic validation checks: file type OK, size within limit, readable/not corrupted. Action buttons: Approve (first-level), Reject (with reason dropdown), Escalate to Compliance. Include CP name, document type, and next step indicator. PRD Trace: PRD-FR-082. |
+| 14 | `RM_14_CP_Onboarding_Assistant` | [NEW] | Guided onboarding workflow for a specific CP. Step-by-step checklist with progress indicator: Firm Profile → PAN/GST → RERA → Bank Details → KYC → First Employee → First Project → First Lead. Each step shows status chip (Pending/In Progress/Complete), required documents, and RM action CTA. Include document upload button, verification status, and activation trigger. Offline-safe with sync queue indicator. PRD Trace: PRD-FR-083. |
+| 15 | `RM_15_Sourcing_Leaderboard_Own` | [NEW] | Personal position on sourcing leaderboard. Show own rank (highlighted), score breakdown (CPs onboarded, documents verified, activation rate), trend indicator, time filter (Day/Week/Month). Include team ranking list with top 5 and own position highlighted. Comparison to team average with delta indicator. PRD Trace: PRD-FR-080, PRD-FR-081, PRD-NFR-018. |
+| 16 | `RM_16_Self_Performance_Detail` | [NEW] | Own detailed performance view. Metric cards: CPs Onboarded, Documents Verified, CP Employees Added, Activation Rate. Trend chart over selected period. Comparison to team average with delta indicators (↑/↓/→). Recent activity timeline showing last 10 actions. Goal progress bars if targets configured. PRD Trace: PRD-FR-084. |
 
 #### Journey Flow
 ```
 Home → Home Loading (variant) → CP Prospect Form → CP Prospect Detail → Assisted Onboarding
 → Queued Document Upload → Meeting Log → Task List → Site Visit Support → Visit History
 → Performance View → Escalation Detail
+→ Document First-Verification → CP Onboarding Assistant → Sourcing Leaderboard (own) → Self Performance Detail
 ```
 
 ---
@@ -521,12 +536,17 @@ Project Console → Console Loading (variant) → Project List → Project Facts
 | 10 | `CPOwner_10_Payout_Ledger` | [EXISTING] | Payout list and detail with status timeline, deductions GST/TDS, payment reference, expected date, Button: Raise Dispute, linked evidence. |
 | 11 | `CPOwner_11_Dispute_Detail` | [NEW] | Dispute detail with dispute reason, raised date, status, evidence attachments, linked payout, resolution timeline, Button: Add Evidence, Button: Close Dispute. |
 | 12 | `CPOwner_12_Support_Ticket` | [NEW] | Support ticket list and detail with category, priority, status, timeline, Button: Raise Ticket, Button: Add Comment. Filter: Open/Closed/All. |
+| 13 | `CPOwner_13_Firm_Dashboard` | [NEW] | Dedicated CP Owner dashboard (firm-wide performance). KPI cards: Leads Generated, Visits Completed, Bookings Closed, Payout Earned `₹3.6 lakh`, Team Activity, Compliance Status. Trend charts for leads/visits/bookings over time. Team activity summary showing top performers. Compliance status indicator. Payout summary with next expected date. PRD Trace: PRD-FR-089. |
+| 14 | `CPOwner_14_Project_Leaderboard` | [NEW] | Per-project leaderboard filtered to own firm. Ranked list of CP employees within firm. Columns: Rank, Employee Name/Avatar, Leads Generated, Visits Completed, Bookings Closed, Payout Earned, Trend (↑/↓/→). Time filter chips: Day/Week/Month/Quarter. Own rank highlighted if viewing as employee. Tap row to view employee detail. PRD Trace: PRD-FR-090, PRD-NFR-018. |
+| 15 | `CPOwner_15_Performance_Comparison` | [NEW] | Performance comparison view. Firm metrics compared to project average, city average, or top performers (anonymized where policy requires). Show benchmark lines on charts, delta indicators (↑/↓/→), percentage change labels. Period selector: Week/Month/Quarter. PRD Trace: PRD-FR-093. |
+| 16 | `CPOwner_16_Employee_Performance_Detail` | [NEW] | Individual employee performance detail. Metric cards: Leads Submitted, Visits Scheduled, Bookings Attributed, Follow-up Completion Rate. Trend chart over time. Comparison to firm average with delta indicators. Recent activity timeline. Button: View Leads, Button: View Visits. PRD Trace: PRD-FR-084. |
 
 #### Journey Flow
 ```
 Home → Home Loading (variant) → Firm Profile → Team Management → Employee Detail
 → Lead Quick Submit → Firm Lead Detail → Visit List → Booking Status → Payout Ledger
 → Dispute Detail → Support Ticket
+→ Firm Dashboard → Project Leaderboard → Performance Comparison → Employee Performance Detail
 ```
 
 ---
@@ -549,12 +569,17 @@ Home → Home Loading (variant) → Firm Profile → Team Management → Employe
 | 10 | `CPEmployee_10_Visit_Proof` | [EXISTING] | Visit schedule with slot, proof method, geofence consent, QR/OTP entry, fallback selector, outcome note, next follow-up date. |
 | 11 | `CPEmployee_11_Visit_List` | [NEW] | Visit list with date, project, buyer (masked), proof status, outcome. Filter: Upcoming/Completed/Failed. Sort by date. Button: Schedule New Visit. |
 | 12 | `CPEmployee_12_Profile_Settings` | [NEW] | Profile and settings screen with name, mobile, role, project access (read-only), performance summary, Button: Change Password, notification preferences, logout. |
+| 13 | `CPEmployee_13_Personal_Dashboard` | [NEW] | Dedicated CP Employee dashboard (personal performance). KPI cards: Leads Submitted, Visits Scheduled, Bookings Attributed, Follow-up Completion Rate. Trend chart over time. Comparison to firm average with delta indicator. Quick actions: Submit Lead, Schedule Visit. PRD Trace: PRD-FR-091. |
+| 14 | `CPEmployee_14_Project_Leaderboard` | [NEW] | Per-project leaderboard (global or firm-scoped per policy). Ranked list of CP employees. Columns: Rank, Name/Avatar, Leads, Visits, Bookings, Trend (↑/↓/→). Time filter chips: Day/Week/Month/Quarter. Own rank highlighted. Tap row to view detail (anonymized where policy requires). PRD Trace: PRD-FR-090, PRD-NFR-018. |
+| 15 | `CPEmployee_15_Performance_Comparison` | [NEW] | Performance comparison view. Personal metrics compared to firm average, project average, or top performers (anonymized). Show benchmark lines, delta indicators, percentage change. Period selector. PRD Trace: PRD-FR-093. |
+| 16 | `CPEmployee_16_Self_Performance_Detail` | [NEW] | Own detailed performance view. Metric breakdown: Leads by project, Visits by proof method, Booking conversion rate, Follow-up completion. Trend charts over time. Recent activity timeline. Goal progress bars if targets configured. PRD Trace: PRD-FR-084. |
 
 #### Journey Flow
 ```
 Agent Home → Home Loading (variant) → Project Catalog → Project Detail → Share Kit
 → Lead Quick Submit → Lead List → Lead Detail Timeline → Follow-Up List → Visit Proof
 → Visit List → Profile/Settings
+→ Personal Dashboard → Project Leaderboard → Performance Comparison → Self Performance Detail
 ```
 
 ---
@@ -577,12 +602,17 @@ Agent Home → Home Loading (variant) → Project Catalog → Project Detail →
 | 10 | `Telecaller_10_Visit_Schedule_Detail` | [NEW] | Visit schedule detail with slot date/time, site address, buyer confirmation status, proof method, Button: Confirm Visit, Button: Reschedule. |
 | 11 | `Telecaller_11_Escalation_Detail` | [NEW] | Escalation detail with lead, escalation reason, RM notified status, escalation date, Button: Update Status, Button: Close Escalation. |
 | 12 | `Telecaller_12_Performance_View` | [NEW] | Telecaller performance summary: calls made, dispositions logged, visits scheduled, conversion rate. Period selector, comparison to target. |
+| 13 | `Telecaller_13_Dashboard` | [NEW] | Dedicated telecaller dashboard. KPI cards: Calls Made Today, Dispositions Logged, Visit Intent Rate, Follow-up Completion, Escalations. Call volume chart (bar chart by day). Conversion funnel: Calls → Dispositions → Visit Intent → Visits Scheduled. Follow-up completion gauge. Escalation count with trend. PRD Trace: PRD-FR-092. |
+| 14 | `Telecaller_14_Call_Performance_Detail` | [NEW] | Detailed call performance view. Metric breakdown: Calls by outcome (Connected/No Answer/Busy/Wrong Number), Dispositions by category (Hot/Warm/Cold/Lost), Visit intent rate, Escalation rate. Trend charts over time. Goal progress bars. Recent call timeline. PRD Trace: PRD-FR-084. |
+| 15 | `Telecaller_15_Performance_Comparison` | [NEW] | Performance comparison view. Personal metrics compared to team average or top performers (anonymized). Show benchmark lines, delta indicators, percentage change. Period selector. PRD Trace: PRD-FR-093. |
+| 16 | `Telecaller_16_Leaderboard` | [NEW] | Telecaller leaderboard (if configured). Ranked list with own rank highlighted. Columns: Rank, Name/Avatar, Calls Made, Dispositions, Visit Intent Rate, Trend (↑/↓/→). Time filter: Day/Week/Month. Score breakdown showing weighted metrics. PRD Trace: PRD-FR-080, PRD-FR-081, PRD-NFR-018. |
 
 #### Journey Flow
 ```
 Queue → Queue Loading (variant) → Queue Empty (variant) → Lead Call Detail → Lead Detail Full
 → Call History → Disposition Form → Follow-Up List → Schedule/Escalate → Visit Schedule Detail
 → Escalation Detail → Performance View
+→ Dashboard → Call Performance Detail → Performance Comparison → Leaderboard
 ```
 
 ---
@@ -645,21 +675,21 @@ Queue → Queue Loading (variant) → Dashboard → Document List → Document R
 
 ## Summary: Screen Count per Persona
 
-| Persona | Existing Screens | New Screens | Total Screens |
-|---|---|---|---|
-| Shared App Foundation | 5 | 7 | 12 |
-| Justo Leadership | 4 | 8 | 12 |
-| CP Sourcing Head | 5 | 7 | 12 |
-| RM / Sourcing Employee | 5 | 7 | 12 |
-| Sales / Admin Ops | 5 | 7 | 12 |
-| Finance | 5 | 7 | 12 |
-| Developer / Project Team | 4 | 8 | 12 |
-| CP Owner / Org Leader | 5 | 7 | 12 |
-| CP Employee / Agent | 5 | 7 | 12 |
-| CP Telecaller | 4 | 8 | 12 |
-| Buyer / Customer | 4 | 8 | 12 |
-| Compliance / Support | 5 | 7 | 12 |
-| **TOTAL** | **56** | **88** | **144** |
+| Persona | Existing Screens | New Screens (v0.2) | New Screens (v0.3 Gamification) | Total Screens |
+|---|---|---|---|---|
+| Shared App Foundation | 5 | 7 | — | 12 |
+| Justo Leadership | 4 | 8 | 4 | 16 |
+| CP Sourcing Head | 5 | 7 | 4 | 16 |
+| RM / Sourcing Employee | 5 | 7 | 4 | 16 |
+| Sales / Admin Ops | 5 | 7 | — | 12 |
+| Finance | 5 | 7 | — | 12 |
+| Developer / Project Team | 4 | 8 | — | 12 |
+| CP Owner / Org Leader | 5 | 7 | 4 | 16 |
+| CP Employee / Agent | 5 | 7 | 4 | 16 |
+| CP Telecaller | 4 | 8 | 4 | 16 |
+| Buyer / Customer | 4 | 8 | — | 12 |
+| Compliance / Support | 5 | 7 | — | 12 |
+| **TOTAL** | **56** | **88** | **24** | **168** |
 
 ---
 
@@ -667,5 +697,6 @@ Queue → Queue Loading (variant) → Dashboard → Document List → Document R
 
 1. **Generate Prompt 06 (Finance)** manually in Stitch UI — this is the only P0 blocker.
 2. **Generate new screens** for each persona using the expanded screen specifications above.
-3. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
-4. **Validate journey completeness** by walking through each persona's flow from entry to completion.
+3. **Generate gamification/leaderboard screens** (v0.3 additions) for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller.
+4. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
+5. **Validate journey completeness** by walking through each persona's flow from entry to completion.

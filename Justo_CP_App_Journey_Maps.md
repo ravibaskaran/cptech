@@ -1,6 +1,6 @@
 # Journey Maps: Justo CP App
 
-Draft version: v0.2
+Draft version: v0.3
 Date: 2026-05-31
 Prepared for: Justo Realfintech
 Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.4 and `Justo_CP_App_PRD.md` v0.3
@@ -10,7 +10,15 @@ Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI S
 
 ### Critical Gaps Fixed
 
-The previous journey-map draft covered only the CP Owner / Org Leader. This version adds actionable journey maps for every persona named in the PRD:
+The first journey-map draft covered only the CP Owner / Org Leader. The second draft added actionable journey maps for every persona named in the PRD. This third draft adds the missing UI-generation contracts Google Stitch needs to create coherent screens without inventing product scope:
+
+- Universal screen states.
+- Cross-persona handoffs.
+- Per-screen data and state contracts.
+- Persona-to-screen bundle mapping.
+- Clear build/reuse/no-screen boundaries.
+
+Personas covered:
 
 - Justo Leadership.
 - CP Sourcing Head.
@@ -37,6 +45,40 @@ Every journey row contains:
 - PRD trace.
 
 Google Stitch should create screens only from rows marked `Build Screen: Yes` or `Build Screen: Reuse`. Rows marked `Build Screen: No` are contextual or external-system actions and should not become new app screens.
+
+### Universal Screen State Contract
+
+Every generated screen must account for these states unless explicitly irrelevant:
+
+| State | Required Behavior | Applies To |
+|---|---|---|
+| Loading | Show skeleton/progress without implying data is final. | All data-backed screens |
+| Empty | Explain why no data exists and show the next allowed action. | Dashboards, queues, lists |
+| Error | Show recoverable error message and retry/support path. | All data-backed screens |
+| Access denied | Show safe denial without leaking restricted data. | Deep links, role-protected screens |
+| Offline cached | Show cached timestamp and disable actions that require server authority. | Mobile role homes, catalog, lead/detail, sync queue |
+| Pending sync | Show local queued status and warn that server confirmation is pending. | Leads, notes, tasks, uploads, visit updates |
+| Conflict/blocked | Show reason, owner, next action, and escalation path. | Leads, sync queue, payouts, support, documents |
+| Audit visible | Show timestamp, actor type, reason/status change where permitted. | Lead, visit, payout, document, support |
+
+### Cross-Persona Handoff Map
+
+These handoffs define how screens connect across personas. Google Stitch should reflect the source screen and target screen relationship in navigation, deep links, and status labels.
+
+| Handoff ID | Triggering Persona | Trigger | Receiving Persona | Target Screen | Required UI Signal |
+|---|---|---|---|---|---|
+| HND-001 | RM | Creates CP prospect / assisted onboarding | CP Sourcing Head, Compliance | Sourcing Dashboard, Compliance Queue | Prospect status, RM owner, pending docs |
+| HND-002 | CP Owner / RM | Uploads document | Compliance / Support | Document Review | Queued/synced/validation status, rejection reason |
+| HND-003 | Compliance | Rejects or approves document | CP Owner, RM | Onboarding Checklist, Notification Center | Decision, reason, next action |
+| HND-004 | Sales/Admin Ops | Publishes or expires collateral | CP Owner, CP Employee, RM | Project Catalog / Share Kit | Current version, expired-share block |
+| HND-005 | CP Owner / CP Employee | Submits lead | Sales/Admin Ops, RM | Lead Conflict Resolution, Firm Lead Dashboard | Accepted/conflict/rejected/pending state |
+| HND-006 | Sales/Admin Ops | Resolves lead conflict | CP Owner, CP Employee, RM | Lead Detail, Notification Center | Decision, reason, next action |
+| HND-007 | CP Owner / CP Employee / RM | Schedules visit | Developer/Project, Buyer | Site Visit Schedule / Proof, Buyer Visit Confirmation | Slot, proof method, visit status |
+| HND-008 | Buyer / Site / CP Employee | Completes visit proof | CP Owner, RM, Developer/Project | Site Visit Detail, Visit Outcome | Proof method, timestamp, fallback reason |
+| HND-009 | Booking event from Manthan | Booking milestone changes | CP Owner, CP Employee if permitted, Finance | Booking Status, Payout Queue | CP-safe milestone, payout impact |
+| HND-010 | Finance | Changes payout state | CP Owner, Leadership, Support | Payout Ledger, Leadership Dashboard, Evidence Bundle | Status, reason, reference, SLA |
+| HND-011 | CP Owner / RM / Support | Raises dispute/ticket | Support / Compliance | Evidence Bundle / Support Ticket | Linked entity, category, SLA, owner |
+| HND-012 | Support / Compliance | Resolves ticket | Originating persona | Notification Center, Support Ticket | Resolution, reason, audit timeline |
 
 ## Persona Coverage Matrix
 
@@ -236,6 +278,62 @@ Use this as the starting screen list for UI screen spec generation.
 | Compliance Queue / Document Review | Compliance/Support | Pending docs, expiries, preview, approve/reject/reason, validation state. |
 | Evidence Bundle / Support Ticket | Compliance/Support, CP Owner, RM | Linked entity, category, evidence, SLA, owner, resolution timeline. |
 | Audit Export | Compliance/Support | Entity/date filters, privacy warning, export status. |
+
+## Screen Data And State Contract
+
+This table narrows what each screen needs from source systems. Google Stitch should use these as content constraints, not as backend design.
+
+| Screen Seed | Primary Data Objects | Source / Authority | Must-Have States |
+|---|---|---|---|
+| Login / Role Selector | User, roles, firm/project context | Identity/RBAC service | Loading, invalid login, no active role, multiple roles, suspended/deactivated |
+| Notification Center / Deep Link Resolver | Notifications, linked entity references, read state | Notification service plus entity permission check | Empty, unread/read, deep-link allowed, access denied, linked entity missing |
+| Offline Sync Queue | Queued actions, files, retry count, conflict reason | Local device queue plus sync service | Queued, syncing, synced, failed, blocked, conflict, retrying |
+| Leadership Dashboard | Aggregate CP, lead, visit, booking, payout, dispute, compliance metrics | Analytics/events from Manthan and app events | Loading, empty, stale data, filtered view, restricted detail |
+| Risk Exception Detail | Exception, linked entity summary, owner, SLA | Support/audit/compliance systems | Open, assigned, escalated, resolved, restricted detail |
+| Sourcing Dashboard | CP prospects, RM assignment, activation status, onboarding blockers | CP prospect/lifecycle records | Empty, filtered, blocked, inactive, escalated |
+| CP Prospect Create/Import | Prospect, RM, territory/source, duplicate match | CP prospect store / Manthan CP master once approved | Draft, duplicate warning, queued, submitted, failed |
+| RM Home | Assigned CPs/prospects, tasks, pending docs, escalations | CP lifecycle, task, support systems | Empty day, overdue, offline cached, sync pending |
+| Assisted Onboarding | CP firm profile, checklist, documents, assigned RM | CP firm/compliance records | Draft, queued upload, under review, rejected, approved, blocked |
+| Admin Queue | Config items, conflicts, exceptions, failed notifications | Admin/config/support/audit systems | Empty, pending, failed, blocked, escalated |
+| Project Access Config | CP firm, project, access rule, reason, audit | Project/access configuration | Pending change, saved, failed, restricted, audited |
+| Collateral Manager | Project collateral, version, expiry, approval status | Project/collateral repository | Draft, pending approval, approved, expired, rejected |
+| Lead Conflict Resolution | Lead, duplicate evidence, ownership ledger, policy reason | Manthan lead module plus ownership ledger | Conflict, resolved, rejected, overridden, restricted evidence |
+| Payout Queue | Payout records, invoice, eligibility, SLA, dispute/clawback | Finance/payout state machine | Eligible, invoice pending, under review, approved, scheduled, paid, failed, disputed, clawback |
+| Payout Detail / Processing | Payout, booking, invoice, GST/TDS, payment reference, audit | Finance/payout system plus accounting reconciliation | Needs correction, maker pending, checker pending, paid, failed, reconciled, disputed |
+| Project Console | Project facts, inventory, offers, RERA details, stale flags | Manthan project/inventory modules | Fresh, stale, pending approval, rejected, restricted |
+| Visit Outcome | Visit, proof, buyer, lead, project, outcome | Site visit module plus proof events | Scheduled, confirmed, verified, fallback used, no-show, completed |
+| CP Owner Home | Firm profile, compliance, team, leads, visits, bookings, payouts, tickets | Aggregated from CP, lead, visit, booking, payout, support systems | Active, compliance blocked, pending sync, urgent action, no activity |
+| Team Management | CP employees, roles, project access, active work | User/RBAC and CP employee model | Invited, active, suspended, deactivated, reassignment required |
+| Project Catalog / Detail / Share Kit | Assigned projects, collateral, inventory, offers, share events | Project/inventory/collateral systems | Empty assignment, stale, approved share, expired share blocked |
+| Lead Quick Submit / Result | Lead draft, buyer phone, project, duplicate result, ownership status | Manthan lead module plus duplicate/ownership rules | Draft, pending sync, accepted, conflict, rejected, pending review |
+| Firm Lead Dashboard / Lead Detail | Firm leads, employee attribution, timeline, visits, booking/payout links | Lead module plus app events | Empty, filtered, conflict, pending sync, restricted data |
+| Site Visit Schedule / Proof | Visit, slot, lead, buyer, proof method, geofence/fallback | Site visit/proof service | Scheduled, rescheduled, cancelled, verified, fallback, failed proof |
+| Booking Status | Booking milestone, CP attribution, payout impact | Manthan booking/deal module | No booking, booked, documentation pending, payment pending, cancelled, restricted |
+| Basic Telecaller Queue | Assigned leads, follow-up due, disposition | Lead/task/timeline systems | Empty, due, overdue, completed, escalated |
+| Disposition Form | Lead, call outcome, next action, visit intent | Lead timeline/task systems | Draft, saved, queued, failed |
+| Buyer Project Link | Link token, approved project facts, CP attribution | Collateral/link service with buyer-safe rules | Valid, expired, revoked, project unavailable |
+| Buyer Visit Confirmation | Visit token, OTP/QR/geofence state, consent | Site visit/proof service | Pending, confirmed, failed OTP, fallback, expired |
+| Compliance Queue / Document Review | Documents, profile, validation status, expiry, rejection reason | Compliance/document system | Pending review, approved, rejected, clarification requested, expired |
+| Evidence Bundle / Support Ticket | Ticket, linked entity, attachments, timeline, SLA, resolution | Support/evidence/audit systems | Open, assigned, waiting on user, escalated, resolved |
+| Audit Export | Audit events, date/entity filters, export job | Audit log service | Preview, generating, ready, blocked, failed |
+
+## Persona Screen Bundle Map
+
+This map prevents Stitch from overbuilding persona-specific duplicates. Use shared screens where `Reuse` is enough.
+
+| Persona | Build-Specific Screens | Reuse Screens |
+|---|---|---|
+| Justo Leadership | Leadership Dashboard | Risk Exception Detail, Notification Center |
+| CP Sourcing Head | Sourcing Dashboard, CP Prospect Create/Import | Onboarding Queue/Assisted Onboarding, Evidence Bundle |
+| RM / Sourcing Employee | RM Home, CP Prospect Create/Import, Assisted Onboarding | Site Visit Schedule / Proof, Evidence Bundle, Sync Queue |
+| Sales/Admin Ops | Admin Queue, Project Access Config, Lead Conflict Resolution | Collateral Manager, Evidence Bundle |
+| Finance | Payout Queue, Payout Detail / Processing | Evidence Bundle, Notification Center |
+| Developer / Project Team | Project Console | Collateral Manager, Visit Outcome |
+| CP Owner / Org Leader | CP Owner Home, Team Management | Assisted Onboarding, Project Catalog, Lead Quick Submit, Lead Detail, Visit Detail, Booking Status, Payout Ledger, Support Ticket |
+| CP Employee / Agent | CP Employee Home, Follow-Up/Disposition | Project Catalog, Share Kit, Lead Quick Submit, Site Visit Proof, Lead Detail |
+| CP Telecaller | Basic Telecaller Queue, Disposition Form | Follow-Up/Visit Action Panel |
+| Buyer / Customer | Buyer Project Link, Buyer Visit Confirmation | Existing buyer KYC/payment handoff |
+| Compliance / Support | Compliance Queue / Document Review, Evidence Bundle / Support Ticket, Audit Export | Notification Center |
 
 ## Explicitly Not To Generate In Google Stitch
 

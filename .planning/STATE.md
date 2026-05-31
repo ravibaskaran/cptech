@@ -46,6 +46,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 - Added scope-gate updates to BRD v0.3 and PRD v0.2 to lock launch MVP around the CP trust loop and defer non-essential features.
 - Restored geofencing, queued document uploads, and full payout processing as core differentiators in BRD v0.4 and PRD v0.3 with engineering guardrails.
 - Expanded `Justo_CP_App_Journey_Maps.md` to cover all PRD personas and added a consolidated Google Stitch screen inventory.
+- Added Google Stitch readiness contracts to `Justo_CP_App_Journey_Maps.md`: universal states, cross-persona handoffs, screen data/state contracts, and persona screen bundles.
 
 ## Next Action
 

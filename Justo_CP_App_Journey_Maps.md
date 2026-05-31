@@ -1,9 +1,9 @@
 # Journey Maps: Justo CP App
 
-Draft version: v0.3
+Draft version: v0.5
 Date: 2026-05-31
 Prepared for: Justo Realfintech
-Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.4 and `Justo_CP_App_PRD.md` v0.3
+Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.5 and `Justo_CP_App_PRD.md` v0.5
 Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
 ## Scope Gatekeeper Review

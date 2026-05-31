@@ -1,9 +1,9 @@
 # Google Stitch UI Screen Prompts: Justo CP App
 
-Draft version: v0.2
+Draft version: v0.4
 Date: 2026-05-31
 Prepared for: Justo Realfintech
-Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.4, `Justo_CP_App_PRD.md` v0.3, `Justo_CP_App_Journey_Maps.md` v0.3, and Stitch project `16963605453633474186`
+Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.5, `Justo_CP_App_PRD.md` v0.5, `Justo_CP_App_Journey_Maps.md` v0.5, and Stitch project `16963605453633474186`
 Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
 ## Stitch Project Read Confirmation
@@ -675,7 +675,7 @@ Queue → Queue Loading (variant) → Dashboard → Document List → Document R
 
 ## Summary: Screen Count per Persona
 
-| Persona | Existing Screens | New Screens (v0.2) | New Screens (v0.3 Gamification) | Total Screens |
+| Persona | Existing Screens | New State / Edge Screens | New Gamification / Leaderboard Screens | Total Screens |
 |---|---|---|---|---|
 | Shared App Foundation | 5 | 7 | — | 12 |
 | Justo Leadership | 4 | 8 | 4 | 16 |
@@ -697,6 +697,6 @@ Queue → Queue Loading (variant) → Dashboard → Document List → Document R
 
 1. **Generate Prompt 06 (Finance)** manually in Stitch UI — this is the only P0 blocker.
 2. **Generate new screens** for each persona using the expanded screen specifications above.
-3. **Generate gamification/leaderboard screens** (v0.3 additions) for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller.
+3. **Generate gamification/leaderboard screens** for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller after product approval. Keep scoring transparent and auditable; do not add unrelated AI scoring, CP microsites, or workforce tracking outside scheduled visit proof.
 4. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
 5. **Validate journey completeness** by walking through each persona's flow from entry to completion.

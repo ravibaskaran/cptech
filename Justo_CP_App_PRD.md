@@ -1,10 +1,10 @@
 # Product Requirements Document: Justo CP App
 
-Draft version: v0.3
+Draft version: v0.5
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 PRD owner: Product, Justo CP App initiative  
-Primary input: `Justo_CP_App_BRD_Draft.md` v0.2  
+Primary input: `Justo_CP_App_BRD_Draft.md` v0.5
 Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
 ## Table Of Contents
@@ -35,7 +35,7 @@ Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI S
 | Field | Value |
 |---|---|
 | Document | Justo CP App PRD |
-| Version | v0.3 scope-gated draft |
+| Version | v0.5 scope-gated draft |
 | Date | 2026-05-31 |
 | Mode | Full Mode |
 | Owner | Product, Justo CP App initiative |
@@ -1098,4 +1098,4 @@ Overall Risk Level: Medium
 - Create a launch/deferred mapping for every journey step during journey-map creation.
 
 ---
-*Draft status: v0.3, scope-gated and ready for persona-wise journey map creation, with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*
+*Draft status: v0.5, scope-gated and ready for persona-wise journey map creation, with geofencing, queued document uploads, full payout processing, and gamification/performance leaderboards retained as core product requirements pending stakeholder validation and open-question resolution.*

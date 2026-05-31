@@ -1,6 +1,6 @@
 # Business Requirements Document: Justo CP App
 
-Draft version: v0.4
+Draft version: v0.5
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
@@ -687,7 +687,7 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | Commission/payout processing | Money drives CP loyalty | CP sees eligibility/status/reason while finance can approve, reject, schedule, mark paid, reconcile, and dispute with audit |
 | Justo sourcing/RM activation view | Justo needs scalable CP acquisition | RM sees CP prospects, activation tasks, pending docs, and escalations |
 | Admin/audit/support foundation | Scale requires controls | Admin can manage core policies, exceptions, audit logs, and evidence-backed tickets |
-| Basic gamification and performance dashboards | Motivation and visibility for sourcing, leadership, and CP field roles | Sourcing leaderboard, cross-persona dashboard, per-project leaderboard, personal performance dashboards with trend and comparison |
+| Gamification, leaderboards, and performance dashboards | Motivation and visibility for sourcing, leadership, and CP field roles | Sourcing leaderboard, cross-persona dashboard, per-project leaderboard, personal performance dashboards with trend and comparison |
 
 ### 10.2 v2 / Deferred Capabilities
 
@@ -855,4 +855,4 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 5. Derive Google Stitch-ready UI screen specs from those journey maps.
 
 ---
-*Draft status: v0.4, scope-gated for persona-wise journey map creation with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*
+*Draft status: v0.5, scope-gated for persona-wise journey map creation with geofencing, queued document uploads, full payout processing, and gamification/performance leaderboards retained as core differentiators pending stakeholder validation and open-question resolution.*

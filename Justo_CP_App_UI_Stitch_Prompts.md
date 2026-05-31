@@ -1,6 +1,6 @@
 # Google Stitch UI Screen Prompts: Justo CP App
 
-Draft version: v0.1
+Draft version: v0.2
 Date: 2026-05-31
 Prepared for: Justo Realfintech
 Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.4, `Justo_CP_App_PRD.md` v0.3, `Justo_CP_App_Journey_Maps.md` v0.3, and Stitch project `16963605453633474186`
@@ -282,15 +282,19 @@ Use these rules in every Stitch generation:
 
 | Prompt | Persona / Flow | Stitch Project | Status | QA Notes |
 |---|---|---|---|---|
-| 01 | Shared App Foundation | `16963605453633474186` | MCP attempted; manual re-run recommended | MCP returned screen IDs `d6d94aa2ea564f0cb3e5d6df0816fa9d` and `a5ce03eab7c54be7b29217d30c7f7351`, but the user could not see generated screens in the Stitch project UI. |
-| 02 | Justo Leadership | `16963605453633474186` | MCP attempted; manual re-run recommended | MCP returned screen IDs `0ee4c20b6be84f11a3054e288ccede6e` and `f996d1af51b147e3ad50c3b1ec1f62be`, but project UI visibility was not confirmed. |
-| 03 | CP Sourcing Head | `16963605453633474186` | Not generated | User stopped MCP flow before completion; run manually in Stitch. |
-| 04 | RM / Sourcing Employee | `16963605453633474186` | Pending generation | Pending |
-| 05 | Sales / Admin Ops | `16963605453633474186` | Pending generation | Pending |
-| 06 | Finance | `16963605453633474186` | Pending generation | Pending |
-| 07 | Developer / Project Team | `16963605453633474186` | Pending generation | Pending |
-| 08 | CP Owner / Org Leader | `16963605453633474186` | Pending generation | Pending |
-| 09 | CP Employee / Agent | `16963605453633474186` | Pending generation | Pending |
-| 10 | CP Telecaller | `16963605453633474186` | Pending generation | Pending |
-| 11 | Buyer / Customer | `16963605453633474186` | Pending generation | Pending |
-| 12 | Compliance / Support | `16963605453633474186` | Pending generation | Pending |
+| 01 | Shared App Foundation | `16963605453633474186` | Generated | Shared login, role selector, notifications, access control, and offline sync screens generated in the target project; visibility confirmed after the user refreshed/stopped the prior flow. Representative screen IDs include `d6d94aa2ea564f0cb3e5d6df0816fa9d`, `5399e0926cc444c7b047c2dc4894ed98`, `3a3bbfd5c05a4785946c4de36f253383`, `298462d996494f59b24ca2a7593575d4`, `a5ce03eab7c54be7b29217d30c7f7351`. |
+| 02 | Justo Leadership | `16963605453633474186` | Generated | Leadership dashboard, filters, risk queue, and risk detail generated in the target project. Representative screen IDs: `0ee4c20b6be84f11a3054e288ccede6e`, `5b4b7f3c59254270bf6187eaed8bc065`, `49a138cda353400e9c055a560fc2d728`, `f996d1af51b147e3ad50c3b1ec1f62be`. |
+| 03 | CP Sourcing Head | `16963605453633474186` | Generated | User screenshot plus Stitch inventory confirmed Sourcing Dashboard, CP Prospect Create / Import, Onboarding Governance Queue, Activation Detail, and Escalation Modal. Representative screen IDs: `45d1368ec1934d02be860af1d81baa34`, `d9f06d3b23b34efe9ef8dd4239047ba0`, `3c441dd1b9ed47619e99d09a02baa50b`, `cda6243d0dfe4c2a9230d5c697773fc4`, `18e8b5e19ee14a089e8f2a728939afd3`. |
+| 04 | RM / Sourcing Employee | `16963605453633474186` | Generated | RM Home, CP Prospect Form, Assisted Onboarding Progress, Queued Document Upload Detail, and Site Visit Support generated. Representative screen IDs include `7f25cfd668064422969b20a357733bb4`, `156ad1c42b7a4aa0a6a97d4fdbae1e56`. |
+| 05 | Sales / Admin Ops | `16963605453633474186` | Generated | Admin Queue, Project Access Config, Collateral Manager, Lead Conflict Resolution, and Exception Action generated. Representative screen IDs include `710e1434518f403fb1cda79090ccba8b`, `133965e886bf44e1b0a488a29547718f`. |
+| 06 | Finance | `16963605453633474186` | MCP timed out; manual Stitch execution required | Finance generation timed out after 120 seconds. Per Stitch MCP tool instruction, the timed-out call was not retried; follow-up project checks did not return a clear Finance screen. Keep this prompt ready for manual execution in Stitch because full payout processing remains in scope. |
+| 07 | Developer / Project Team | `16963605453633474186` | Generated | Project Console, Project Facts Form, Collateral Review, and Visit Outcome generated. Representative screen IDs include `d03738d79a894d3e8867ed91c12230c6`, `846ab4743bd648729d6939acf7a93cf3`. |
+| 08 | CP Owner / Org Leader | `16963605453633474186` | Generated | CP Owner Home, Team Management, Lead Quick Submit, Firm Lead Detail, and Payout Ledger generated. Representative screen IDs include `e8450d724098452ab9facf0958bae73e`, `3e2aa216f8e64fb2baf92b9647a377b0`. |
+| 09 | CP Employee / Agent | `16963605453633474186` | Generated | Agent Home, Project Catalog, Share Kit, Lead Quick Submit, and Visit Proof / Follow-up generated. Representative screen IDs include `2088f2db56ca4a3697993aa408bed27b`, `1bbffc2f0f17495f82c9e8d6b6799754`. |
+| 10 | CP Telecaller | `16963605453633474186` | Generated after QA correction | First pass generated Lead Call Detail and Disposition Form; QA found missing Telecaller Queue and Schedule / Escalate, then a corrective generation added them. Representative screen IDs: `83a34a26615c42deb2b0e9a2dc2bf307`, `a34d830ea28340cda392ab087a860336`, `37cc609dcd1a45eca9c43322c28ce494`, `d27752b973624df897965cc70c42264c`. |
+| 11 | Buyer / Customer | `16963605453633474186` | Generated | Stitch reported the four-screen Buyer Project Link, Interest / Callback Form, Visit Confirmation, and Visit Proof Result flow generated horizontally in the target project. Representative screen IDs include `482bb21ea5ec4aedaf446571238d9306`, `9a0c88f846d548e698d1bec29af148fa`. |
+| 12 | Compliance / Support | `16963605453633474186` | Generated | Stitch reported the five-screen Compliance Queue, Document Review, Evidence Bundle, Resolution Action, and Audit Export flow generated in the target project. Representative screen IDs include `03a61b7135974e598e1b72e958d9d3d7`, `40e47256d92242f88b24fd0fbe7daf4a`. |
+
+## Open Stitch Action
+
+[high] Prompt 06 Finance still needs manual execution in the Stitch UI because the MCP generation timed out and the Stitch MCP instruction prohibits retrying a timed-out `generate_screen_from_text` call. The Finance prompt remains part of this artifact and must not be removed or de-scoped; full payout processing is a core product differentiator.

@@ -745,6 +745,28 @@ QA result:
 
 Note: the canvas contains duplicate device frames from earlier timed-out/recovered generations. These were not deleted because the instruction was not to modify or delete existing screens. Required exact-title screens are present and can be used as the authoritative handoff set.
 
+### Canvas Presentation Cleanup - 31/05/2026
+
+User request: remove duplicate generated frames where safe, arrange the Stitch canvas horizontally by persona journey, and add decision-maker-readable persona headings.
+
+Execution result:
+
+| Cleanup Item | Status | Evidence / Notes |
+|---|---|---|
+| Duplicate removal / decluttering | Partially complete | The signed-in Stitch UI agent accepted the cleanup instruction and reported that duplicate device frames and legacy human-readable duplicate screens were removed while retaining authoritative versions. |
+| Persona row arrangement | Partially complete | `get_project` now shows device frames distributed across distinct row bands, including row y-positions around `2899`, `4039`, `5527`, `6994`, `8278`, `10569`, `13620`, `14965`, `17255`, `19158`, `21638`, `23288`, `27632`, and `29067`. This is materially cleaner than the earlier clustered/timed-out canvas. |
+| Decision-maker headings | Incomplete | Stitch generated `Heading 1` through `Heading 12`, but placed the heading frames together in a separate bottom row near `y=32026` instead of attaching each heading above its persona row. |
+| Reference area | Partially complete | Stitch reported that design/reference assets were consolidated into a reference area. Visual QA still needs a final human check after heading placement is fixed. |
+| Final presentation readiness | Not yet complete | The canvas is cleaner, but not yet decision-maker-ready because persona headings are not positioned beside their journeys. |
+
+Manual follow-up required in Stitch:
+
+1. Move `Heading 1` through `Heading 12` from the bottom heading row to the top/left of the matching persona rows.
+2. Ensure the rows are ordered for review as: Shared App Foundation, Justo Leadership, CP Sourcing Head, RM / Sourcing Employee, Sales / Admin Ops, Finance, Developer / Project Team, CP Owner / Org Leader, CP Employee / Agent, CP Telecaller, Buyer / Customer, Compliance / Support.
+3. After heading placement, run one visual scan at 5-8% zoom and confirm no row overlaps, no duplicate rows are visible, and exact-title authoritative screens remain in the intended journey rows.
+
+Constraint note: the currently exposed Stitch MCP tools support project/screen reads, screen generation, variants, screen edits, and design system application. They do not expose a direct screen-instance delete or canvas-coordinate update mutation. Canvas cleanup was therefore executed through the signed-in Stitch UI agent. The UI agent completed decluttering and row grouping, but did not reliably accept the targeted follow-up command to reposition only the heading frames.
+
 ### Persona Sign-Off
 
 | Persona / Bundle | Required New Screens | Exact Title Presence | Visual QA | Sign-Off |
@@ -766,7 +788,8 @@ Note: the canvas contains duplicate device frames from earlier timed-out/recover
 
 ## Next Steps
 
-1. Use the exact-title screens listed in this file as the authoritative design handoff set.
-2. Ignore duplicate non-authoritative generated frames unless a designer explicitly chooses to reuse them.
-3. Proceed to persona-wise UI review / product walkthrough before PRD-to-engineering decomposition.
-4. Keep gamification / leaderboard screens in scope for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller. Keep scoring transparent and auditable; do not add unrelated AI scoring, CP microsites, or workforce tracking outside scheduled visit proof.
+1. Complete the manual Stitch heading placement noted in `Canvas Presentation Cleanup - 31/05/2026`.
+2. Use the exact-title screens listed in this file as the authoritative design handoff set.
+3. Ignore duplicate non-authoritative generated frames unless a designer explicitly chooses to reuse them.
+4. Proceed to persona-wise UI review / product walkthrough before PRD-to-engineering decomposition after the heading row cleanup is complete.
+5. Keep gamification / leaderboard screens in scope for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller. Keep scoring transparent and auditable; do not add unrelated AI scoring, CP microsites, or workforce tracking outside scheduled visit proof.

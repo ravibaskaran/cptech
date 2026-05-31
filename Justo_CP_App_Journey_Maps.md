@@ -1,182 +1,270 @@
 # Journey Maps: Justo CP App
 
-Draft version: v0.1
+Draft version: v0.2
 Date: 2026-05-31
 Prepared for: Justo Realfintech
 Primary inputs: `Justo_CP_App_BRD_Draft.md` v0.4 and `Justo_CP_App_PRD.md` v0.3
 Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
-## Scope
+## Scope Gatekeeper Review
 
-This draft covers the primary persona only: **CP Owner / Org Leader**.
+### Critical Gaps Fixed
 
-The CP Owner is treated as the primary persona because the PRD identifies this role as launch core and gives it responsibility for firm onboarding, employee control, project access, lead oversight, booking visibility, payout transparency, and dispute escalation.
+The previous journey-map draft covered only the CP Owner / Org Leader. This version adds actionable journey maps for every persona named in the PRD:
 
-This journey map is intentionally limited to the MVP trust loop defined in the PRD:
+- Justo Leadership.
+- CP Sourcing Head.
+- RM / Sourcing Employee.
+- Sales/Admin Ops.
+- Finance.
+- Developer / Project Team.
+- CP Owner / Org Leader.
+- CP Employee / Agent.
+- CP Telecaller.
+- Buyer / Customer.
+- Compliance / Support.
 
-- CP onboarding and compliance.
-- CP employee control.
-- Project enablement.
-- Lead ownership.
-- Site-visit scheduling and proof visibility.
-- Booking visibility.
-- Full payout processing visibility.
-- Notifications, offline queue, and support/dispute escalation.
+Each journey is constrained to the PRD-defined trust loop: onboarding, compliance, employee control, project enablement, lead ownership, follow-up, site-visit proof, booking visibility, payout processing, notifications, offline recovery, support, and audit.
 
-## Source Traceability
+### Google Stitch Readiness Rules
 
-| Source | Relevant Sections |
-|---|---|
-| `Justo_CP_App_PRD.md` | MVP Scope Gate, CP Owner persona, Role-Based Entry Principle, PRD-FR-001 to PRD-FR-079, NFRs, Acceptance Criteria |
-| `Justo_CP_App_BRD_Draft.md` | CP Owner journey, launch MVP proof points, role/permission matrix, MVP must include |
+Every journey row contains:
 
-## Primary Persona
+- User action.
+- System check.
+- System response.
+- UI requirement.
+- PRD trace.
 
-| Field | Definition |
-|---|---|
-| Persona | CP Owner / Org Leader |
-| Core job | Manage CP firm onboarding, employees, leads, visits, bookings, payouts, and disputes with clear ownership and status. |
-| Primary pain points | Low team control, lead ownership anxiety, payout opacity, limited visibility after lead submission, scattered escalation handling. |
-| MVP success outcome | CP Owner can run the firm relationship with Justo without repeatedly calling RM/finance for basic status. |
+Google Stitch should create screens only from rows marked `Build Screen: Yes` or `Build Screen: Reuse`. Rows marked `Build Screen: No` are contextual or external-system actions and should not become new app screens.
 
-## Journey Map
+## Persona Coverage Matrix
 
-### Phase: Access And Role Entry
+| Persona | PRD Classification | Journey Status | Google Stitch Action |
+|---|---|---|---|
+| Justo Leadership | Launch control | Complete | Build lightweight dashboard/risk views only |
+| CP Sourcing Head | Launch control | Complete | Build sourcing and activation control views |
+| RM / Sourcing Employee | Launch core | Complete | Build RM field and activation views |
+| Sales/Admin Ops | Launch core | Complete | Build admin configuration and exception views |
+| Finance | Launch core | Complete | Build payout processing views |
+| Developer / Project Team | Launch control | Complete | Build project/collateral/visit input views |
+| CP Owner / Org Leader | Launch core | Complete | Build full CP owner flow |
+| CP Employee / Agent | Launch core | Complete | Build mobile selling flow |
+| CP Telecaller | Deferred specialist | Complete | Preserve basic queue flow; avoid AI/call intelligence |
+| Buyer / Customer | App-linked, not core app user | Complete | Build only safe link/confirmation views or reuse buyer portal |
+| Compliance / Support | Launch core | Complete | Build compliance, dispute, evidence, and audit views |
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-001 | CP Owner opens the app and signs in with a single credential. | Validate credential, active user status, assigned role(s), CP firm association, device/session state. | User is authenticated and routed to CP Owner role home if role is active. | Login screen, loading state, role-resolution state, safe error state for failed login. | PRD-FR-001, PRD-FR-002, PRD-FR-004 |
-| CP-O-002 | CP Owner has more than one assigned role/context and selects CP Owner. | Check active roles, default role, permitted CP firm contexts. | App sets CP Owner as active role context for the session. | Role selector with role name, firm name, and clear active context indicator. | PRD-FR-003 |
-| CP-O-003 | CP Owner role is suspended, expired, or deactivated. | Check role status, CP firm status, compliance block policy. | App blocks restricted data/actions and shows support/escalation path. | Access-denied screen with status reason where policy permits and support CTA. | PRD-FR-005, PRD-FR-006, PRD-FR-012 |
+## Common App Foundation
 
-### Phase: Firm Onboarding And Compliance
+These shared steps apply to every authenticated app persona and should be reused in UI specs.
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-010 | CP Owner starts or resumes firm onboarding. | Fetch CP firm profile, onboarding checklist, missing fields, compliance status, assigned RM. | App shows current onboarding state and next required action. | Onboarding dashboard with status, checklist, missing items, assigned RM, save/resume state. | PRD-FR-007, PRD-FR-009 |
-| CP-O-011 | CP Owner enters or edits firm profile details. | Validate required fields, format, duplicates where configured, RM/source attribution. | Valid data is saved as draft or submitted depending on user action and connectivity. | Firm profile form with required indicators, inline validation, save draft, submit. | PRD-FR-007, PRD-FR-071, PRD-FR-073 |
-| CP-O-012 | CP Owner uploads RERA, GST, PAN, bank, KYC, or required compliance document. | Check file type, size limit, role permission, document category, network state, local storage availability. | If online, upload begins. If offline/poor network, file enters secure upload queue. Compliance remains pending validation. | Document upload screen with category, allowed formats, file state, queued/uploading/synced/failed/validation status, retry/cancel/delete. | PRD-FR-008, PRD-FR-072, PRD-FR-079, PRD-NFR-016 |
-| CP-O-013 | CP Owner submits onboarding profile for review. | Check required profile fields, required documents, queued upload status, compliance blockers. | If complete and synced, status becomes under review. If uploads pending, app shows blocked/pending sync state. | Submit review screen with pre-submit checklist, blockers, pending upload warning, confirmation state. | PRD-FR-009, PRD-FR-073, PRD-FR-074 |
-| CP-O-014 | CP Owner receives document rejection or clarification request. | Notification event references rejected document, reason code, reviewer decision, permitted resubmission action. | App deep-links to the rejected document and shows reason and resubmission path. | In-app notification detail, document rejection banner, reason, resubmit CTA, RM/support contact. | PRD-FR-009, PRD-FR-039, PRD-FR-040, PRD-FR-041 |
-| CP-O-015 | CP Owner's compliance document is near expiry. | Check document expiry date and reminder policy. | App shows renewal reminder and required action. | Compliance status card with expiry date, renewal CTA, notification history. | PRD-FR-011, PRD-FR-040 |
+| Step ID | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|
+| GLOBAL-001 | User signs in with one credential. | Validate credential, active account, assigned role(s), CP/Justo context, device/session state. | User lands on assigned role home or role selector. | Login, loading, role selector, role home routing, safe error states. | Yes | PRD-FR-001 to PRD-FR-004 |
+| GLOBAL-002 | User opens a deep link from notification. | Validate role, permission, entity access, current account state. | User lands on the exact allowed screen or access-denied state. | Notification center, deep-link resolver, access-denied state. | Yes | PRD-FR-006, PRD-FR-039 to PRD-FR-043 |
+| GLOBAL-003 | User works with weak/no network. | Check cached data, local queue, session validity, allowed offline action list. | App shows cached data and queues allowed actions. | Offline banner, sync queue, queued/syncing/synced/failed/blocked/conflict states. | Yes | PRD-FR-071 to PRD-FR-076 |
 
-### Phase: Team Control
+## Persona Journey: Justo Leadership
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-020 | CP Owner opens team management. | Fetch CP employees, roles, status, project access, pending invites, active work counts. | App shows employee list and current access state. | Team screen with employee cards/table, role, status, assigned projects, active leads/tasks. | PRD-FR-013, PRD-FR-014, PRD-FR-017 |
-| CP-O-021 | CP Owner invites or imports a CP employee. | Check CP Owner permission, employee contact uniqueness, allowed role types, CP firm status. | Invite is created and employee appears as pending/active according to onboarding state. | Invite employee form with contact fields, role selection, project access, status feedback. | PRD-FR-013, PRD-FR-014 |
-| CP-O-022 | CP Owner assigns or changes employee role/project access. | Check allowed permissions, project access rules, compliance state, audit requirement. | Employee permissions update and audit event is created. | Role/access editor with before/after summary, affected projects, save confirmation. | PRD-FR-014, PRD-FR-063 |
-| CP-O-023 | CP Owner deactivates an employee. | Check employee active leads/tasks, historical attribution, reassignment requirement, deactivation policy. | Employee access is blocked; active work must be reassigned or handled by configured policy; historical attribution remains. | Deactivate confirmation with active work summary, reassignment selector, reason field, audit confirmation. | PRD-FR-015, PRD-FR-016, PRD-FR-063 |
+Goal: Monitor CP business health and risk without operational detail overload.
 
-### Phase: Project Enablement
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| JL-001 | Executive Review | Opens leadership dashboard. | Check leadership role, metric permissions, geography/project filters. | Shows aggregate CP network KPIs. | Dashboard with CP count, activation, leads, visits, bookings, payout SLA, disputes, compliance exceptions. | Yes | PRD-FR-065 |
+| JL-002 | Executive Review | Filters by city, cluster, RM, project, CP segment, or date. | Query permitted aggregate metrics; suppress restricted PII. | Dashboard refreshes with scoped metrics. | Filter bar, saved view, empty/stale data state. | Yes | PRD-FR-065, PRD-NFR-008 |
+| JL-003 | Risk Control | Opens risk exceptions. | Fetch dispute, payout delay, compliance expiry, failed sync, and collateral exception counts. | Shows ranked exception list. | Risk queue with severity, owner team, SLA, linked entity count. | Yes | PRD-FR-060 to PRD-FR-064 |
+| JL-004 | Risk Control | Opens a high-severity exception. | Check leadership detail permission and privacy rules. | Shows summary and accountable team, not restricted raw data. | Exception detail summary with owner, status, escalation note, allowed drill-down. | Yes | PRD-FR-052, PRD-FR-062 |
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-030 | CP Owner opens assigned project catalog. | Check CP firm status, role permission, geography, project assignment, inventory/collateral availability. | App displays only permitted projects. | Project catalog with filters, assigned project cards, availability, last-updated timestamp. | PRD-FR-023, PRD-FR-025 |
-| CP-O-031 | CP Owner opens project detail. | Fetch permitted project facts, inventory, price band, offers, RERA details, site instructions, commission summary where permitted. | App shows CP-safe project detail. | Project detail screen with facts, freshness indicator, approved collateral, commission summary if permitted. | PRD-FR-024, PRD-FR-025 |
-| CP-O-032 | CP Owner shares approved collateral. | Check collateral approval status, expiry/version, share permission, buyer/lead context if available. | App shares only approved current collateral and records share event. | Share kit screen with approved assets, expiry/version badge, channel selector, share confirmation. | PRD-FR-026, PRD-FR-027 |
-| CP-O-033 | CP Owner attempts to share expired or unapproved collateral. | Check collateral status and version. | App blocks sharing and points to current approved material if available. | Blocked share state with reason, current collateral CTA, support/admin contact if needed. | PRD-FR-026, PRD-FR-028 |
+## Persona Journey: CP Sourcing Head
 
-### Phase: Lead Ownership
+Goal: Build, activate, and govern the CP network through RM-owned execution.
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-040 | CP Owner registers a lead. | Check CP Owner permission, required lead fields, buyer phone format, project selection, network state. | Online submission starts duplicate check; offline submission enters pending-sync state. | Lead quick submit screen with phone-first capture, project selector, buyer details, pending-sync warning if offline. | PRD-FR-029, PRD-FR-071, PRD-FR-076 |
-| CP-O-041 | System evaluates submitted lead. | Run configured duplicate detection, ownership/lock rules, direct-vs-CP rules, CP/employee attribution. | Lead returns accepted, conflict, rejected, pending sync, or pending review. | Lead result screen with status, reason, ownership/lock info where allowed, next action. | PRD-FR-030, PRD-FR-031, PRD-FR-032, PRD-FR-033 |
-| CP-O-042 | CP Owner reviews firm lead pipeline. | Fetch firm leads by permission, status, owner/employee attribution, next action, visit/booking/payout linkage. | App shows pipeline grouped by actionable status. | Firm lead dashboard with accepted/conflict/rejected/pending sync filters, owner, next action, latest activity. | PRD-FR-017, PRD-FR-032, PRD-FR-037 |
-| CP-O-043 | CP Owner opens a conflicted lead. | Fetch conflict reason category, evidence visible to CP, dispute eligibility, privacy constraints. | App shows reason and allowed dispute/escalation action without exposing unauthorized personal data. | Lead conflict detail with status, reason, timeline, evidence upload, dispute CTA. | PRD-FR-033, PRD-FR-035, PRD-FR-036 |
-| CP-O-044 | CP Owner raises lead ownership dispute. | Validate linked lead, dispute category, evidence attachments, CP permission, support ticket rules. | Dispute ticket is created and linked to the lead ownership ledger. | Dispute form with evidence upload, category, description, linked lead timeline, submitted state. | PRD-FR-035, PRD-FR-060, PRD-FR-061, PRD-FR-062 |
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| CSH-001 | Sourcing Control | Opens sourcing dashboard. | Check sourcing-head role, geography/team permissions. | Shows CP prospect funnel, activation, inactivity, and escalations. | Sourcing dashboard with prospect statuses, RM workload, pending docs, activation blockers. | Yes | PRD-FR-021, PRD-FR-066 |
+| CSH-002 | CP Prospecting | Creates/imports CP prospect or assigns RM. | Validate required fields, duplicate CP/prospect, RM availability, territory rules. | Prospect is created and assigned. | Prospect create/import form, duplicate warning, RM assignment selector, status. | Yes | PRD-FR-018, PRD-FR-019 |
+| CSH-003 | Onboarding Governance | Reviews onboarding queue. | Fetch CPs pending docs, under review, rejected, blocked, approved. | Shows blockers by CP and RM. | Onboarding queue with CP, RM, missing docs, ageing, next action. | Yes | PRD-FR-009, PRD-FR-020 |
+| CSH-004 | Activation Governance | Opens inactive or stalled CP. | Check activation signals: first login, employee, project access, first lead, first visit. | Shows activation gap and owner. | Activation detail with checklist, RM notes, escalation CTA. | Yes | PRD-FR-019, PRD-FR-021, PRD-FR-022 |
+| CSH-005 | Escalation | Escalates lead, compliance, payout, or RM issue. | Validate category, linked entity, owner team, SLA. | Support/escalation ticket is created or updated. | Escalation modal with linked CP, category, severity, notes, owner team. | Reuse | PRD-FR-060, PRD-FR-061 |
 
-### Phase: Follow-Up And Notifications
+## Persona Journey: RM / Sourcing Employee
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-050 | CP Owner creates or reviews follow-up task for a lead. | Check lead permission, task ownership, reminder policy, offline state. | Task/note is saved online or queued for sync if offline. | Lead timeline with notes, tasks, reminder date, sync status, edit/delete where permitted. | PRD-FR-037, PRD-FR-038, PRD-FR-071, PRD-FR-073 |
-| CP-O-051 | CP Owner receives critical notification. | Check role visibility, notification category, deep-link target, OS permission state. | Native push is sent where allowed; in-app notification is always retained. | Notification center with unread/read state, category, timestamp, deep link target, safe payload text. | PRD-FR-039, PRD-FR-040, PRD-FR-041, PRD-FR-043 |
-| CP-O-052 | CP Owner opens notification for lead conflict, payout, visit, document rejection, or support update. | Validate current role permission and linked entity access. | App opens exact allowed screen or safe access-denied state. | Deep-linked screen landing with context banner and fallback access-denied state. | PRD-FR-041, PRD-FR-006 |
+Goal: Recruit, onboard, activate, and support CPs in the field.
 
-### Phase: Site Visit Scheduling And Proof Visibility
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| RM-001 | Field Start | Opens RM home. | Check assigned CP prospects, active CPs, tasks, escalations, offline queue. | Shows prioritized field work. | RM home with today tasks, pending docs, stalled CPs, escalations, sync queue. | Yes | PRD-FR-020, PRD-FR-067 |
+| RM-002 | CP Prospecting | Creates CP prospect after field meeting. | Validate duplicate CP/prospect, required fields, territory/source, offline state. | Prospect saved online or queued. | CP prospect form with save draft, source, territory, next follow-up, sync state. | Yes | PRD-FR-018, PRD-FR-019, PRD-FR-073 |
+| RM-003 | Assisted Onboarding | Helps CP upload documents. | Check file type/size, local secure storage, document category, network. | Document uploads or enters secure queue. | Assisted onboarding screen with checklist, queued uploads, retry/cancel/delete, pending validation. | Yes | PRD-FR-008, PRD-FR-072, PRD-FR-079 |
+| RM-004 | Activation | Assigns projects or triggers activation checklist. | Check CP approval/compliance state, project access, role permissions. | Projects or activation tasks are assigned where allowed. | Activation checklist with project access, first login, first employee, first lead, first visit. | Yes | PRD-FR-019, PRD-FR-020, PRD-FR-023 |
+| RM-005 | Support | Opens CP escalation for lead, visit, payout, or compliance. | Validate linked CP/lead/visit/payout and RM access. | Shows status and allowed action/escalation path. | Escalation detail with linked evidence, owner team, SLA, comment/action. | Reuse | PRD-FR-060 to PRD-FR-062 |
+| RM-006 | Visit Support | Schedules or supports a site visit. | Check accepted lead, slot rules, project/site rules, buyer details. | Visit request/status is created or updated. | Visit scheduling screen with lead, buyer, project, slot, proof method status. | Reuse | PRD-FR-044, PRD-FR-045, PRD-FR-049 |
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-060 | CP Owner requests or schedules a site visit for an accepted lead. | Check lead accepted state, project/site rules, slot availability, CP permission, buyer details. | Visit request/schedule is created with status and notifications to relevant users. | Schedule visit screen with lead, project, slot, buyer contact, confirmation status. | PRD-FR-044, PRD-FR-045, PRD-FR-049 |
-| CP-O-061 | CP Owner reviews visit proof status. | Fetch visit proof method, timestamp, verifier, geofence/QR/OTP/site-desk/admin status, fallback reason where relevant. | App shows proof status and linked evidence visible by permission. | Visit detail screen with proof badge, method, timestamp, outcome, fallback reason, timeline. | PRD-FR-046, PRD-FR-047, PRD-FR-077 |
-| CP-O-062 | Geofence proof fails for permitted visit user and fallback is used. | Check permission denial, accuracy failure, visit window, fallback proof method. | App records fallback method and reason in audit trail. CP Owner sees proof status, not unauthorized device/location details. | Visit proof status state with fallback reason, verified/unverified badge, support CTA if unresolved. | PRD-FR-046, PRD-FR-077, PRD-FR-063 |
-| CP-O-063 | CP Owner reviews visit outcome. | Fetch outcome entered by permitted site/project user, next action, lead/booking linkage. | App updates lead timeline and visit state. | Visit outcome section with interested/dropped/reschedule/booked status, notes if visible, next action. | PRD-FR-048, PRD-FR-037 |
+## Persona Journey: Sales/Admin Ops
 
-### Phase: Booking Visibility
+Goal: Keep operating rules, project access, collateral, lead conflicts, and exceptions controlled.
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-070 | CP Owner opens booking status for a firm lead. | Check CP firm attribution, RBAC, buyer data exposure policy, booking source status. | App shows CP-safe booking milestone and next action. | Booking status screen/card with milestone, allowed details, next action, restricted-data placeholders. | PRD-FR-050, PRD-FR-051, PRD-FR-052 |
-| CP-O-071 | Booking cancellation or eligibility-impacting event occurs. | Check booking event, payout eligibility dependency, notification visibility. | Booking status and payout state update; CP Owner receives notification if permitted. | Booking event banner, payout impact note, notification center entry, timeline update. | PRD-FR-053, PRD-FR-041 |
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| OPS-001 | Admin Start | Opens admin queue. | Check admin role and queue permissions. | Shows pending configs, conflicts, collateral, exceptions, failed notifications. | Admin queue with tabs: setup, collateral, conflicts, exceptions, audit. | Yes | PRD-FR-004, PRD-FR-060 |
+| OPS-002 | Project Access | Configures CP/project access. | Check CP compliance, geography, project status, role permission. | Project access is updated and audited. | Access configuration table with CP, project, status, reason, save confirmation. | Yes | PRD-FR-023, PRD-FR-063 |
+| OPS-003 | Collateral Governance | Publishes, expires, or replaces collateral. | Check approval state, version, expiry, project assignment, claim-safe fields. | Collateral status updates and expired versions are blocked from share. | Collateral manager with version, expiry, approve/expire/replace, audit note. | Yes | PRD-FR-026 to PRD-FR-028 |
+| OPS-004 | Lead Conflict | Resolves lead conflict. | Fetch duplicate evidence, timestamps, owner, source, policy rules, privacy constraints. | Conflict decision is saved with reason and audit event. | Conflict detail with evidence bundle, policy reason, decision buttons, audit trail. | Yes | PRD-FR-030 to PRD-FR-036 |
+| OPS-005 | Exception Handling | Overrides, suspends, reactivates, or reassigns with reason. | Check permission, policy, linked work, audit requirement. | Exception action is applied and audited. | Exception action modal with reason, affected users/leads, confirmation, audit state. | Yes | PRD-FR-010, PRD-FR-016, PRD-FR-063 |
 
-### Phase: Payout Processing Visibility
+## Persona Journey: Finance
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-080 | CP Owner opens payout ledger. | Check CP firm permission, eligible transactions, finance policy, payout state machine, sensitive data restrictions. | App shows payout records and current status allowed by policy. | Payout ledger with status, project/lead/booking link, amount basis, deductions, invoice state, expected/paid date where configured. | PRD-FR-054, PRD-FR-055, PRD-FR-056 |
-| CP-O-081 | CP Owner reviews payout detail. | Fetch payout audit state, invoice status, GST/TDS, approval/rejection reason, payment reference, reconciliation state, clawback/dispute state. | App shows finance-controlled payout state without allowing unauthorized finance actions. | Payout detail screen with state timeline, reason codes, documents, references, dispute CTA. | PRD-FR-056, PRD-FR-057, PRD-FR-078 |
-| CP-O-082 | CP Owner submits payout dispute. | Validate payout record, dispute category, supporting evidence, ticket rules, duplicate active dispute. | Payout dispute ticket is created and linked to payout record and evidence bundle. | Payout dispute form with linked payout, evidence upload, category, description, submitted state. | PRD-FR-058, PRD-FR-060, PRD-FR-061, PRD-FR-062 |
-| CP-O-083 | Finance updates payout status. | Check finance state transition, maker-checker rule, payment/reconciliation reference, audit event. | CP Owner sees updated payout status and receives notification if permitted. | Payout status update banner, notification center item, timeline/audit visible fields. | PRD-FR-057, PRD-FR-078, PRD-FR-041 |
+Goal: Process payouts accurately while making CP-visible status transparent.
 
-### Phase: Offline Queue And Sync Recovery
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| FIN-001 | Finance Start | Opens payout queue. | Check finance role, eligible booking/payout records, SLA, state machine. | Shows payout queue by state and priority. | Payout queue with eligible, invoice pending, under review, approved, scheduled, failed, disputed, clawback. | Yes | PRD-FR-054, PRD-FR-055, PRD-FR-069 |
+| FIN-002 | Eligibility Review | Opens payout detail. | Fetch booking milestone, CP eligibility, invoice, GST/TDS, bank/KYC, cancellation risk. | Shows validation checklist and current payout state. | Payout detail with validation checklist, linked lead/booking, docs, deductions, risk flags. | Yes | PRD-FR-056, PRD-FR-078 |
+| FIN-003 | Approval | Approves, rejects, or requests correction. | Check state transition, maker-checker rule, required reason, policy. | Payout state changes and audit event is created. | Approval action panel with approve/reject/request correction, reason, maker-checker indicator. | Yes | PRD-FR-057, PRD-FR-078 |
+| FIN-004 | Payment | Schedules, marks paid/failed, or records payment reference. | Check approved state, payment reference format, reconciliation source. | Payment state updates and CP-visible status changes. | Payment action panel with scheduled date, reference, amount, failure reason. | Yes | PRD-FR-057, PRD-FR-059 |
+| FIN-005 | Reconciliation | Reconciles payment or initiates clawback/dispute. | Check accounting/payment source, reconciliation event, prior payout state. | Record is reconciled, disputed, or clawed back with immutable audit. | Reconciliation panel with source reference, status, clawback/dispute reason, audit timeline. | Yes | PRD-FR-057, PRD-FR-078 |
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-090 | CP Owner opens sync queue. | Fetch local queued actions and server reconciliation state: queued, syncing, synced, failed, blocked, conflict. | App shows each queued action and allowed recovery action. | Sync queue screen with action type, entity, status, retry/cancel/delete, last attempt, error reason. | PRD-FR-073, PRD-FR-074, PRD-FR-075 |
-| CP-O-091 | CP Owner retries failed document upload. | Check connectivity, session validity, file availability, file rules, retry count. | Upload retries; compliance status remains pending until server validation succeeds. | Upload queue item with retry progress, failure reason, validation pending state. | PRD-FR-079, PRD-FR-074 |
-| CP-O-092 | Offline lead submission syncs after reconnect. | Run server duplicate detection and lead ownership rules. | Lead becomes accepted/conflict/rejected/pending review; ownership is final only after server response. | Pending-sync lead card updates to final status with reason and next action. | PRD-FR-076, PRD-FR-030, PRD-FR-031 |
+## Persona Journey: Developer / Project Team
 
-### Phase: Support And Audit
+Goal: Keep project data, approved collateral, visit instructions, and outcomes accurate.
 
-| Step ID | User Action | System Check | System Response | UI Requirement | PRD Trace |
-|---|---|---|---|---|---|
-| CP-O-100 | CP Owner raises a support ticket from a lead, visit, booking, payout, document, or project context. | Validate linked entity, category, severity, attachments, duplicate ticket policy. | Ticket is created with linked evidence and status. | Contextual support form with prefilled entity, category, severity, attachment upload, submitted state. | PRD-FR-060, PRD-FR-061 |
-| CP-O-101 | CP Owner reviews support ticket status. | Fetch ticket owner, SLA, latest status, resolution, linked evidence visibility. | App shows status and next expected action. | Ticket detail with SLA, status, owner/team, timeline, linked entity, resolution notes where visible. | PRD-FR-061, PRD-FR-062 |
-| CP-O-102 | CP Owner views audit-relevant timeline for lead, visit, payout, or document. | Check entity access, audit visibility, privacy restrictions. | App shows allowed audit events and hides restricted internal details. | Timeline/audit panel with actor type, timestamp, status change, reason, evidence link where permitted. | PRD-FR-036, PRD-FR-063 |
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| DEV-001 | Project Start | Opens project console. | Check project-team role and assigned projects. | Shows projects requiring updates or approvals. | Project console with assigned projects, stale data flags, collateral approvals, visit items. | Yes | PRD-FR-024, PRD-FR-025 |
+| DEV-002 | Project Facts | Updates project facts, inventory, offers, RERA details, or site instructions. | Validate required fields, source, freshness timestamp, approval rules. | Project facts are saved or sent for approval. | Project facts form with freshness, validation, approval status, audit note. | Yes | PRD-FR-024, PRD-FR-025 |
+| DEV-003 | Collateral Input | Uploads or approves collateral for CP sharing. | Check file/type/version, approval permission, expiry, claim-safe fields. | Collateral becomes pending/approved/expired according to workflow. | Collateral review screen with preview, approve/reject/expire, version, reason. | Reuse | PRD-FR-026 to PRD-FR-028 |
+| DEV-004 | Visit Outcome | Confirms site visit outcome or site notes. | Check visit record, project assignment, proof status, allowed outcome fields. | Visit outcome is recorded and lead timeline updates. | Visit outcome screen with verified status, outcome, note, next action. | Reuse | PRD-FR-047, PRD-FR-048 |
 
-## Google Stitch Screen Seeds
+## Persona Journey: CP Owner / Org Leader
 
-These are screen seeds derived strictly from the CP Owner journey above. They are not visual designs yet.
+Goal: Run CP firm operations with clear team control, lead ownership, booking status, payout status, and disputes.
 
-| Screen Seed | Journey Steps | Required Screen Content |
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| CPO-001 | Owner Home | Opens CP owner home. | Check CP firm, compliance status, team, lead/payout/visit/dispute summaries, notifications, sync queue. | Shows firm operating summary and urgent actions. | CP Owner home with firm status, team alerts, leads, visits, bookings, payouts, disputes, sync queue. | Yes | PRD-FR-068, PRD-FR-071 |
+| CPO-002 | Onboarding | Completes firm profile and uploads documents. | Validate required fields, file rules, queued upload state, server validation. | Profile/document status moves to draft, queued, under review, rejected, or approved. | Onboarding checklist and document upload queue with retry/cancel/delete and validation state. | Yes | PRD-FR-007 to PRD-FR-012, PRD-FR-079 |
+| CPO-003 | Team Control | Invites, assigns, or deactivates employee. | Check permission, employee uniqueness, active work, reassignment need, audit. | Employee access changes and active work is reassigned where required. | Team management with invite, role/project access, deactivate, reassignment, reason. | Yes | PRD-FR-013 to PRD-FR-017 |
+| CPO-004 | Project Enablement | Opens project catalog and shares approved collateral. | Check assigned projects, collateral approval/expiry, freshness, share permission. | Shows permitted projects and records approved share event. | Project catalog/detail/share kit with freshness, approved assets, blocked expired state. | Yes | PRD-FR-023 to PRD-FR-028 |
+| CPO-005 | Lead Ownership | Registers or reviews firm lead. | Run required fields, duplicate detection, ownership/lock rules, online/offline state. | Lead becomes accepted, conflict, rejected, pending sync, or pending review. | Lead quick submit, result screen, firm lead dashboard, conflict detail. | Yes | PRD-FR-029 to PRD-FR-036, PRD-FR-076 |
+| CPO-006 | Visit Visibility | Schedules/reviews visit and proof. | Check accepted lead, slot/site rules, proof method, geofence/fallback/audit state. | Visit schedule/proof/outcome is shown by permission. | Site visit detail with schedule, proof badge, geofence/fallback, outcome timeline. | Yes | PRD-FR-044 to PRD-FR-049, PRD-FR-077 |
+| CPO-007 | Booking Visibility | Opens booking status. | Check CP attribution, RBAC, buyer data exposure, booking source. | Shows CP-safe booking milestone and payout impact. | Booking status card/detail with restricted fields, next action, payout impact. | Yes | PRD-FR-050 to PRD-FR-053 |
+| CPO-008 | Payout Visibility | Opens payout ledger/detail or raises dispute. | Check finance policy, payout state machine, GST/TDS, reference, dispute rules. | Shows payout state and allows permitted dispute. | Payout ledger/detail with state timeline, deductions, references, dispute CTA. | Yes | PRD-FR-054 to PRD-FR-059, PRD-FR-078 |
+| CPO-009 | Support/Audit | Opens support ticket or audit timeline. | Check linked entity, evidence, ticket SLA, audit visibility. | Ticket/timeline shows status, owner, evidence, allowed details. | Support form/detail and audit timeline panel. | Reuse | PRD-FR-060 to PRD-FR-064 |
+
+## Persona Journey: CP Employee / Agent
+
+Goal: Sell projects quickly using current information, protected lead registration, follow-ups, and visits.
+
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| CPE-001 | Agent Home | Opens CP employee home. | Check employee role, firm status, assigned projects, due tasks, notifications, sync queue. | Shows assigned work and quick actions. | Agent home with project shortcuts, lead quick submit, due follow-ups, visits, sync status. | Yes | PRD-FR-014, PRD-FR-023, PRD-FR-071 |
+| CPE-002 | Project Discovery | Searches projects by buyer need. | Check assigned projects, inventory/freshness, filters, collateral status. | Shows permitted project matches. | Project search/catalog with filters, freshness, offer and inventory indicators. | Reuse | PRD-FR-023 to PRD-FR-025 |
+| CPE-003 | Share | Shares approved collateral with buyer. | Check approval/version/expiry, share permission, lead/buyer context. | Approved material is shared and share event recorded. | Share kit with approved assets, channel selector, share result. | Reuse | PRD-FR-026, PRD-FR-027 |
+| CPE-004 | Lead Submit | Registers lead online or offline. | Validate fields, phone format, project, duplicate rules, network. | Lead returns accepted/conflict/rejected/pending sync/pending review. | Lead quick submit, pending sync, result status, next action. | Reuse | PRD-FR-029 to PRD-FR-033, PRD-FR-076 |
+| CPE-005 | Follow-Up | Adds note, task, reminder, or disposition. | Check lead access, reminder policy, offline queue. | Timeline updates online or queues sync. | Lead timeline with notes/tasks/reminders/disposition and sync state. | Yes | PRD-FR-037, PRD-FR-038, PRD-FR-073 |
+| CPE-006 | Visit Proof | Schedules visit or captures permitted proof. | Check accepted lead, visit window, location permission, QR/OTP/site-desk/admin fallback. | Visit proof is verified or fallback recorded. | Visit schedule/proof screen with geofence status, fallback, outcome. | Yes | PRD-FR-044 to PRD-FR-049, PRD-FR-077 |
+| CPE-007 | Status Review | Reviews assigned lead booking/payout visibility if permitted. | Check CP owner policy, employee permission, buyer/finance data exposure. | Shows allowed assigned lead status only. | Assigned lead detail with booking milestone and payout milestone if allowed. | Reuse | PRD-FR-050 to PRD-FR-056 |
+
+## Persona Journey: CP Telecaller
+
+Goal: Preserve basic qualification/nurture flow without building advanced call intelligence or AI scoring.
+
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| TEL-001 | Queue | Opens assigned follow-up queue. | Check telecaller role, assigned leads, due follow-ups, priority rules. | Shows permitted queue without advanced scoring. | Basic queue with lead, project, due time, status, priority label if configured. | Yes | PRD-FR-037, PRD-FR-038 |
+| TEL-002 | Call/Disposition | Records call outcome/disposition. | Check lead access, allowed disposition fields, next action rules. | Timeline updates with disposition and next action. | Disposition form with budget, location, urgency, objection, visit intent, next follow-up. | Yes | PRD-FR-037, PRD-FR-038 |
+| TEL-003 | Schedule/Escalate | Schedules follow-up/visit or escalates hot lead. | Check accepted lead, visit rules, notification target. | Task/visit/escalation is created and relevant users notified. | Follow-up/visit action panel and escalation CTA. | Reuse | PRD-FR-038, PRD-FR-041, PRD-FR-044 |
+| TEL-004 | Excluded Automation | Attempts AI/call intelligence workflow. | Feature is deferred by PRD. | Do not generate AI scoring/call intelligence screens. | No screen. Preserve as deferred note only. | No | PRD alternatives and launch classification |
+
+## Persona Journey: Buyer / Customer
+
+Goal: Receive accurate project information, confirm interest/visit, and reuse existing buyer flows where applicable.
+
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| BUY-001 | Project Link | Opens CP-shared project link. | Validate link token, collateral version, project status, buyer-safe fields, CP attribution. | Shows approved project facts only. | Buyer-safe project link page with facts, offer, RERA info if allowed, CP/Justo attribution. | Yes | PRD-FR-026, PRD-FR-027, PRD-FR-052 |
+| BUY-002 | Interest | Confirms interest or requests callback/site visit. | Check link validity, lead context, duplicate/privacy rules. | Interest event is recorded and CP/RM notified where permitted. | CTA form with callback/site visit request, contact confirmation, consent text. | Yes | PRD-FR-037, PRD-FR-041 |
+| BUY-003 | Visit Confirmation | Confirms or verifies site visit via configured method. | Check visit booking, OTP/QR/geofence/site-desk/admin method, consent. | Visit proof event is recorded or fallback is used. | Visit confirmation screen with OTP/QR instructions and success/failure state. | Yes | PRD-FR-046, PRD-FR-047, PRD-FR-077 |
+| BUY-004 | KYC/Payment | Continues into existing buyer portal where needed. | Check if existing buyer portal/payment flow is linked. | User is routed to existing buyer flow; no new expanded buyer portal screen. | Handoff screen with safe redirect and status return if available. | Reuse | PRD-FR-052 |
+
+## Persona Journey: Compliance / Support
+
+Goal: Validate compliance and resolve disputes with repeatable evidence and audit trails.
+
+| Step ID | Phase | User Action | System Check | System Response | UI Requirement | Build Screen | PRD Trace |
+|---|---|---|---|---|---|---|---|
+| SUP-001 | Compliance Queue | Opens compliance/support queue. | Check support/compliance role, pending docs, expiries, exceptions, tickets. | Shows prioritized queue. | Queue with tabs: documents, expiries, disputes, payout issues, lead conflicts, collateral issues. | Yes | PRD-FR-010, PRD-FR-060 |
+| SUP-002 | Document Review | Opens document/compliance item. | Check document upload status, validation state, CP profile, expiry, prior rejection reason. | Reviewer can approve, reject, request clarification, or flag. | Document review screen with preview, metadata, approve/reject/reason, audit timeline. | Yes | PRD-FR-008 to PRD-FR-012, PRD-FR-079 |
+| SUP-003 | Dispute Evidence | Opens lead/visit/payout/support dispute. | Fetch linked evidence bundle, permissions, entity timeline, SLA. | Shows evidence and allowed resolution actions. | Evidence bundle screen with linked lead/visit/booking/payout/document, timeline, status, resolution action. | Yes | PRD-FR-060 to PRD-FR-063 |
+| SUP-004 | Resolution | Resolves, escalates, suspends, or requests information. | Check policy, reason, required owner, notification, audit. | Ticket/entity state changes and notifications are sent. | Resolution panel with action, reason, owner, notification preview, audit confirmation. | Yes | PRD-FR-010, PRD-FR-061, PRD-FR-063 |
+| SUP-005 | Audit Export | Exports audit evidence where permitted. | Check export permission, date/entity range, privacy constraints. | Audit export is generated or blocked with reason. | Audit export screen with filters, preview count, privacy warning, export status. | Yes | PRD-FR-064 |
+
+## Consolidated Google Stitch Screen Inventory
+
+Use this as the starting screen list for UI screen spec generation.
+
+| Screen Seed | Personas | Required Core Content |
 |---|---|---|
-| Login / Role Resolution | CP-O-001 to CP-O-003 | Credential input, role selector, active role, access-denied state. |
-| CP Owner Home | CP-O-010, CP-O-020, CP-O-042, CP-O-080, CP-O-090 | Firm status, team alerts, lead/pipeline summary, payout summary, sync queue status, notifications. |
-| Onboarding Checklist | CP-O-010 to CP-O-015 | Profile status, document checklist, missing items, queued upload states, rejection reasons, renewal reminders. |
-| Document Upload Queue | CP-O-012, CP-O-013, CP-O-091 | File category, file state, retry/resume/cancel/delete, validation pending, failure reason. |
-| Team Management | CP-O-020 to CP-O-023 | Employee list, invite form, role/project access, active work reassignment, deactivation reason. |
-| Project Catalog | CP-O-030 to CP-O-033 | Assigned project cards, freshness, project detail, approved collateral, blocked expired share state. |
-| Lead Quick Submit | CP-O-040 to CP-O-041 | Phone-first fields, project selector, online/offline state, submission result. |
-| Firm Lead Dashboard | CP-O-042 to CP-O-044 | Lead status filters, owner/employee attribution, conflict detail, dispute CTA. |
-| Notification Center | CP-O-051 to CP-O-052 | Notification list, read/unread, category, safe preview, deep-link behavior. |
-| Site Visit Detail | CP-O-060 to CP-O-063 | Schedule state, proof method, geofence/fallback status, outcome, timeline. |
-| Booking Status | CP-O-070 to CP-O-071 | CP-safe milestone, next action, restricted fields, payout impact. |
-| Payout Ledger And Detail | CP-O-080 to CP-O-083 | Status list, payout detail, GST/TDS/deductions, approval/payment/reconciliation state, dispute CTA. |
-| Sync Queue | CP-O-090 to CP-O-092 | Queued actions, status, retry/cancel/delete, conflict/blocked reason. |
-| Support Ticket | CP-O-100 to CP-O-102 | Linked entity, category, severity, evidence, SLA, status timeline, resolution. |
+| Login / Role Selector | All app users | Credential input, role choices, active context, suspended/deactivated access state. |
+| Notification Center / Deep Link Resolver | All app users | Notification list, safe preview, read/unread, category, linked entity, access-denied fallback. |
+| Offline Sync Queue | CP Owner, CP Employee, RM | Queued actions, document uploads, failed/blocked/conflict states, retry/cancel/delete. |
+| Leadership Dashboard | Justo Leadership | Aggregate KPIs, filters, risk exceptions, stale/empty data states. |
+| Risk Exception Detail | Justo Leadership, Support | Severity, owner team, SLA, linked evidence summary, allowed drill-down. |
+| Sourcing Dashboard | CP Sourcing Head | Prospect funnel, RM workload, pending docs, activation blockers, escalations. |
+| CP Prospect Create/Import | CP Sourcing Head, RM | Prospect details, duplicate warning, RM assignment, follow-up. |
+| RM Home | RM | Assigned CPs, tasks, pending docs, stalled activation, escalations. |
+| Assisted Onboarding | RM, CP Owner | Checklist, profile fields, document upload queue, validation state. |
+| Admin Queue | Sales/Admin Ops | Setup, collateral, conflicts, exceptions, failed notifications, audit. |
+| Project Access Config | Sales/Admin Ops | CP/project assignment, compliance state, reason, audit. |
+| Collateral Manager | Sales/Admin Ops, Developer/Project | Version, expiry, preview, approve/reject/replace/expire. |
+| Lead Conflict Resolution | Sales/Admin Ops, Compliance | Duplicate evidence, policy rule, decision, reason, audit. |
+| Payout Queue | Finance | Payout states, SLA, eligibility, disputed/failed/clawback filters. |
+| Payout Detail / Processing | Finance, CP Owner view-only slice | Validation checklist, GST/TDS, invoice, approval, payment reference, reconciliation, audit. |
+| Project Console | Developer/Project | Project facts, stale flags, inventory/offers/RERA, approval state. |
+| Visit Outcome | Developer/Project, RM, CP Employee | Visit proof status, outcome, notes, next action. |
+| CP Owner Home | CP Owner | Firm status, team alerts, lead/pipeline summary, payout summary, sync queue, notifications. |
+| Team Management | CP Owner | Employee list, invite, role/project access, active work reassignment, deactivation. |
+| Project Catalog / Detail / Share Kit | CP Owner, CP Employee, RM | Assigned projects, freshness, approved collateral, expired-share block. |
+| Lead Quick Submit / Result | CP Owner, CP Employee | Phone-first capture, project selector, duplicate result, pending-sync state. |
+| Firm Lead Dashboard / Lead Detail | CP Owner, CP Employee | Lead status, owner/employee attribution, timeline, conflict/dispute CTA. |
+| Site Visit Schedule / Proof | CP Owner, CP Employee, RM, Buyer | Slot, buyer, proof method, geofence/fallback, result, outcome. |
+| Booking Status | CP Owner, CP Employee if permitted | CP-safe milestone, next action, payout impact, restricted fields. |
+| Basic Telecaller Queue | CP Telecaller | Assigned leads, due follow-ups, basic priority, no AI scoring. |
+| Disposition Form | CP Telecaller | Call outcome, budget, location, urgency, objection, visit intent, next follow-up. |
+| Buyer Project Link | Buyer | Approved project facts, CP/Justo attribution, CTA, safe fields only. |
+| Buyer Visit Confirmation | Buyer | OTP/QR/geofence/site-desk instructions, confirmation status. |
+| Compliance Queue / Document Review | Compliance/Support | Pending docs, expiries, preview, approve/reject/reason, validation state. |
+| Evidence Bundle / Support Ticket | Compliance/Support, CP Owner, RM | Linked entity, category, evidence, SLA, owner, resolution timeline. |
+| Audit Export | Compliance/Support | Entity/date filters, privacy warning, export status. |
 
-## Explicitly Not Mapped For CP Owner MVP
+## Explicitly Not To Generate In Google Stitch
 
-| Not Mapped | Reason |
+| Excluded Screen | Reason |
 |---|---|
 | AI voice calling, AI assistant, KHOJ/Gemini, AI scoring | Deferred in PRD and not required for the MVP trust loop. |
 | CP microsites or CP-branded public pages | Excluded from launch scope in PRD. |
-| Advanced telecaller queue/call intelligence | CP telecaller is a deferred specialist persona in PRD. |
-| Advanced analytics, gamification, loyalty, CP health scoring | Deferred until reliable source data exists. |
+| Advanced telecaller call intelligence or sentiment dashboard | Deferred specialist scope; only basic telecaller queue/disposition is mapped. |
+| Advanced gamification, loyalty, CP health scoring | Deferred until reliable source data exists. |
 | Workforce tracking outside scheduled site-visit proof | Explicitly excluded; geofencing is limited to visit proof. |
-| Full buyer portal expansion | Buyer experience is app-linked, not CP Owner MVP. |
+| New full buyer portal | Buyer flow is app-linked and should reuse existing buyer/KYC/payment flows where applicable. |
+
+## Remaining Open Constraints For UI Specs
+
+| Constraint | Owner Needed | Why It Matters For Stitch |
+|---|---|---|
+| Exact lead-lock duration and duplicate priority rules | Sales/CP leadership | Affects lead result, conflict, and dispute screens. |
+| Payout SLA, GST/TDS display rules, and authoritative reconciliation event | Finance/product/technology | Affects payout ledger and finance processing states. |
+| Geofence radius, accuracy threshold, consent text, fallback path, retention | Product/legal/technology | Affects visit proof screens and privacy copy. |
+| Document file types, size limits, retry limits, local retention, scanning | Product/technology/compliance | Affects upload queue and document review screens. |
+| Buyer-facing data exposure | Product/legal | Affects buyer link and booking visibility screens. |
 
 ## Readiness For Next Artifact
 
-This journey map is ready to feed Google Stitch UI screen specs because every step includes:
+This journey map is ready to feed `Justo_CP_App_UI_Screen_Specs.md` because every PRD persona now has:
 
-- A specific CP Owner action.
-- A system check or business rule.
-- A concrete system response.
-- A required UI surface/state.
-- PRD requirement traceability.
-
-Next artifact: `Justo_CP_App_UI_Screen_Specs.md`.
+- Actionable journey steps.
+- Required system checks.
+- Required system responses.
+- Required UI surfaces/states.
+- Explicit build/reuse/no-screen instruction.
+- Traceability to PRD requirements or PRD launch classification.

@@ -31,7 +31,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 |---|---|---|---|
 | 1 | BRD Completion | Drafted | `Justo_CP_App_BRD_Draft.md` |
 | 2 | PRD Definition | Drafted pending stakeholder review | `Justo_CP_App_PRD.md` |
-| 3 | Persona-wise Journey Maps | Primary persona drafted | `Justo_CP_App_Journey_Maps.md` |
+| 3 | Persona-wise Journey Maps | All PRD personas drafted | `Justo_CP_App_Journey_Maps.md` |
 | 4 | Google Stitch UI Screen Specs And Prototype | Pending | `Justo_CP_App_UI_Screen_Specs.md` |
 
 ## Last Completed
@@ -45,11 +45,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 - Created first PRD draft in `Justo_CP_App_PRD.md`.
 - Added scope-gate updates to BRD v0.3 and PRD v0.2 to lock launch MVP around the CP trust loop and defer non-essential features.
 - Restored geofencing, queued document uploads, and full payout processing as core differentiators in BRD v0.4 and PRD v0.3 with engineering guardrails.
-- Created CP Owner / Org Leader journey map in `Justo_CP_App_Journey_Maps.md`.
+- Expanded `Justo_CP_App_Journey_Maps.md` to cover all PRD personas and added a consolidated Google Stitch screen inventory.
 
 ## Next Action
 
-Review the CP Owner journey map, then create remaining persona-wise journey maps or derive Google Stitch-ready UI screen specs for the CP Owner flow.
+Review the all-persona journey map, then derive Google Stitch-ready UI screen specs.
 
 ---
 *State initialized: 2026-05-30*

@@ -6,7 +6,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 
 **Core value:** The planning artifacts must make the CP network lifecycle explicit enough that Justo can scope, compare, design, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
 
-**Current focus:** Phase 1 - BRD Completion
+**Current focus:** Phase 2 - PRD Definition
 
 ## Workflow Preferences
 
@@ -30,8 +30,8 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 
 | Phase | Name | Status | Primary Output |
 |---|---|---|---|
-| 1 | BRD Completion | Pending | `Justo_CP_App_BRD_Draft.md` |
-| 2 | PRD Definition | Pending | `Justo_CP_App_PRD.md` |
+| 1 | BRD Completion | Drafted | `Justo_CP_App_BRD_Draft.md` |
+| 2 | PRD Definition | Drafted pending stakeholder review | `Justo_CP_App_PRD.md` |
 | 3 | Product Roadmap And Phases | Pending | `Justo_CP_App_Product_Roadmap.md` |
 | 4 | Journey Maps | Pending | `Justo_CP_App_Journey_Maps.md` |
 | 5 | UI Screen Specs And Prototype | Pending | `Justo_CP_App_UI_Screen_Specs.md` |
@@ -43,10 +43,12 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 - Added research artifacts.
 - Defined requirements.
 - Created vertical MVP roadmap.
+- Expanded BRD draft to v0.2.
+- Created first PRD draft in `Justo_CP_App_PRD.md`.
 
 ## Next Action
 
-Discuss and complete Phase 1: BRD Completion.
+Review `Justo_CP_App_PRD.md`, close critical open decisions, then derive the product roadmap/phases.
 
 ---
 *State initialized: 2026-05-30*

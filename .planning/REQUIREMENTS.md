@@ -166,11 +166,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REV-01 | Phase 1 | Pending |
 | REV-02 | Phase 1 | Pending |
 | REV-03 | Phase 1 | Pending |
-| PRD-01 | Phase 2 | Pending |
-| PRD-02 | Phase 2 | Pending |
-| PRD-03 | Phase 2 | Pending |
-| PRD-04 | Phase 2 | Pending |
-| PRD-05 | Phase 2 | Pending |
+| PRD-01 | Phase 2 | Drafted |
+| PRD-02 | Phase 2 | Drafted |
+| PRD-03 | Phase 2 | Drafted |
+| PRD-04 | Phase 2 | Drafted |
+| PRD-05 | Phase 2 | Drafted |
 | ROAD-01 | Phase 3 | Pending |
 | ROAD-02 | Phase 3 | Pending |
 | ROAD-03 | Phase 3 | Pending |

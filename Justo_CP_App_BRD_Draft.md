@@ -3,7 +3,7 @@
 Draft version: v0.4
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
-Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype
+Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
 ## 1. Executive Summary
 
@@ -18,7 +18,7 @@ Project Manthan already provides a meaningful CRM foundation: leads, CP tagging,
 The vendor proposals show three different paths:
 
 - **I9/Indexnine** is the strongest Manthan-continuity option because its CP app proposal explicitly references existing Manthan modules, existing covered scope, and new CP mobile additions. Its risk is that a fast-tracked six-week delivery can underbuild the deeper CP lifecycle that Justo needs to win.
-- **Auum** has the broadest CP operating-system product vision: CP mobile app, project/inventory, lead CRM, lead locking, site visits, communication, AI assistant, microsites, workforce tools, commission, telephony, analytics, and marketing automation. Its risk is platform/integration/IP complexity and the fact that several trust-critical features sit in Phase 2.
+- **Auum** has the broadest CP operating-system product vision: CP mobile app, project/inventory, lead CRM, lead locking, site visits, communication, AI assistant, microsites, workforce tools, commission, telephony, analytics, and marketing automation. Its risk is platform/integration/IP complexity and the fact that several trust-critical features sit outside its first delivery tranche.
 - **TSPL/Triazine** has the strongest AI-calling narrative and a broad microservices architecture. Its risk is that the proposal is materially less granular on Justo-specific CP sourcing, Manthan integration, lead conflict rules, CP employee lifecycle, compliance, and payout operations.
 
 ## Scope Gatekeeper Addendum: Launch MVP Boundary
@@ -41,7 +41,7 @@ The launch MVP objective is narrower than the full CP operating-system vision: p
 | Cut From Launch | Keep For Later Only If |
 |---|---|
 | AI voice calling, AI assistant, KHOJ/Gemini workflows, AI campaign generation | Core lead, visit, and payout workflows are stable and measurable. |
-| CP microsites and CP-branded public pages | Leadership explicitly funds a marketing-distribution phase after the trust loop works. |
+| CP microsites and CP-branded public pages | Leadership explicitly funds a marketing-distribution workstream after the trust loop works. |
 | Advanced telecaller queue, call intelligence, sentiment, and automated scoring | Manual follow-up timeline and basic dispositions are already adopted. |
 | Advanced analytics, CP health scoring, gamification, and loyalty | Basic KPI reporting proves reliable source data. |
 | Workforce geo-tracking outside site-visit proof | Legal/HR review approves location capture beyond a buyer visit context. |
@@ -58,9 +58,9 @@ These capabilities are core differentiators and must remain in scope, but they n
 | Queued document uploads | Field onboarding breaks when network is poor; queued uploads reduce RM/CP friction | Restrict file type/size, show upload queue state, encrypt local files, retry/resume safely, allow cancel/delete before sync, virus/malware scan server-side where available, never mark compliance complete until server validation succeeds. |
 | Full payout processing | Payout transparency is a loyalty differentiator only if finance can act inside the workflow | Use a finance-controlled state machine, maker-checker approval, GST/TDS fields, invoice validation, payment reference, reconciliation state, clawback/dispute states, and full audit trail. |
 
-### Scope Gate Rule For Roadmap
+### Journey Map Readiness Gate
 
-When the roadmap is created, each phase must pass this test: "Does this directly improve CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, or operational control?" If not, it is not launch scope.
+When journey maps are created, every persona step must pass this test: "Does this directly improve CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, or operational control?" If not, keep it as deferred context and do not turn it into a Google Stitch screen.
 
 ## 2. Business Thesis: Why This Can Win Or Fail
 
@@ -123,17 +123,14 @@ Enable Justo to build, activate, and govern a scalable CP network in Maharashtra
 ### 4.1 Local Source Corpus
 
 - `docs/Manthan Proposal IndexNine.docx`
-- `docs/Justo-CRM-Phase 1-SOW-7th May.docx.pdf`
-- `docs/Justo-CRM-Phase 2 SOW-10th Nov.docx.pdf`
-- `docs/Justo-CRM-Phase 2.4 SOW-16 Feb.docx.pdf`
-- `docs/Justo-CRM-Phase 3 SOW-21st Jan.docx.pdf`
+- Manthan CRM SoWs dated 7 May, 10 Nov, 16 Feb, and 21 Jan.
 - `docs/Auum Justo Proposal CP App.pdf`
 - `docs/TSPL_Business_Proposal_Justo_AI_CP_Platform.pdf`
 - `docs/CP tech proposal from I9.pdf`
 - `Justo_CP_App_Business_Brief.md`
 - `.planning/PROJECT.md`
 - `.planning/REQUIREMENTS.md`
-- `.planning/ROADMAP.md`
+- `.planning/STATE.md`
 
 ### 4.2 External Market Evidence Used
 
@@ -191,8 +188,8 @@ Enable Justo to build, activate, and govern a scalable CP network in Maharashtra
 |---|---|---|---|
 | Strategic posture | Broad CP operating system | AI-enabled CP platform | Manthan extension / CP mobile app |
 | Proposal strength | Rich product modules and CP-first ideas | AI calling and modular architecture | Existing Manthan continuity |
-| Core risk | Integration, IP, Phase 2 dependency | Generic scope, high cost, lifecycle gaps | Six-week scope may be shallow |
-| Commercial/timeline | Phase 1 INR 65L, Phase 2 INR 80.419L, total INR 1.45419Cr; 18 + 24 weeks indicated | INR 1.8Cr plus taxes; 8-9 months; significant recurring third-party costs | INR 73.58L plus GST; 6 weeks; support extra |
+| Core risk | Integration, IP, later-tranche dependency | Generic scope, high cost, lifecycle gaps | Six-week scope may be shallow |
+| Commercial/timeline | INR 65L first tranche, INR 80.419L later tranche, total INR 1.45419Cr; 18 + 24 weeks indicated | INR 1.8Cr plus taxes; 8-9 months; significant recurring third-party costs | INR 73.58L plus GST; 6 weeks; support extra |
 
 ### 6.2 Auum
 
@@ -205,13 +202,13 @@ Enable Justo to build, activate, and govern a scalable CP network in Maharashtra
 - CP registration management integrated with existing CRM/CP admin, bulk CP import, RM assignment.
 - Site visit digitization with scheduling, QR/OTP check-in, walk-in registration, visit logs, feedback.
 - Agentic AI assistant for voice/text commands, creating leads, scheduling visits, updating status, audit logging.
-- Phase 2 commission, workforce intelligence, RBAC, telecaller operations, marketing automation, microsites, telephony, analytics.
+- Later-tranche commission, workforce intelligence, RBAC, telecaller operations, marketing automation, microsites, telephony, analytics.
 
 **Gaps to clarify**
 
 - CP sourcing lifecycle is not explicit enough: prospecting, field acquisition, RM activation funnel, retention, suspension, offboarding.
 - Manthan integration is stated but not specified at data ownership/API level.
-- Several trust-critical features are Phase 2: brokerage/commission, team/geo tracking, telecaller operations, marketing, microsites, telephony intelligence, analytics.
+- Several trust-critical features are outside the first tranche: brokerage/commission, team/geo tracking, telecaller operations, marketing, microsites, telephony intelligence, analytics.
 - Compliance is framed mainly as security/KYC handling; RERA validation, renewal, and claim governance need explicit scope.
 - IP terms need review because proprietary frameworks, prebuilt modules, and AI datasets remain Auum property.
 
@@ -748,7 +745,7 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | CP employee lifecycle | Medium | Low-medium | Medium-low | Must be explicit in PRD |
 | Lead ownership trust | High | Medium | High | Strong overlap; policy detail still needed |
 | Site-visit proof | High | Medium | High | MVP requirement |
-| Commission/payout trust | High in Phase 2 | Medium-high | High | MVP or near-MVP; not optional |
+| Commission/payout trust | High in later tranche | Medium-high | High | MVP or near-MVP; not optional |
 | Compliance lifecycle | Medium-low | Low-medium | Medium-low | RERA renewal/audit must be added |
 | AI | High | High | High | Useful but not MVP center |
 | Delivery confidence | Medium | Low-medium | Medium | Depends on scope discipline |
@@ -853,8 +850,8 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 1. Validate this BRD with Justo leadership, CP sourcing, RM, finance, ops, product, and compliance stakeholders.
 2. Convert unresolved questions into a decision log.
 3. Create a vendor clarification pack for Auum, TSPL, and I9.
-4. Use the scope-gated BRD and PRD to create `Justo_CP_App_Product_Roadmap.md`.
-5. Derive product phases from the launch trust loop first, then journey maps and UI screen specs.
+4. Use the scope-gated BRD and PRD to create persona-wise journey maps.
+5. Derive Google Stitch-ready UI screen specs from those journey maps.
 
 ---
-*Draft status: v0.4, scope-gated for roadmap derivation with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*
+*Draft status: v0.4, scope-gated for persona-wise journey map creation with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*

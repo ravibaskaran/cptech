@@ -5,7 +5,7 @@ Date: 2026-05-31
 Prepared for: Justo Realfintech  
 PRD owner: Product, Justo CP App initiative  
 Primary input: `Justo_CP_App_BRD_Draft.md` v0.2  
-Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype
+Artifact sequence: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype
 
 ## Table Of Contents
 
@@ -65,7 +65,7 @@ Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Sc
 
 Justo wants to scale into a large regional channel partner business in Maharashtra and then across India. [high] CPs will not adopt an app just because Justo launches one. They will adopt it if the app makes selling projects easier, protects their lead ownership, gives them current project information, proves site visits, shows what happened after a lead was submitted, and makes commission and payout status visible.
 
-This PRD defines the first complete product requirement draft for the Justo CP App. [high] It deliberately avoids product release phases because phases are the next artifact in the project sequence. Instead, it defines users, journeys, functional requirements, non-functional requirements, acceptance criteria, metrics, risks, open decisions, and design/technical constraints so that the next artifacts can derive a roadmap, journey maps, and UI screen specifications.
+This PRD defines the first complete product requirement draft for the Justo CP App. [high] It now prepares directly for persona-wise journey maps and Google Stitch-ready UI screen specifications. It defines users, journeys, functional requirements, non-functional requirements, acceptance criteria, metrics, risks, open decisions, and design/technical constraints so that each persona journey can be converted into screen-level UI specs without additional product-scoping work.
 
 ## Scope Gatekeeper Addendum: MVP Scope Gate
 
@@ -110,9 +110,9 @@ This PRD defines the first complete product requirement draft for the Justo CP A
 | Queued document uploads | Required for CP/RM onboarding in poor-network field conditions | Encrypt files locally, restrict file type/size, show queue state, support retry/resume/cancel/delete, never mark compliance complete until server validation succeeds. |
 | Full payout processing | Required because payout trust is a CP loyalty differentiator | Use finance-controlled state machine, maker-checker approval, GST/TDS fields, invoice validation, payment reference, reconciliation state, clawback/dispute states, and immutable audit log. |
 
-### Roadmap Gate
+### Journey Map Readiness Gate
 
-When product phases are created, each phase must map every feature to one of these outcomes: CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, notification/offline reliability, or operational control. If a feature does not map, it goes to the deferred backlog.
+When persona-wise journey maps are created, every journey step must map to one of these outcomes: CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, notification/offline reliability, or operational control. If a step does not map, keep it as deferred context and do not convert it into a Google Stitch screen.
 
 ## 2. Overview And Context
 
@@ -196,7 +196,6 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 
 | Non-Goal | Reason |
 |---|---|
-| Define product phases in this PRD | Product roadmap/phases are the next artifact in the approved sequence. |
 | Select a final vendor | Vendor selection requires procurement and stakeholder decision. |
 | Build detailed API specifications | API design depends on Manthan technical discovery and vendor path. |
 | Launch full AI voice calling in the first requirement set | AI should not crowd out core trust workflows unless tied to measurable business outcomes. |
@@ -213,7 +212,7 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | Vendor product adoption without Manthan continuity | Could speed up delivery if vendor has mature CP product | Deferred | [high] Duplicate sources of truth would create high operational risk. |
 | WhatsApp-only operating model | CPs already use WhatsApp heavily | Rejected as primary product | [moderate] WhatsApp is useful as a channel, but it cannot provide complete RBAC, audit, payout ledger, and compliance lifecycle alone. |
 | Web portal only | Easier for admin-heavy workflows | Rejected for CP field users | [high] CP employees and RMs need mobile-first workflows; owner/admin web views can be added if needed. |
-| Full launch with all modules | Attractive for business completeness | Rejected for PRD sequencing | [high] Requirements should be complete, but product phases must be defined separately. |
+| Full launch with all modules | Attractive for business completeness | Rejected for UI readiness | [high] Requirements should be complete, but persona journey maps and Google Stitch screens should focus on the core trust loop first. |
 
 ## 6. User Personas And Use Cases
 
@@ -237,7 +236,7 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 
 | Classification | Personas | Scope Rule |
 |---|---|---|
-| Launch core | CP owner, CP employee/agent, RM/sourcing employee, sales/admin ops, finance, compliance/support | Must be represented in the first roadmap because they operate the trust loop. |
+| Launch core | CP owner, CP employee/agent, RM/sourcing employee, sales/admin ops, finance, compliance/support | Must be represented in the first journey-map set because they operate the trust loop. |
 | Launch control | CP sourcing head, Justo leadership, developer/project team | Need lightweight dashboards, approvals, or inputs only; avoid advanced analytics buildout. |
 | App-linked, not core app user | Buyer/customer | Use safe project links and existing buyer flows; do not expand buyer portal in launch scope. |
 | Deferred specialist | CP telecaller | Preserve persona context, but do not build advanced queues, call intelligence, or AI scoring in launch. |
@@ -744,7 +743,7 @@ Scenario: CP uploads onboarding document while offline
 
 ### Wireframe Placeholders For Future UI Specs
 
-The following are placeholders only. Detailed screen specs will be produced after roadmap/phases and journey maps.
+The following are placeholders only. Detailed screen specs will be produced after persona-wise journey maps.
 
 | Screen Placeholder | Primary Users | Core Purpose |
 |---|---|---|
@@ -902,7 +901,7 @@ Exact baseline values are not yet available. Targets below are directional and m
 | Payout processing control failure | High | Incorrect approval/payment states can create financial leakage | Use state machine, maker-checker, reconciliation, reason codes, and immutable audit |
 | Compliance gaps | High | RERA/KYC/GST/bank issues can create legal and payout risk | Add compliance lifecycle, expiry, blocking, and audit |
 | Push notifications fail or are disabled | Medium | Follow-ups and escalations may be missed | Use in-app notification center and critical banners |
-| Role complexity delays delivery | Medium | Many personas and permissions increase scope | Build from shared RBAC model and role homes; phase delivery later |
+| Role complexity delays delivery | Medium | Many personas and permissions increase scope | Build from shared RBAC model and role homes; sequence delivery later |
 | AI distracts from core workflows | Medium | Cost and complexity can rise before trust is solved | Keep AI deferred unless tied to measurable outcomes |
 | Vendor lock-in | Medium | Future changes become costly | Require API, source, export, and IP clarity in SoW |
 | Data privacy leakage in notifications/shared links | High | Buyer/CP data can leak outside permitted context | Use minimal notification payloads and permission checks on open |
@@ -911,7 +910,7 @@ Exact baseline values are not yet available. Targets below are directional and m
 
 ### Important Scope Boundary
 
-[high] Product phases are intentionally not defined in this PRD. The next artifact, `Justo_CP_App_Product_Roadmap.md`, will convert these requirements into product phases and delivery slices. This section defines release gates and rollout controls only.
+[high] The next artifact is persona-wise journey maps, followed by Google Stitch-ready UI screen specs. This section defines readiness gates and rollout controls only.
 
 ### Release Gates
 
@@ -948,7 +947,7 @@ Exact baseline values are not yet available. Targets below are directional and m
 
 | Date | Decision | Owner | Status | Notes |
 |---|---|---|---|---|
-| 2026-05-31 | PRD will not define product phases. | Product | Decided | Phases are next artifact after PRD. |
+| 2026-05-31 | PRD will feed persona-wise journey maps directly. | Product | Decided | Product sequencing will be revisited only when explicitly requested. |
 | 2026-05-31 | Product model uses single credential plus assigned role(s). | Product/business | Decided | Admin-based RBAC is mandatory. |
 | 2026-05-31 | Offline-first behavior is preferred for safe mobile workflows. | Product | Decided | Server confirmation remains authoritative for lead ownership. |
 | 2026-05-31 | Native push plus in-app notification center is required. | Product | Decided | Notifications should deep-link where possible. |
@@ -1042,7 +1041,7 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 | 7 | Assumption Audit | ✅ | Open questions and assumptions are explicitly captured instead of being invented. |
 | 8 | Accessibility Compliance | ⚠️ | Accessibility checklist is included; detailed screen-level validation must happen during UI spec/prototype work. |
 | 9 | Evidence Rigor | ⚠️ | Local BRD/vendor evidence is used, but primary and secondary direct quotes are not available. |
-| 10 | No Contradictions | ✅ | PRD intentionally defers product phases, marks launch exclusions, and keeps Manthan as assumed CRM foundation pending validation. |
+| 10 | No Contradictions | ✅ | PRD is aligned to persona-wise journey map creation, marks launch exclusions, and keeps Manthan as assumed CRM foundation pending validation. |
 
 ## AI Gap Report
 
@@ -1061,7 +1060,7 @@ Overall Risk Level: Medium
 - Queued document upload is core scope, but file limits, scanning, retry limits, and local retention are still open.
 - Full payout processing is core scope, but Manthan-vs-finance-system ownership and reconciliation authority are still open.
 - Buyer-facing data exposure needs legal/product approval before shared links are specified in detail.
-- Launch scope is now gated, but roadmap work must enforce the gate requirement-by-requirement.
+- Launch scope is now gated, but journey-map work must enforce the gate requirement-by-requirement.
 
 ### Recommended Clarifications
 
@@ -1070,9 +1069,9 @@ Overall Risk Level: Medium
 - Ask Manthan/I9 for an API/source-of-truth readiness matrix covering every PRD entity.
 - Ask Manthan/I9 for explicit feasibility on geofence proof, queued document upload, and payout processing state machine.
 - Define notification taxonomy, sensitivity rules, payload rules, and deep-link targets.
-- Create the next artifact, `Justo_CP_App_Product_Roadmap.md`, only after reviewing this PRD.
-- Convert this PRD into journey maps and UI screen specs after product phases are agreed.
-- Create a launch/deferred mapping for every functional requirement during roadmap creation.
+- Create persona-wise journey maps directly from this PRD.
+- Convert those journey maps into Google Stitch-ready UI screen specs.
+- Create a launch/deferred mapping for every journey step during journey-map creation.
 
 ---
-*Draft status: v0.3, scope-gated with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*
+*Draft status: v0.3, scope-gated and ready for persona-wise journey map creation, with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*

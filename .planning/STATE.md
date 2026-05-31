@@ -6,7 +6,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 
 **Core value:** The planning artifacts must make the CP network lifecycle explicit enough that Justo can scope, compare, design, and negotiate the CP app as a business operating system rather than as a generic mobile CRM add-on.
 
-**Current focus:** Phase 2 - PRD Definition
+**Current focus:** Persona-wise Journey Maps
 
 ## Workflow Preferences
 
@@ -22,19 +22,17 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 
 1. BRD
 2. PRD
-3. Product Roadmap/Phases
-4. Journey Maps
-5. UI Screen Specs/Prototype
+3. Persona-wise Journey Maps
+4. Google Stitch UI Screen Specs/Prototype
 
-## Phase Status
+## Artifact Status
 
-| Phase | Name | Status | Primary Output |
+| Step | Name | Status | Primary Output |
 |---|---|---|---|
 | 1 | BRD Completion | Drafted | `Justo_CP_App_BRD_Draft.md` |
 | 2 | PRD Definition | Drafted pending stakeholder review | `Justo_CP_App_PRD.md` |
-| 3 | Product Roadmap And Phases | Pending | `Justo_CP_App_Product_Roadmap.md` |
-| 4 | Journey Maps | Pending | `Justo_CP_App_Journey_Maps.md` |
-| 5 | UI Screen Specs And Prototype | Pending | `Justo_CP_App_UI_Screen_Specs.md` |
+| 3 | Persona-wise Journey Maps | Next | `Justo_CP_App_Journey_Maps.md` |
+| 4 | Google Stitch UI Screen Specs And Prototype | Pending | `Justo_CP_App_UI_Screen_Specs.md` |
 
 ## Last Completed
 
@@ -42,7 +40,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 - Added workflow config.
 - Added research artifacts.
 - Defined requirements.
-- Created vertical MVP roadmap.
+- Created initial vertical MVP artifact tracking.
 - Expanded BRD draft to v0.2.
 - Created first PRD draft in `Justo_CP_App_PRD.md`.
 - Added scope-gate updates to BRD v0.3 and PRD v0.2 to lock launch MVP around the CP trust loop and defer non-essential features.
@@ -50,7 +48,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 
 ## Next Action
 
-Review the scope-gated BRD/PRD, close differentiator guardrail decisions, then derive the product roadmap/phases from the launch trust loop.
+Create persona-wise journey maps directly from the scope-gated BRD/PRD, then derive Google Stitch-ready UI screen specs.
 
 ---
 *State initialized: 2026-05-30*

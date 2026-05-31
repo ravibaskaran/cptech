@@ -4,7 +4,7 @@
 
 This project creates the business and product planning artifacts for Justo's Channel Partner app and operating model. The app is intended to sit on top of Project Manthan's CRM and help Justo become a large regional channel partner in Maharashtra first, then expand across India.
 
-The artifact sequence is: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype. The BRD must translate the existing Manthan scope, the Phase 1/2/2.4/3 SoWs, the Auum/TSPL/I9 vendor proposals, and CP market pain-point research into a clear business, persona, lifecycle, capability, and gap-analysis document that Justo can use for vendor alignment and product scoping.
+The active artifact sequence is: BRD -> PRD -> Persona-wise Journey Maps -> Google Stitch UI Screen Specs/Prototype. Product delivery sequencing is intentionally skipped until the user explicitly asks for it. The BRD must translate the existing Manthan scope, the Manthan SoWs, the Auum/TSPL/I9 vendor proposals, and CP market pain-point research into a clear business, persona, lifecycle, capability, and gap-analysis document that Justo can use for vendor alignment and product scoping.
 
 ## Core Value
 
@@ -27,13 +27,12 @@ The planning artifacts must make the CP network lifecycle explicit enough that J
 - [ ] Identify what Project Manthan already covers, what must be configured or extended, and what should be added to any future SoW annexure.
 - [ ] Produce a decision-useful structure that can support vendor negotiation, internal stakeholder review, and product scoping.
 - [ ] Translate the approved BRD into a PRD with product requirements, roles, permissions, workflows, integrations, source-of-truth rules, non-functional requirements, and acceptance criteria.
-- [ ] Convert the PRD into product delivery phases and capability sequencing.
-- [ ] Produce journey maps aligned to the product phases.
-- [ ] Produce UI screen specs/prototype guidance aligned to the product phases.
+- [ ] Produce persona-wise journey maps directly from the BRD and PRD.
+- [ ] Produce Google Stitch-ready UI screen specs/prototype guidance aligned to the persona-wise journey maps.
 
 ### Out of Scope
 
-- Implementing the CP app - this project is for BRD, PRD, product roadmap, journey maps, and UI specs/prototype artifacts first.
+- Implementing the CP app - this project is for BRD, PRD, journey maps, and UI specs/prototype artifacts first.
 - Selecting a final vendor without stakeholder review - the BRD can recommend evaluation criteria and gaps, but procurement needs a separate decision process.
 - Treating AI voice/campaign automation as mandatory MVP scope - these are second-wave unless they directly support CP activation, conversion, or trust.
 - Rewriting Project Manthan architecture - the BRD should identify integration and source-of-truth needs, not redesign Manthan end to end.
@@ -44,7 +43,7 @@ Justo wants to become a large retail/channel partner player in Maharashtra and l
 
 Project Manthan is the underlying CRM program delivered by Indexnine. The high-level Manthan proposal describes a broad real estate CRM covering lead management, qualification, sales pipeline tracking, inventory, project onboarding, marketing, billing/accounting, sourcing, corporate/developer/customer tech, and CP management.
 
-Delivered or scoped Manthan phases already include platform scaffolding, RBAC/user management, lead CRUD/scoring, communication channels, lead-gen connectors, CP tagging/CRUD APIs, audit logs, import/export, smart lists, tasks, notifications, CP portal, buyer portal, white-label portal management, CP approval, referral links/QR/referral codes, KYC/payment/token flows, CP employee provisioning, Decentro/CIBIL/Zoho/KYC integrations, CP import/export, travel desk/pickup workflows, EOI/token/payment enhancements, WhatsApp integration, dashboards, bulk actions, custom fields, workflow management, walk-in experience, and activity logs.
+Delivered or scoped Manthan work already includes platform scaffolding, RBAC/user management, lead CRUD/scoring, communication channels, lead-gen connectors, CP tagging/CRUD APIs, audit logs, import/export, smart lists, tasks, notifications, CP portal, buyer portal, white-label portal management, CP approval, referral links/QR/referral codes, KYC/payment/token flows, CP employee provisioning, Decentro/CIBIL/Zoho/KYC integrations, CP import/export, travel desk/pickup workflows, EOI/token/payment enhancements, WhatsApp integration, dashboards, bulk actions, custom fields, workflow management, walk-in experience, and activity logs.
 
 The initial business brief concludes that the missing strategic layer is the full CP network lifecycle: CP sourcing, verification, activation, training, project enablement, lead ownership protection, site-visit proof, booking visibility, commission/payout transparency, performance management, renewal, and offboarding.
 
@@ -73,16 +72,16 @@ External market review indicates recurring CP pain points around stale inventory
 | Treat the CP app as a CP operating system, not only a mobile CRM shell | Justo's goal depends on CP acquisition, trust, lifecycle, payouts, and operating controls, not only lead entry | - Pending |
 | Use I9 as the baseline integration comparator | I9 owns or understands the current Manthan implementation and submitted a Manthan-linked CP app proposal | - Pending |
 | Keep AI voice/campaign automation as second-wave unless directly tied to activation/conversion/trust | The brief identifies onboarding, lead lock, inventory, site visit, booking visibility, and payout ledger as higher-confidence MVP needs | - Pending |
-| Produce a BRD before PRD, roadmap, journey maps, and UI specs | Stakeholders need agreement on personas, lifecycle, scope, vendor gaps, and acceptance criteria first | - Pending |
-| Use Vertical MVP for GSD roadmap structure | Each phase should produce a stakeholder-reviewable artifact in the sequence BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype | - Pending |
+| Produce a BRD before PRD, journey maps, and UI specs | Stakeholders need agreement on personas, lifecycle, scope, vendor gaps, and acceptance criteria first | - Pending |
+| Skip product delivery sequencing until explicitly requested | User wants to move directly from BRD/PRD into persona-wise journey maps and Google Stitch-ready UI screens | - Active |
 
 ## Evolution
 
-This document evolves at phase transitions and milestone boundaries.
+This document evolves at artifact transitions and milestone boundaries.
 
-**After each phase transition** (via `$gsd-transition`):
+**After each artifact transition**:
 1. Requirements invalidated? -> Move to Out of Scope with reason
-2. Requirements validated? -> Move to Validated with phase reference
+2. Requirements validated? -> Move to Validated with artifact reference
 3. New requirements emerged? -> Add to Active
 4. Decisions to log? -> Add to Key Decisions
 5. "What This Is" still accurate? -> Update if drifted

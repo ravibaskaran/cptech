@@ -693,10 +693,53 @@ Queue → Queue Loading (variant) → Dashboard → Document List → Document R
 
 ---
 
+## Stitch MCP Execution Log - 31/05/2026
+
+Target project: `16963605453633474186`
+
+Design system used for all MCP calls: `CP Tech Digital` (`assets/a4fcff9ba89d4126a1be6a3518716a4e`)
+
+### Inventory Clarification
+
+The expanded prompt file contains `112` `[NEW]` screens, not `24`. The `24` count refers only to the gamification / leaderboard / dashboard additions. All `112` `[NEW]` screens remain required for complete persona journeys.
+
+### Persona Generation Status
+
+| Persona / Bundle | MCP Status | Validation Status | Notes |
+|---|---|---|---|
+| Shared App Foundation | Generated | Partially verified by screen list | Stitch reported all 7 new shared screens generated. Representative confirmed screens include `OTP Verification - CP Tech Android`, `Password Reset - CP Tech Android`, `Role Switcher - CP Tech Android`, `Notifications Empty - CP Tech Android`, `Profile Management - CP Tech Android`, `Settings - CP Tech Android`, and `Session Expired - CP Tech Android`. |
+| Justo Leadership | Generated after timeout recovery | Partially verified by screen list and successful final two-screen response | The first two Leadership calls timed out but created the required state/drill-down screens in the project. Confirmed screens include `Leadership_02_Dashboard_Loading`, `Leadership_03_Dashboard_Empty`, `Leadership_05_Drill_Down_Region`, `Leadership_06_Drill_Down_Project`, `Leadership_07_CP_Network_Health`, `Leadership_08_Trend_Comparison`, `Leadership_11_Export_Share`, `Leadership_12_Error_State`, `Leadership_15_Performance_Export`, and `Leadership_16_Period_Comparison`. Final MCP response successfully created `Leadership_13_Cross_Persona_Dashboard` and `Leadership_14_Persona_Detail_Team`. |
+| CP Sourcing Head | Submitted to Stitch; MCP timed out | Visual QA pending | Full 11-screen bundle submitted: loading, prospect list/detail, activation progress, RM workload, inactive CP management, bulk import, sourcing leaderboard, RM detail, document first verification, onboarding assistant. The project listing endpoint timed out afterward, so visual verification is pending. |
+| RM / Sourcing Employee | Submitted to Stitch; MCP timed out | Visual QA pending | Full 11-screen bundle submitted: loading, CP detail, meeting log, tasks, visit history, performance, escalation detail, document verification, onboarding assistant, leaderboard, self performance. |
+| Sales / Admin Ops | Submitted to Stitch; MCP timed out | Visual QA pending | Full 7-screen bundle submitted: loading, project list, lead rule config, visit proof config, user roles, audit log, bulk operations. |
+| Finance | Generated | MCP response verified | Stitch generated all 7 Finance screens: `Finance_02_Queue_Loading`, `Finance_03_Payout_SLA_Dashboard`, `Finance_05_Invoice_List`, `Finance_06_GST_TDS_Detail`, `Finance_09_Bank_Reconciliation`, `Finance_10_Dispute_Detail`, `Finance_12_Payment_History`. Prompt 06 remains in scope and is no longer a manual-generation blocker from this run. |
+| Developer / Project Team | Submitted to Stitch; MCP timed out | Visual QA pending | Full 8-screen bundle submitted: loading, project list, inventory, offers, collateral list, visit slot management, visit outcome detail, project performance. |
+| CP Owner / Org Leader | Submitted to Stitch; MCP timed out | Visual QA pending | Full 11-screen bundle submitted: loading, firm profile, employee detail, visits, booking status, disputes, support, firm dashboard, project leaderboard, comparison, employee performance. |
+| CP Employee / Agent | Submitted to Stitch; MCP timed out | Visual QA pending | Full 11-screen bundle submitted: loading, project detail, lead list/detail, follow-ups, visits, profile/settings, personal dashboard, leaderboard, comparison, self performance. |
+| CP Telecaller | Submitted to Stitch; MCP timed out | Visual QA pending | Full 12-screen bundle submitted: loading, empty queue, full lead detail, call history, follow-ups, visit schedule, escalation detail, performance, dashboard, call detail, comparison, leaderboard. |
+| Buyer / Customer | Submitted to Stitch; MCP timed out | Visual QA pending | Full 8-screen lightweight buyer-link bundle submitted. Scope remains limited to shared project link, callback, visit, KYC, support, and error states; no full buyer portal was introduced. |
+| Compliance / Support | Submitted to Stitch; MCP timed out | Visual QA pending | Full 7-screen bundle submitted: loading, dashboard, document list, dispute list, support ticket detail, SLA monitoring, audit log detail. |
+
+### Final QA Status
+
+Final cross-persona sign-off is **not yet complete** because `list_screens` and `get_project` timed out after the project became large. The next validation pass must be done either from the Stitch UI canvas or when the MCP project listing endpoint responds again.
+
+Validation checklist for the next pass:
+
+1. Confirm every submitted timeout bundle has materialized as named screens in project `16963605453633474186`.
+2. Confirm each persona is arranged horizontally in the journey order listed above.
+3. Confirm every new screen uses CP Tech Digital styling: `#121417`, `#b8ff4d`, Manrope, Material 3 layout.
+4. Confirm India-ready formatting: `₹`, `dd/mm/yyyy`, lakh/crore.
+5. Confirm loading, empty, error, stale-sync, offline/retry states are visible where specified.
+6. Confirm no AI calling, AI scoring, CP microsites, or full buyer portal screens were introduced.
+7. Confirm journey traceability against `Justo_CP_App_Journey_Maps.md` before design handoff.
+
+---
+
 ## Next Steps
 
-1. **Generate Prompt 06 (Finance)** manually in Stitch UI — this is the only P0 blocker.
-2. **Generate new screens** for each persona using the expanded screen specifications above.
-3. **Generate gamification/leaderboard screens** for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller after product approval. Keep scoring transparent and auditable; do not add unrelated AI scoring, CP microsites, or workforce tracking outside scheduled visit proof.
-4. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
-5. **Validate journey completeness** by walking through each persona's flow from entry to completion.
+1. **Run visual QA in Stitch UI** for timeout-submitted bundles and mark each persona as generated / needs correction.
+2. **Arrange screens horizontally** per persona in Stitch, maintaining the journey order specified.
+3. **Validate journey completeness** by walking through each persona's flow from entry to completion.
+4. **Keep gamification / leaderboard screens in scope** for Leadership, Sourcing, RM, CP Owner, CP Employee, and Telecaller. Keep scoring transparent and auditable; do not add unrelated AI scoring, CP microsites, or workforce tracking outside scheduled visit proof.
+5. **Approve design handoff only after final visual QA** confirms all screens exist, are ordered, and satisfy the journey map.

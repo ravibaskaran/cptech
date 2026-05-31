@@ -45,10 +45,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-30)
 - Created vertical MVP roadmap.
 - Expanded BRD draft to v0.2.
 - Created first PRD draft in `Justo_CP_App_PRD.md`.
+- Added scope-gate updates to BRD v0.3 and PRD v0.2 to lock launch MVP around the CP trust loop and defer non-essential features.
 
 ## Next Action
 
-Review `Justo_CP_App_PRD.md`, close critical open decisions, then derive the product roadmap/phases.
+Review the scope-gated BRD/PRD, close critical open decisions, then derive the product roadmap/phases from the launch trust loop.
 
 ---
 *State initialized: 2026-05-30*

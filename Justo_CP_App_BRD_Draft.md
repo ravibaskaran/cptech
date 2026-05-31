@@ -1,6 +1,6 @@
 # Business Requirements Document: Justo CP App
 
-Draft version: v0.2  
+Draft version: v0.3
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype
@@ -20,6 +20,37 @@ The vendor proposals show three different paths:
 - **I9/Indexnine** is the strongest Manthan-continuity option because its CP app proposal explicitly references existing Manthan modules, existing covered scope, and new CP mobile additions. Its risk is that a fast-tracked six-week delivery can underbuild the deeper CP lifecycle that Justo needs to win.
 - **Auum** has the broadest CP operating-system product vision: CP mobile app, project/inventory, lead CRM, lead locking, site visits, communication, AI assistant, microsites, workforce tools, commission, telephony, analytics, and marketing automation. Its risk is platform/integration/IP complexity and the fact that several trust-critical features sit in Phase 2.
 - **TSPL/Triazine** has the strongest AI-calling narrative and a broad microservices architecture. Its risk is that the proposal is materially less granular on Justo-specific CP sourcing, Manthan integration, lead conflict rules, CP employee lifecycle, compliance, and payout operations.
+
+## Scope Gatekeeper Addendum: Launch MVP Boundary
+
+The launch MVP objective is narrower than the full CP operating-system vision: prove that a controlled Maharashtra CP pilot can trust Justo for the core transaction loop from CP onboarding to project access, lead protection, site-visit proof, booking visibility, and payout status. Anything that does not directly improve this trust loop should be excluded from launch planning unless it is already available in Manthan with near-zero incremental build.
+
+### Launch MVP Must Prove
+
+| Launch Proof Point | Required Outcome |
+|---|---|
+| Verified CP can start working | CP firm and CP employees can be onboarded, approved, assigned projects, and activated. |
+| CP can sell from current information | CP users can view current assigned projects and share only approved collateral. |
+| CP can protect a lead | CP users can submit a lead and receive accepted, conflict, rejected, or pending-sync status with reason and next action. |
+| Justo can verify a visit | CP/RM/site users can schedule and confirm site visits with launch-approved proof. |
+| CP can see transaction progress | CP owner can see CP-safe booking milestones and payout status without calling RM/finance for every update. |
+| Justo can control risk | Admin, support, compliance, and finance users can audit lead, visit, collateral, compliance, and payout decisions. |
+
+### Launch MVP Cuts
+
+| Cut From Launch | Keep For Later Only If |
+|---|---|
+| AI voice calling, AI assistant, KHOJ/Gemini workflows, AI campaign generation | Core lead, visit, and payout workflows are stable and measurable. |
+| CP microsites and CP-branded public pages | Leadership explicitly funds a marketing-distribution phase after the trust loop works. |
+| Advanced telecaller queue, call intelligence, sentiment, and automated scoring | Manual follow-up timeline and basic dispositions are already adopted. |
+| Advanced analytics, CP health scoring, gamification, and loyalty | Basic KPI reporting proves reliable source data. |
+| Geofencing and workforce geo-tracking | QR/OTP/site-desk/admin visit proof is insufficient and legal/HR review approves location capture. |
+| Multi-tenant/white-label platform architecture | Justo first proves its own CP network operating model. |
+| Full buyer portal expansion | Existing buyer portal can be linked safely; buyer-facing CP app scope stays limited to approved project links and visit confirmation. |
+
+### Scope Gate Rule For Roadmap
+
+When the roadmap is created, each phase must pass this test: "Does this directly improve CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, or operational control?" If not, it is not launch scope.
 
 ## 2. Business Thesis: Why This Can Win Or Fail
 
@@ -135,10 +166,10 @@ Enable Justo to build, activate, and govern a scalable CP network in Maharashtra
 | CP firm profile | Extend | Current CP CRUD is insufficient for lifecycle, compliance, activation |
 | CP employee management | Extend | Need invitation, role, attribution, deactivation, reassignment |
 | Lead capture | Reuse/extend | Add duplicate rules, ownership lock, CP employee attribution |
-| Site visit | Extend | Add QR/OTP/geofence/site-desk proof and outcome |
+| Site visit | Extend | Add QR/OTP/site-desk/admin proof and outcome for launch; geofence only if already available and legally approved |
 | Project catalog | Extend | CP-friendly discovery, share kits, inventory freshness, RERA facts |
 | Payout | Add/extend | Need CP-visible ledger and finance-controlled lifecycle |
-| CP sourcing | Add/extend | Need prospect funnel, RM activity, activation status, CP health |
+| CP sourcing | Add/extend | Need prospect funnel, RM activity, and activation status for launch; advanced CP health scoring later |
 | Compliance | Add/extend | RERA/GST/PAN/bank/KYC renewal and exception workflows |
 | AI | Defer/optional | Use after trust workflows are stable |
 
@@ -369,7 +400,7 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | 1. Configure CP project access | Select project, CP cohorts, visibility, offers, collateral | Launch/project operations | Prevents blanket access mistakes |
 | 2. Publish inventory/collateral | Versioned price sheet, unit availability, approved brochures | Developer/project updates | Reduces stale sharing |
 | 3. Configure lead rules | Lock duration, duplicate rules, direct-vs-CP priority, override rights | Commercial/legal policy | Makes disputes rule-based |
-| 4. Configure site visit proof | QR/OTP/geofence/site-desk check-in | Site operations | Standardizes visit evidence |
+| 4. Configure site visit proof | QR/OTP/site-desk/admin check-in | Site operations | Standardizes visit evidence |
 | 5. Manage exceptions | Rejected leads, duplicate conflicts, failed notifications, document issues | Ops desk | Reduces unresolved queue |
 
 **PRD implications**
@@ -640,15 +671,15 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | Capability | Why MVP | Core Acceptance Direction |
 |---|---|---|
 | CP firm onboarding and compliance | No trusted network without verified CPs | CP can register, submit docs, see approval status, receive rejection reasons |
-| CP employee management | CP is an organization, not one login | CP owner can invite, assign roles, deactivate, and reassign leads |
-| Project catalog and approved collateral | CPs need reliable sellable inventory | CP sees current projects, inventory freshness, approved share kit |
-| Lead submission and lock | CP trust depends on ownership clarity | Lead accepted/conflicted/rejected with reason and audit trail |
-| Site visit scheduling and proof | Visit attribution drives conversion and commission | Visit can be scheduled, verified, outcome captured |
-| Communication timeline | Follow-up leakage is a conversion killer | Calls/WhatsApp/SMS/email/notes visible per lead |
-| Booking visibility | CP needs to know what happened after visit | Booking stage and next action visible by permission |
-| Commission/payout ledger | Money drives CP loyalty | CP sees eligibility, invoice, approval, expected date, paid/disputed state |
-| Justo sourcing/RM dashboard | Justo needs scalable CP acquisition | RM sees CP prospects, activation tasks, meetings, performance |
-| Admin/audit/support | Scale requires controls | Admin can manage policies, exceptions, audit logs, tickets |
+| CP employee management | CP is an organization, not one login | CP owner can invite, assign roles, deactivate, and reassign active work |
+| Project catalog and approved collateral | CPs need reliable sellable inventory | CP sees assigned projects, freshness indicators, and approved share kit |
+| Lead submission and lock | CP trust depends on ownership clarity | Lead accepted/conflicted/rejected/pending-sync with reason and audit trail |
+| Site visit scheduling and proof | Visit attribution drives conversion and commission | Visit can be scheduled, verified by launch-approved proof, and outcome captured |
+| Communication timeline | Follow-up leakage is a conversion killer | Lightweight notes, reminders, and integrated communication events where already available |
+| Booking visibility | CP needs to know what happened after visit | CP-safe booking milestone and next action visible by permission |
+| Commission/payout status ledger | Money drives CP loyalty | CP sees eligibility/status/reason; full payout engine only if Manthan/finance integration is ready |
+| Justo sourcing/RM activation view | Justo needs scalable CP acquisition | RM sees CP prospects, activation tasks, pending docs, and escalations |
+| Admin/audit/support foundation | Scale requires controls | Admin can manage core policies, exceptions, audit logs, and evidence-backed tickets |
 
 ### 10.2 v2 / Deferred Capabilities
 
@@ -659,6 +690,9 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 - Full marketing budget optimization.
 - CP marketplace/network effects.
 - Advanced workforce intelligence and geo-tracking.
+- Geofence-based visit proof unless already available and approved for launch.
+- Advanced leadership analytics, gamification, loyalty, and CP health scoring beyond simple KPI reporting.
+- Full buyer portal expansion beyond safe project links, visit confirmation, and reuse of existing buyer flows.
 - Multi-tenant/white-label platform architecture beyond Justo's own CP network.
 
 ### 10.3 Capability Acceptance Criteria For PRD
@@ -754,10 +788,12 @@ The PRD should convert this BRD into requirements under these themes:
 6. What payout SLA can Justo credibly promise?
 7. Which Manthan APIs and data models are production-ready for mobile app integration?
 8. What is the authoritative RERA validation workflow?
-9. Does Justo want CP-branded collateral or CP-branded microsites in MVP?
-10. Which buyer-facing actions should happen in the CP app versus existing buyer portal?
+9. Which CP-branded collateral formats, if any, are required at launch, excluding CP microsites?
+10. Which buyer-facing actions are allowed in launch without expanding the buyer portal?
 11. What support model will handle CP disputes?
 12. Which AI features have a measurable business case for v1?
+13. Which launch site-visit proof methods are acceptable: QR, OTP, site-desk confirmation, admin verification, or existing geofence?
+14. Which payout fields can be exposed at launch if full accounting integration is not ready?
 
 ## 15. Recommended MVP Definition
 
@@ -769,12 +805,12 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 - CP employee invitation, role, and deactivation.
 - Project catalog with current inventory and approved share collateral.
 - Lead submission with duplicate check and clear ownership status.
-- Site visit scheduling and proof.
-- Communication and follow-up timeline.
-- Booking status visibility.
-- Commission/payout ledger.
-- RM sourcing and activation dashboard.
-- Admin/audit/dispute foundation.
+- Site visit scheduling and launch-approved proof.
+- Lightweight communication and follow-up timeline.
+- CP-safe booking status visibility.
+- Commission/payout status ledger; do not build a full payout engine unless Manthan/finance integration is ready.
+- RM sourcing and activation view.
+- Admin/audit/dispute foundation for core trust workflows.
 
 ### MVP Should Exclude Unless Already Cheap In Manthan
 
@@ -784,6 +820,10 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 - Full marketplace features.
 - Advanced geo workforce surveillance.
 - Multi-tenant SaaS expansion.
+- Advanced telecaller operations and call intelligence.
+- Advanced analytics, gamification, loyalty, and CP health scoring beyond launch KPI reporting.
+- Full buyer portal expansion.
+- New geofence implementation unless it is already available and approved.
 
 ## 16. Stakeholder Review Checklist
 
@@ -801,8 +841,8 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 1. Validate this BRD with Justo leadership, CP sourcing, RM, finance, ops, product, and compliance stakeholders.
 2. Convert unresolved questions into a decision log.
 3. Create a vendor clarification pack for Auum, TSPL, and I9.
-4. Use the approved BRD to create `Justo_CP_App_PRD.md`.
-5. Derive product phases from PRD capabilities, then journey maps and UI screen specs.
+4. Use the scope-gated BRD and PRD to create `Justo_CP_App_Product_Roadmap.md`.
+5. Derive product phases from the launch trust loop first, then journey maps and UI screen specs.
 
 ---
-*Draft status: v0.2, PRD-ready pending stakeholder validation and open-question resolution.*
+*Draft status: v0.3, scope-gated for roadmap derivation pending stakeholder validation and open-question resolution.*

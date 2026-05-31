@@ -1,6 +1,6 @@
 # Product Requirements Document: Justo CP App
 
-Draft version: v0.1  
+Draft version: v0.2
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 PRD owner: Product, Justo CP App initiative  
@@ -11,6 +11,7 @@ Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Sc
 
 - [0. Version And Ownership](#0-version-and-ownership)
 - [1. Executive One-Pager](#1-executive-one-pager)
+- [Scope Gatekeeper Addendum: MVP Scope Gate](#scope-gatekeeper-addendum-mvp-scope-gate)
 - [2. Overview And Context](#2-overview-and-context)
 - [3. Customer Insights And Evidence](#3-customer-insights-and-evidence)
 - [4. Goals And Non-Goals](#4-goals-and-non-goals)
@@ -34,14 +35,14 @@ Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Sc
 | Field | Value |
 |---|---|
 | Document | Justo CP App PRD |
-| Version | v0.1 draft |
+| Version | v0.2 scope-gated draft |
 | Date | 2026-05-31 |
 | Mode | Full Mode |
 | Owner | Product, Justo CP App initiative |
 | Business sponsor | Justo leadership, CP business |
 | Reviewers | CP sourcing, RM leadership, sales/admin ops, finance, compliance/legal, Manthan product/technology, vendor management |
 | Source artifacts | `Justo_CP_App_BRD_Draft.md`, `Justo_CP_App_Business_Brief.md`, `.planning/REQUIREMENTS.md`, vendor proposals from Auum, TSPL/Triazine, I9/Indexnine, Manthan proposal and SoWs |
-| Status | Draft for stakeholder review |
+| Status | Scope-gated draft for stakeholder review |
 
 ### Evidence Confidence Tags
 
@@ -65,6 +66,44 @@ Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Sc
 Justo wants to scale into a large regional channel partner business in Maharashtra and then across India. [high] CPs will not adopt an app just because Justo launches one. They will adopt it if the app makes selling projects easier, protects their lead ownership, gives them current project information, proves site visits, shows what happened after a lead was submitted, and makes commission and payout status visible.
 
 This PRD defines the first complete product requirement draft for the Justo CP App. [high] It deliberately avoids product release phases because phases are the next artifact in the project sequence. Instead, it defines users, journeys, functional requirements, non-functional requirements, acceptance criteria, metrics, risks, open decisions, and design/technical constraints so that the next artifacts can derive a roadmap, journey maps, and UI screen specifications.
+
+## Scope Gatekeeper Addendum: MVP Scope Gate
+
+### Core Launch Objective
+
+[high] The launch MVP must prove one narrow business outcome: a controlled Maharashtra CP pilot can complete the trust loop from verified CP onboarding to assigned project access, lead ownership decision, site-visit proof, booking milestone visibility, and payout status visibility. Requirements outside this trust loop are valid product context, but they are not launch scope unless Manthan already supports them with near-zero incremental build.
+
+### Launch Core
+
+| Launch Core | Included Behavior |
+|---|---|
+| Identity and RBAC | Single credential, assigned role home, permission enforcement, suspended/deactivated access handling |
+| CP onboarding | CP firm registration, required docs, approval/rejection, compliance status, RM visibility |
+| CP employee control | Invite/import, role assignment, deactivation, historical attribution, active work reassignment |
+| Project enablement | Assigned project catalog, freshness indicator, approved collateral share |
+| Lead ownership | Quick lead submit, duplicate check, accepted/conflict/rejected/pending-sync state, reason, audit |
+| Site visit proof | Scheduling plus launch-approved proof: QR, OTP, site-desk confirmation, or admin verification |
+| Booking visibility | CP-safe booking milestone and next action, not full buyer/finance detail |
+| Payout status | Eligibility/status/reason visibility; full payout processing only if Manthan/finance integration is ready |
+| Notifications | Native push plus in-app notification center for critical role-specific events |
+| Offline reliability | Safe drafts and sync queue for launch-approved offline actions only |
+| Admin/support/audit | Lightweight evidence-backed tickets and audit logs for core trust workflows |
+
+### Not Launch Scope
+
+| Excluded From Launch | Reason |
+|---|---|
+| AI voice calling, AI assistant, KHOJ/Gemini, AI summaries, AI scoring | Does not unlock the core trust loop; adds integration and operating risk. |
+| CP microsites and CP-branded public pages | Marketing/distribution feature, not required to prove CP trust. |
+| Advanced telecaller queue, call intelligence, sentiment, automated scoring | Follow-up can launch through basic timeline, tasks, and notes. |
+| Advanced analytics, gamification, loyalty, CP health scoring | Requires reliable event data first. |
+| New geofence implementation and workforce tracking | High complexity and legal/privacy risk; use QR/OTP/site-desk/admin proof for launch. |
+| Full buyer portal expansion | Reuse existing buyer flows; launch only safe project links and visit confirmation where needed. |
+| Multi-tenant/white-label architecture | Not needed for Justo's first Maharashtra CP operating model. |
+
+### Roadmap Gate
+
+When product phases are created, each phase must map every feature to one of these outcomes: CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, notification/offline reliability, or operational control. If a feature does not map, it goes to the deferred backlog.
 
 ## 2. Overview And Context
 
@@ -184,6 +223,15 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | CP telecaller | Qualifies and nurtures leads | Work call queue, record disposition, schedule follow-up/visit | Spreadsheet queues, missed follow-ups |
 | Buyer / customer | Receives project information and attends visits | Confirm interest, receive accurate info, complete KYC/payment where needed | Inconsistent claims, fragmented confirmation |
 | Compliance/support | Controls risk and issue resolution | Validate documents, monitor expiry, handle disputes, export evidence | Scattered evidence and non-repeatable decisions |
+
+### Launch Role Classification
+
+| Classification | Personas | Scope Rule |
+|---|---|---|
+| Launch core | CP owner, CP employee/agent, RM/sourcing employee, sales/admin ops, finance, compliance/support | Must be represented in the first roadmap because they operate the trust loop. |
+| Launch control | CP sourcing head, Justo leadership, developer/project team | Need lightweight dashboards, approvals, or inputs only; avoid advanced analytics buildout. |
+| App-linked, not core app user | Buyer/customer | Use safe project links and existing buyer flows; do not expand buyer portal in launch scope. |
+| Deferred specialist | CP telecaller | Preserve persona context, but do not build advanced queues, call intelligence, or AI scoring in launch. |
 
 ### Role-Based Entry Principle
 
@@ -410,7 +458,7 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 |---|---|---|---|
 | PRD-FR-044 | CP users shall request or schedule site visits for accepted leads, subject to project/site rules. | Must | G2, G3 |
 | PRD-FR-045 | Site visits shall support confirmation, reschedule, cancellation, no-show, and completion states. | Must | G2 |
-| PRD-FR-046 | The system shall capture visit proof using configured methods such as QR, OTP, site-desk confirmation, geofence, or admin verification. | Must | G3, G6 |
+| PRD-FR-046 | The system shall capture visit proof using launch-approved methods such as QR, OTP, site-desk confirmation, or admin verification. New geofence implementation is deferred unless already available and approved. | Must | G3, G6 |
 | PRD-FR-047 | Site visit proof shall link to lead, CP firm, CP employee, buyer, project, timestamp, verification method, and outcome. | Must | G3, G6 |
 | PRD-FR-048 | Site/project users shall record visit outcomes and next actions where permitted. | Should | G2 |
 | PRD-FR-049 | Visit status changes shall trigger notifications to relevant CP, RM, site, and admin users. | Must | G2, G7 |
@@ -428,10 +476,10 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 
 | ID | Requirement | Priority | Goals |
 |---|---|---|---|
-| PRD-FR-054 | CP owners shall see a payout ledger for eligible firm transactions, subject to finance policy. | Must | G4 |
+| PRD-FR-054 | CP owners shall see a payout status ledger for eligible firm transactions, subject to finance policy. | Must | G4 |
 | PRD-FR-055 | The payout ledger shall show status such as not eligible, eligible, invoice pending, invoice under review, approved, rejected, payment scheduled, paid, failed, disputed, or clawback. | Must | G4 |
 | PRD-FR-056 | Payout records shall show commission basis, deductions, GST/TDS treatment, expected date, paid date, payment reference, and reason codes where available and permitted. | Must | G4, G6 |
-| PRD-FR-057 | Finance users shall approve, reject, request correction, schedule, mark paid, mark failed, and reconcile payout records with reason/audit. | Must | G4, G6 |
+| PRD-FR-057 | If payout processing is executed inside this product, finance users shall approve, reject, request correction, schedule, mark paid, mark failed, and reconcile payout records with reason/audit. If not, the app shall consume finance status from the source system. | Should | G4, G6 |
 | PRD-FR-058 | CP owners shall raise payout disputes linked to booking, invoice, payout status, and evidence. | Must | G4 |
 | PRD-FR-059 | The app shall not promise payout dates unless finance has configured an approved payout SLA. | Must | G4 |
 
@@ -450,7 +498,7 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | ID | Requirement | Priority | Goals |
 |---|---|---|---|
 | PRD-FR-065 | Leadership shall view aggregate CP network KPIs by geography, project, RM, CP segment, and time period. | Must | G1, G5 |
-| PRD-FR-066 | CP sourcing heads shall view CP sourcing funnel, onboarding conversion, activation, inactivity, health, and escalations. | Must | G1, G5 |
+| PRD-FR-066 | CP sourcing heads shall view CP sourcing funnel, onboarding conversion, activation, inactivity, and escalations. Advanced CP health scoring is deferred. | Must | G1, G5 |
 | PRD-FR-067 | RMs shall view assigned CP pipeline, tasks, inactive CPs, lead/visit/bookings, and escalations. | Must | G1, G5 |
 | PRD-FR-068 | CP owners shall view firm-level leads, visits, bookings, team performance, payout, and disputes. | Must | G1, G4 |
 | PRD-FR-069 | Finance shall view payout queue, SLA adherence, rejected payouts, failed payments, and dispute volume. | Must | G4 |
@@ -460,8 +508,8 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 
 | ID | Requirement | Priority | Goals |
 |---|---|---|---|
-| PRD-FR-071 | The app shall cache safe role-permitted data for offline use, including assigned projects, approved collateral metadata, lead drafts, tasks, reminders, and notification history. | Must | G2, G7 |
-| PRD-FR-072 | The app shall allow users to create offline drafts for leads, notes, tasks, visit updates, support tickets, and document uploads where safe. | Must | G2, G7 |
+| PRD-FR-071 | The app shall cache safe role-permitted data for offline use, including assigned project summaries, approved collateral metadata, previously opened assets where allowed, lead drafts, tasks, reminders, and notification history. | Must | G2, G7 |
+| PRD-FR-072 | The app shall allow users to create offline drafts for launch-approved actions: leads, notes, tasks, visit updates, and support ticket drafts. Document uploads should remain online-only unless technical review approves queued file upload. | Must | G2, G7 |
 | PRD-FR-073 | Offline-created actions shall enter a visible sync queue with status: queued, syncing, synced, failed, blocked, or conflict. | Must | G7 |
 | PRD-FR-074 | The app shall automatically sync queued actions when connectivity returns and the session/permissions remain valid. | Must | G7 |
 | PRD-FR-075 | The app shall resolve sync conflicts with clear user/admin actions and shall not silently overwrite server-side authoritative data. | Must | G6, G7 |
@@ -903,7 +951,7 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 | Lead lock | A policy-controlled ownership period or state that protects a CP's submitted lead where applicable. |
 | Duplicate detection | System logic to identify whether a submitted lead may already exist. |
 | Conflict | A state where lead ownership or eligibility needs review under policy. |
-| Site visit proof | Evidence that a buyer attended a site visit, such as QR, OTP, geofence, site-desk confirmation, or admin verification. |
+| Site visit proof | Evidence that a buyer attended a site visit, such as QR, OTP, site-desk confirmation, or admin verification for launch. Geofence is deferred unless already available and approved. |
 | Payout ledger | CP-visible finance status view for commission eligibility, invoice, approval, deductions, payment, and disputes. |
 | Sync queue | Local app queue holding offline actions until server sync succeeds, fails, or conflicts. |
 | Deep link | A link or notification target that opens a specific app screen or product state. |
@@ -915,7 +963,7 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 
 | # | Verification Category | Status | Notes |
 |---|---|---|---|
-| 1 | Completeness | ✅ | All required Karo PRD sections are present, including PRD, quality report, and AI gap report. |
+| 1 | Completeness | ✅ | All required Karo PRD sections are present, including PRD, quality report, AI gap report, and scope-gate addendum. |
 | 2 | Clarity | ✅ | Acronyms are defined and major workflows use explicit actors, states, and next actions. |
 | 3 | Actionability | ✅ | Requirements are numbered and paired with Gherkin acceptance criteria for critical flows. |
 | 4 | Feasibility | ⚠️ | Feasibility depends on Manthan API readiness, RBAC model, finance integration, and offline sync architecture. |
@@ -924,7 +972,7 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 | 7 | Assumption Audit | ✅ | Open questions and assumptions are explicitly captured instead of being invented. |
 | 8 | Accessibility Compliance | ⚠️ | Accessibility checklist is included; detailed screen-level validation must happen during UI spec/prototype work. |
 | 9 | Evidence Rigor | ⚠️ | Local BRD/vendor evidence is used, but primary and secondary direct quotes are not available. |
-| 10 | No Contradictions | ✅ | PRD intentionally defers product phases and keeps Manthan as assumed CRM foundation pending validation. |
+| 10 | No Contradictions | ✅ | PRD intentionally defers product phases, marks launch exclusions, and keeps Manthan as assumed CRM foundation pending validation. |
 
 ## AI Gap Report
 
@@ -940,6 +988,7 @@ Overall Risk Level: Medium
 - RERA validation source and compliance blocking policy are open decisions.
 - Offline-first behavior is required, but exact allowed offline actions by role need technical and risk review.
 - Buyer-facing data exposure needs legal/product approval before shared links are specified in detail.
+- Launch scope is now gated, but roadmap work must enforce the gate requirement-by-requirement.
 
 ### Recommended Clarifications
 
@@ -949,6 +998,7 @@ Overall Risk Level: Medium
 - Define notification taxonomy, sensitivity rules, payload rules, and deep-link targets.
 - Create the next artifact, `Justo_CP_App_Product_Roadmap.md`, only after reviewing this PRD.
 - Convert this PRD into journey maps and UI screen specs after product phases are agreed.
+- Create a launch/deferred mapping for every functional requirement during roadmap creation.
 
 ---
-*Draft status: v0.1, ready for stakeholder review and roadmap derivation after open decisions are triaged.*
+*Draft status: v0.2, scope-gated and ready for stakeholder review and roadmap derivation after open decisions are triaged.*

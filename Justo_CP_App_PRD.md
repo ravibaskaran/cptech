@@ -1,6 +1,6 @@
 # Product Requirements Document: Justo CP App
 
-Draft version: v0.2
+Draft version: v0.3
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 PRD owner: Product, Justo CP App initiative  
@@ -35,7 +35,7 @@ Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Sc
 | Field | Value |
 |---|---|
 | Document | Justo CP App PRD |
-| Version | v0.2 scope-gated draft |
+| Version | v0.3 scope-gated draft |
 | Date | 2026-05-31 |
 | Mode | Full Mode |
 | Owner | Product, Justo CP App initiative |
@@ -82,12 +82,13 @@ This PRD defines the first complete product requirement draft for the Justo CP A
 | CP employee control | Invite/import, role assignment, deactivation, historical attribution, active work reassignment |
 | Project enablement | Assigned project catalog, freshness indicator, approved collateral share |
 | Lead ownership | Quick lead submit, duplicate check, accepted/conflict/rejected/pending-sync state, reason, audit |
-| Site visit proof | Scheduling plus launch-approved proof: QR, OTP, site-desk confirmation, or admin verification |
+| Site visit proof | Scheduling plus launch-approved proof: QR, OTP, geofence, site-desk confirmation, or admin verification |
 | Booking visibility | CP-safe booking milestone and next action, not full buyer/finance detail |
-| Payout status | Eligibility/status/reason visibility; full payout processing only if Manthan/finance integration is ready |
+| Payout processing | Eligibility/status/reason visibility plus finance approval, rejection, scheduling, payment reference, reconciliation, clawback, dispute, and audit |
 | Notifications | Native push plus in-app notification center for critical role-specific events |
-| Offline reliability | Safe drafts and sync queue for launch-approved offline actions only |
+| Offline reliability | Safe drafts, queued document uploads, and sync queue for launch-approved offline actions |
 | Admin/support/audit | Lightweight evidence-backed tickets and audit logs for core trust workflows |
+| Geofenced visit proof | Location-backed proof for scheduled site visits with consent, fallback, accuracy, and retention controls |
 
 ### Not Launch Scope
 
@@ -97,9 +98,17 @@ This PRD defines the first complete product requirement draft for the Justo CP A
 | CP microsites and CP-branded public pages | Marketing/distribution feature, not required to prove CP trust. |
 | Advanced telecaller queue, call intelligence, sentiment, automated scoring | Follow-up can launch through basic timeline, tasks, and notes. |
 | Advanced analytics, gamification, loyalty, CP health scoring | Requires reliable event data first. |
-| New geofence implementation and workforce tracking | High complexity and legal/privacy risk; use QR/OTP/site-desk/admin proof for launch. |
+| Workforce tracking outside scheduled visit proof | High legal/privacy risk and not required for launch trust loop. |
 | Full buyer portal expansion | Reuse existing buyer flows; launch only safe project links and visit confirmation where needed. |
 | Multi-tenant/white-label architecture | Not needed for Justo's first Maharashtra CP operating model. |
+
+### Core Differentiator Guardrails
+
+| Differentiator | Product Rule | Engineering Guardrail |
+|---|---|---|
+| Geofencing | Required for differentiated site-visit proof, with QR/OTP/site-desk/admin fallback | Capture only during scheduled/active visit windows; require OS location permission and role permission; store timestamp, coordinates if approved, accuracy, proof method, and fallback reason; avoid continuous tracking. |
+| Queued document uploads | Required for CP/RM onboarding in poor-network field conditions | Encrypt files locally, restrict file type/size, show queue state, support retry/resume/cancel/delete, never mark compliance complete until server validation succeeds. |
+| Full payout processing | Required because payout trust is a CP loyalty differentiator | Use finance-controlled state machine, maker-checker approval, GST/TDS fields, invoice validation, payment reference, reconciliation state, clawback/dispute states, and immutable audit log. |
 
 ### Roadmap Gate
 
@@ -458,10 +467,11 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 |---|---|---|---|
 | PRD-FR-044 | CP users shall request or schedule site visits for accepted leads, subject to project/site rules. | Must | G2, G3 |
 | PRD-FR-045 | Site visits shall support confirmation, reschedule, cancellation, no-show, and completion states. | Must | G2 |
-| PRD-FR-046 | The system shall capture visit proof using launch-approved methods such as QR, OTP, site-desk confirmation, or admin verification. New geofence implementation is deferred unless already available and approved. | Must | G3, G6 |
+| PRD-FR-046 | The system shall capture visit proof using launch-approved methods including QR, OTP, geofence, site-desk confirmation, or admin verification. | Must | G3, G6 |
 | PRD-FR-047 | Site visit proof shall link to lead, CP firm, CP employee, buyer, project, timestamp, verification method, and outcome. | Must | G3, G6 |
 | PRD-FR-048 | Site/project users shall record visit outcomes and next actions where permitted. | Should | G2 |
 | PRD-FR-049 | Visit status changes shall trigger notifications to relevant CP, RM, site, and admin users. | Must | G2, G7 |
+| PRD-FR-077 | Geofenced visit proof shall capture location only during a scheduled or active visit workflow, require device permission and role permission, store configured accuracy metadata, and offer QR/OTP/site-desk/admin fallback when location capture fails or is denied. | Must | G3, G6, G7 |
 
 #### 7.9 Booking Visibility
 
@@ -479,9 +489,10 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | PRD-FR-054 | CP owners shall see a payout status ledger for eligible firm transactions, subject to finance policy. | Must | G4 |
 | PRD-FR-055 | The payout ledger shall show status such as not eligible, eligible, invoice pending, invoice under review, approved, rejected, payment scheduled, paid, failed, disputed, or clawback. | Must | G4 |
 | PRD-FR-056 | Payout records shall show commission basis, deductions, GST/TDS treatment, expected date, paid date, payment reference, and reason codes where available and permitted. | Must | G4, G6 |
-| PRD-FR-057 | If payout processing is executed inside this product, finance users shall approve, reject, request correction, schedule, mark paid, mark failed, and reconcile payout records with reason/audit. If not, the app shall consume finance status from the source system. | Should | G4, G6 |
+| PRD-FR-057 | Finance users shall approve, reject, request correction, schedule, mark paid, mark failed, reconcile, claw back, and dispute payout records with reason and audit trail. | Must | G4, G6 |
 | PRD-FR-058 | CP owners shall raise payout disputes linked to booking, invoice, payout status, and evidence. | Must | G4 |
 | PRD-FR-059 | The app shall not promise payout dates unless finance has configured an approved payout SLA. | Must | G4 |
+| PRD-FR-078 | Payout processing shall use a finance-controlled state machine with maker-checker controls for configured high-risk actions and immutable audit events for every status change. | Must | G4, G6 |
 
 #### 7.11 Support, Dispute, And Audit
 
@@ -509,11 +520,12 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | ID | Requirement | Priority | Goals |
 |---|---|---|---|
 | PRD-FR-071 | The app shall cache safe role-permitted data for offline use, including assigned project summaries, approved collateral metadata, previously opened assets where allowed, lead drafts, tasks, reminders, and notification history. | Must | G2, G7 |
-| PRD-FR-072 | The app shall allow users to create offline drafts for launch-approved actions: leads, notes, tasks, visit updates, and support ticket drafts. Document uploads should remain online-only unless technical review approves queued file upload. | Must | G2, G7 |
+| PRD-FR-072 | The app shall allow users to create offline drafts and queued submissions for launch-approved actions: leads, notes, tasks, visit updates, support ticket drafts, and onboarding/compliance document uploads. | Must | G2, G7 |
 | PRD-FR-073 | Offline-created actions shall enter a visible sync queue with status: queued, syncing, synced, failed, blocked, or conflict. | Must | G7 |
 | PRD-FR-074 | The app shall automatically sync queued actions when connectivity returns and the session/permissions remain valid. | Must | G7 |
 | PRD-FR-075 | The app shall resolve sync conflicts with clear user/admin actions and shall not silently overwrite server-side authoritative data. | Must | G6, G7 |
 | PRD-FR-076 | Lead lock and duplicate detection shall be confirmed by server sync before ownership is final; offline lead submissions shall show pending sync until confirmed. | Must | G3, G7 |
+| PRD-FR-079 | Queued document uploads shall show file-level upload state, support retry/resume/cancel/delete before sync, preserve local encryption, enforce allowed file types and size limits, and require server-side validation before changing compliance status. | Must | G1, G6, G7 |
 
 ### Non-Functional Requirements
 
@@ -533,6 +545,9 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 | PRD-NFR-012 | Availability | Product must degrade gracefully when Manthan or third-party services are unavailable. | Show cached data, queue safe actions, explain blocked actions. |
 | PRD-NFR-013 | Maintainability | Source-of-truth ownership must be explicit for CP, lead, project, visit, booking, payout, audit, and notification objects. | Prevent duplicate domain logic across app and Manthan. |
 | PRD-NFR-014 | Native capability | Android and iOS builds must support native push notifications and secure local storage. | Required for field reliability and reviewable notifications. |
+| PRD-NFR-015 | Location privacy | Geofencing must be limited to scheduled/active site-visit proof and must not become continuous workforce tracking. | Requires consent, permission checks, retention policy, and fallback path. |
+| PRD-NFR-016 | File security | Queued document uploads must use secure local storage, encrypted transport, retry-safe upload, and server-side validation before status changes. | Prevents false compliance completion and data leakage. |
+| PRD-NFR-017 | Financial controls | Payout processing must support auditability, maker-checker controls where configured, immutable status history, and reconciliation against the authoritative finance/payment source. | Prevents payout errors and finance leakage. |
 
 ### Acceptance Criteria
 
@@ -649,6 +664,26 @@ Scenario: Visit proof is captured
   And permitted users receive visit status updates
 ```
 
+```gherkin
+Scenario: Geofenced visit proof succeeds during visit window
+  Given a site visit is scheduled for an accepted lead
+  And the user has role permission to capture visit proof
+  And device location permission is granted
+  When the user checks in within the configured geofence and visit window
+  Then the visit proof is captured with timestamp, proof method, and configured accuracy metadata
+  And the proof event is linked to the lead, CP firm, CP employee, buyer, project, and visit
+  And the system does not continue tracking location after the visit proof event is complete
+```
+
+```gherkin
+Scenario: Geofenced visit proof falls back when location is unavailable
+  Given a site visit is scheduled for an accepted lead
+  When location permission is denied or geofence accuracy is insufficient
+  Then the app shows the configured fallback options
+  And the visit can be verified using QR, OTP, site-desk confirmation, or admin verification
+  And the fallback reason is recorded in the audit trail
+```
+
 #### Payout Ledger
 
 ```gherkin
@@ -668,6 +703,15 @@ Scenario: Finance rejects payout
   And the action is recorded in the audit log
 ```
 
+```gherkin
+Scenario: Finance processes payout through controlled state machine
+  Given a payout record is eligible for finance review
+  When finance approves, schedules, marks paid, or reconciles the payout
+  Then each status change follows the configured payout state machine
+  And maker-checker approval is required for configured high-risk actions
+  And the payout record stores reason, actor, timestamp, payment reference where applicable, and audit trail
+```
+
 #### Offline Sync
 
 ```gherkin
@@ -677,6 +721,15 @@ Scenario: Queued actions sync after reconnection
   And the user's session and permissions are valid
   Then the app automatically syncs queued actions
   And each action shows synced, failed, blocked, or conflict status
+```
+
+```gherkin
+Scenario: CP uploads onboarding document while offline
+  Given a CP owner or RM is completing onboarding with poor or no connectivity
+  When the user adds an allowed document file
+  Then the app stores the file securely in the upload queue
+  And the file shows queued status with retry, cancel, and delete options
+  And compliance status remains pending until server upload and validation succeed
 ```
 
 ## 8. UX And Design Considerations
@@ -769,9 +822,11 @@ The following are placeholders only. Detailed screen specs will be produced afte
 | Push notification infrastructure | [unknown] provider pending | Medium |
 | WhatsApp/SMS/email/call integrations | [unknown] integration scope pending | Medium |
 | RERA validation source | [unknown] business/legal decision pending | High |
-| Accounting/payment reconciliation | [unknown] integration path pending | High |
+| Accounting/payment reconciliation | [unknown] integration path pending; core to launch payout processing | High |
 | Offline storage and sync engine | [moderate] required by PRD | Medium |
 | Analytics/event instrumentation | [moderate] required by PRD | Medium |
+| Location/geofencing capability | [unknown] native implementation and consent model pending | High |
+| Secure queued file upload | [unknown] file limits, malware scanning, and retry model pending | High |
 
 ### Data Schema Implications
 
@@ -783,14 +838,20 @@ The implementation will likely need or extend the following data concepts:
 - Lead ownership ledger with duplicate check, lock, expiry, conflict, override, dispute.
 - Project collateral version, status, expiry, share audit.
 - Visit proof entity linked to lead, buyer, CP, project, and verification method.
+- Geofence proof metadata: visit window, permission state, accuracy, fallback reason, retention rule, and audit event.
 - Payout ledger state machine linked to booking, invoice, deductions, approvals, and payment.
+- Payout processing state machine: maker/checker, approval, rejection, correction, scheduled payment, failed payment, paid, reconciliation, clawback, dispute.
 - Notification entity with deep-link target, role visibility, read/unread state, and delivery status.
 - Offline sync queue entity on device and server reconciliation events.
+- Queued document upload entity: file metadata, local encrypted state, retry count, upload status, validation status, rejection reason, and linked compliance checklist item.
 
 ### Future-Proofing Considerations
 
 - Keep AI calling, AI summaries, campaign automation, microsites, and advanced CP scoring behind clear domain events and feature flags.
 - Do not embed business policy such as lock duration, payout SLA, or commission eligibility only in mobile clients.
+- Do not implement geofencing as open-ended location tracking; keep it bound to site-visit proof events.
+- Do not treat uploaded compliance documents as accepted until server-side validation and reviewer/system decision completes.
+- Do not bypass finance controls for payout speed; payout transparency must be paired with approval and reconciliation discipline.
 - Maintain an exportable audit trail for lead, visit, payout, compliance, and collateral events.
 - Design role homes so additional roles can be added without changing identity assumptions.
 
@@ -836,6 +897,9 @@ Exact baseline values are not yet available. Targets below are directional and m
 | Lead disputes continue | High | CP trust breaks if ownership remains opaque | Implement dedupe, lock, conflict, dispute, and audit ledger |
 | Payout visibility overpromises | High | CPs may lose trust if expected dates are wrong | Show expected dates only after finance SLA configuration |
 | Offline lead ownership confusion | High | CP may believe a lead is protected before server check | Mark offline leads as pending sync until server confirms |
+| Queued document upload false completion | High | CP may assume compliance is complete before server validation | Show uploaded as pending validation until server and reviewer/system checks pass |
+| Geofence privacy overreach | High | Visit proof can become workforce tracking if poorly bounded | Capture only during visit workflow with consent, fallback, retention, and audit rules |
+| Payout processing control failure | High | Incorrect approval/payment states can create financial leakage | Use state machine, maker-checker, reconciliation, reason codes, and immutable audit |
 | Compliance gaps | High | RERA/KYC/GST/bank issues can create legal and payout risk | Add compliance lifecycle, expiry, blocking, and audit |
 | Push notifications fail or are disabled | Medium | Follow-ups and escalations may be missed | Use in-app notification center and critical banners |
 | Role complexity delays delivery | Medium | Many personas and permissions increase scope | Build from shared RBAC model and role homes; phase delivery later |
@@ -921,6 +985,9 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 | Is I9 default implementation partner, or are all vendors still active options? | Leadership/procurement | Delivery architecture |
 | Which notification categories are legally/operationally sensitive? | Product/legal/compliance | Privacy and UX |
 | Which offline actions are allowed for each role? | Product/technology | Sync complexity and risk |
+| What geofence radius, accuracy threshold, consent copy, fallback path, and retention rule should apply? | Product/legal/technology | Visit proof reliability and privacy |
+| What document file types, size limits, retry limits, malware scanning, and local retention rules should apply? | Product/technology/compliance | Queued upload reliability and data safety |
+| Which payout actions happen in Manthan versus the finance/accounting system, and which reconciliation event is authoritative? | Finance/product/technology | Payout processing correctness |
 
 ### Assumptions
 
@@ -951,8 +1018,11 @@ The product succeeds because it does not ask CPs to work for the CRM. It makes t
 | Lead lock | A policy-controlled ownership period or state that protects a CP's submitted lead where applicable. |
 | Duplicate detection | System logic to identify whether a submitted lead may already exist. |
 | Conflict | A state where lead ownership or eligibility needs review under policy. |
-| Site visit proof | Evidence that a buyer attended a site visit, such as QR, OTP, site-desk confirmation, or admin verification for launch. Geofence is deferred unless already available and approved. |
+| Site visit proof | Evidence that a buyer attended a site visit, such as QR, OTP, geofence, site-desk confirmation, or admin verification. |
+| Geofencing | Location-based validation that a permitted user/device is within an approved project/site boundary during a scheduled or active visit workflow. |
 | Payout ledger | CP-visible finance status view for commission eligibility, invoice, approval, deductions, payment, and disputes. |
+| Payout processing | Finance-controlled workflow for approving, rejecting, scheduling, marking paid/failed, reconciling, clawing back, and disputing payouts. |
+| Queued document upload | Offline-first upload flow where selected documents are stored locally, queued, synced later, and validated server-side before compliance status changes. |
 | Sync queue | Local app queue holding offline actions until server sync succeeds, fails, or conflicts. |
 | Deep link | A link or notification target that opens a specific app screen or product state. |
 | Claim-safe collateral | Approved project material and facts that CPs are allowed to share. |
@@ -987,6 +1057,9 @@ Overall Risk Level: Medium
 - Payout SLA, GST/TDS display, invoice process, and accounting integration are open decisions.
 - RERA validation source and compliance blocking policy are open decisions.
 - Offline-first behavior is required, but exact allowed offline actions by role need technical and risk review.
+- Geofencing is core scope, but radius, accuracy, consent, retention, and fallback policy are still open.
+- Queued document upload is core scope, but file limits, scanning, retry limits, and local retention are still open.
+- Full payout processing is core scope, but Manthan-vs-finance-system ownership and reconciliation authority are still open.
 - Buyer-facing data exposure needs legal/product approval before shared links are specified in detail.
 - Launch scope is now gated, but roadmap work must enforce the gate requirement-by-requirement.
 
@@ -995,10 +1068,11 @@ Overall Risk Level: Medium
 - Run stakeholder review to lock lead ownership policy, payout policy, compliance policy, and CP employee exit policy.
 - Conduct 8-12 field interviews across CP owners, CP employees, RMs, finance, and support/compliance.
 - Ask Manthan/I9 for an API/source-of-truth readiness matrix covering every PRD entity.
+- Ask Manthan/I9 for explicit feasibility on geofence proof, queued document upload, and payout processing state machine.
 - Define notification taxonomy, sensitivity rules, payload rules, and deep-link targets.
 - Create the next artifact, `Justo_CP_App_Product_Roadmap.md`, only after reviewing this PRD.
 - Convert this PRD into journey maps and UI screen specs after product phases are agreed.
 - Create a launch/deferred mapping for every functional requirement during roadmap creation.
 
 ---
-*Draft status: v0.2, scope-gated and ready for stakeholder review and roadmap derivation after open decisions are triaged.*
+*Draft status: v0.3, scope-gated with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*

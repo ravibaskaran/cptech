@@ -1,6 +1,6 @@
 # Business Requirements Document: Justo CP App
 
-Draft version: v0.3
+Draft version: v0.4
 Date: 2026-05-31  
 Prepared for: Justo Realfintech  
 Artifact sequence: BRD -> PRD -> Product Roadmap/Phases -> Journey Maps -> UI Screen Specs/Prototype
@@ -44,9 +44,19 @@ The launch MVP objective is narrower than the full CP operating-system vision: p
 | CP microsites and CP-branded public pages | Leadership explicitly funds a marketing-distribution phase after the trust loop works. |
 | Advanced telecaller queue, call intelligence, sentiment, and automated scoring | Manual follow-up timeline and basic dispositions are already adopted. |
 | Advanced analytics, CP health scoring, gamification, and loyalty | Basic KPI reporting proves reliable source data. |
-| Geofencing and workforce geo-tracking | QR/OTP/site-desk/admin visit proof is insufficient and legal/HR review approves location capture. |
+| Workforce geo-tracking outside site-visit proof | Legal/HR review approves location capture beyond a buyer visit context. |
 | Multi-tenant/white-label platform architecture | Justo first proves its own CP network operating model. |
 | Full buyer portal expansion | Existing buyer portal can be linked safely; buyer-facing CP app scope stays limited to approved project links and visit confirmation. |
+
+### Launch Differentiators With Guardrails
+
+These capabilities are core differentiators and must remain in scope, but they need strict guardrails so they do not become uncontrolled engineering surfaces.
+
+| Differentiator | Why It Stays In Scope | Guardrails |
+|---|---|---|
+| Geofenced site-visit proof | Strengthens visit attribution and reduces manual dispute handling | Capture only during scheduled/active visit windows, require role permission and device consent, store timestamp/accuracy/proof method, support QR/OTP/site-desk/admin fallback, avoid continuous employee tracking. |
+| Queued document uploads | Field onboarding breaks when network is poor; queued uploads reduce RM/CP friction | Restrict file type/size, show upload queue state, encrypt local files, retry/resume safely, allow cancel/delete before sync, virus/malware scan server-side where available, never mark compliance complete until server validation succeeds. |
+| Full payout processing | Payout transparency is a loyalty differentiator only if finance can act inside the workflow | Use a finance-controlled state machine, maker-checker approval, GST/TDS fields, invoice validation, payment reference, reconciliation state, clawback/dispute states, and full audit trail. |
 
 ### Scope Gate Rule For Roadmap
 
@@ -166,9 +176,9 @@ Enable Justo to build, activate, and govern a scalable CP network in Maharashtra
 | CP firm profile | Extend | Current CP CRUD is insufficient for lifecycle, compliance, activation |
 | CP employee management | Extend | Need invitation, role, attribution, deactivation, reassignment |
 | Lead capture | Reuse/extend | Add duplicate rules, ownership lock, CP employee attribution |
-| Site visit | Extend | Add QR/OTP/site-desk/admin proof and outcome for launch; geofence only if already available and legally approved |
+| Site visit | Extend | Add QR/OTP/geofence/site-desk/admin proof and outcome for launch with consent, fallback, and audit guardrails |
 | Project catalog | Extend | CP-friendly discovery, share kits, inventory freshness, RERA facts |
-| Payout | Add/extend | Need CP-visible ledger and finance-controlled lifecycle |
+| Payout | Add/extend | Need CP-visible ledger plus finance-controlled payout processing lifecycle |
 | CP sourcing | Add/extend | Need prospect funnel, RM activity, and activation status for launch; advanced CP health scoring later |
 | Compliance | Add/extend | RERA/GST/PAN/bank/KYC renewal and exception workflows |
 | AI | Defer/optional | Use after trust workflows are stable |
@@ -674,10 +684,10 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 | CP employee management | CP is an organization, not one login | CP owner can invite, assign roles, deactivate, and reassign active work |
 | Project catalog and approved collateral | CPs need reliable sellable inventory | CP sees assigned projects, freshness indicators, and approved share kit |
 | Lead submission and lock | CP trust depends on ownership clarity | Lead accepted/conflicted/rejected/pending-sync with reason and audit trail |
-| Site visit scheduling and proof | Visit attribution drives conversion and commission | Visit can be scheduled, verified by launch-approved proof, and outcome captured |
+| Site visit scheduling and proof | Visit attribution drives conversion and commission | Visit can be scheduled, verified by QR/OTP/geofence/site-desk/admin proof, and outcome captured |
 | Communication timeline | Follow-up leakage is a conversion killer | Lightweight notes, reminders, and integrated communication events where already available |
 | Booking visibility | CP needs to know what happened after visit | CP-safe booking milestone and next action visible by permission |
-| Commission/payout status ledger | Money drives CP loyalty | CP sees eligibility/status/reason; full payout engine only if Manthan/finance integration is ready |
+| Commission/payout processing | Money drives CP loyalty | CP sees eligibility/status/reason while finance can approve, reject, schedule, mark paid, reconcile, and dispute with audit |
 | Justo sourcing/RM activation view | Justo needs scalable CP acquisition | RM sees CP prospects, activation tasks, pending docs, and escalations |
 | Admin/audit/support foundation | Scale requires controls | Admin can manage core policies, exceptions, audit logs, and evidence-backed tickets |
 
@@ -690,8 +700,8 @@ The following journeys are intentionally granular enough to feed the PRD. Each j
 - Full marketing budget optimization.
 - CP marketplace/network effects.
 - Advanced workforce intelligence and geo-tracking.
-- Geofence-based visit proof unless already available and approved for launch.
 - Advanced leadership analytics, gamification, loyalty, and CP health scoring beyond simple KPI reporting.
+- Workforce geo-tracking beyond scheduled site-visit proof.
 - Full buyer portal expansion beyond safe project links, visit confirmation, and reuse of existing buyer flows.
 - Multi-tenant/white-label platform architecture beyond Justo's own CP network.
 
@@ -792,8 +802,9 @@ The PRD should convert this BRD into requirements under these themes:
 10. Which buyer-facing actions are allowed in launch without expanding the buyer portal?
 11. What support model will handle CP disputes?
 12. Which AI features have a measurable business case for v1?
-13. Which launch site-visit proof methods are acceptable: QR, OTP, site-desk confirmation, admin verification, or existing geofence?
-14. Which payout fields can be exposed at launch if full accounting integration is not ready?
+13. What geofence radius, accuracy threshold, consent text, fallback path, and retention rule should apply to site-visit proof?
+14. Which payout actions are processed in Manthan versus finance/accounting systems, and what reconciliation event is authoritative?
+15. What file types, size limits, retry limits, and local retention rules apply to queued document uploads?
 
 ## 15. Recommended MVP Definition
 
@@ -805,10 +816,11 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 - CP employee invitation, role, and deactivation.
 - Project catalog with current inventory and approved share collateral.
 - Lead submission with duplicate check and clear ownership status.
-- Site visit scheduling and launch-approved proof.
+- Site visit scheduling and proof, including geofence with QR/OTP/site-desk/admin fallback.
 - Lightweight communication and follow-up timeline.
 - CP-safe booking status visibility.
-- Commission/payout status ledger; do not build a full payout engine unless Manthan/finance integration is ready.
+- Full commission/payout processing with CP-visible ledger, finance approval, payment reference, reconciliation, clawback/dispute states, and audit.
+- Queued document uploads for onboarding/compliance with secure local storage, upload state, retry/resume, and server-side validation.
 - RM sourcing and activation view.
 - Admin/audit/dispute foundation for core trust workflows.
 
@@ -823,7 +835,7 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 - Advanced telecaller operations and call intelligence.
 - Advanced analytics, gamification, loyalty, and CP health scoring beyond launch KPI reporting.
 - Full buyer portal expansion.
-- New geofence implementation unless it is already available and approved.
+- Workforce geo-tracking outside scheduled site-visit proof.
 
 ## 16. Stakeholder Review Checklist
 
@@ -845,4 +857,4 @@ MVP should be judged by whether CPs trust and use the app, not by number of modu
 5. Derive product phases from the launch trust loop first, then journey maps and UI screen specs.
 
 ---
-*Draft status: v0.3, scope-gated for roadmap derivation pending stakeholder validation and open-question resolution.*
+*Draft status: v0.4, scope-gated for roadmap derivation with geofencing, queued document uploads, and full payout processing restored as core differentiators pending stakeholder validation and open-question resolution.*

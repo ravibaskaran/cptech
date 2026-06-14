@@ -1,143 +1,155 @@
-# Architecture
+# Justo CP App: Architecture Blueprint
 
-## Pattern Overview
+## 1. Non-Functional Requirements (NFRs)
 
-**Overall:** Artifact-chain document planning project with a Goal-Structured Delivery (GSD) framework
+**CRITICAL:** No implementation in any phase should begin until journey screens are ready and the underlying architecture strictly supports these NFRs.
 
-**Key Characteristics:**
-- Artifact sequence produces BRD -> PRD -> journey maps -> Google Stitch UI screen prompts in lockstep
-- GSD framework provides state tracking, requirements definition, roadmap sequencing, and research artifact management
-- All planning artifacts anchor to source evidence in `Justo_CP_App_Business_Brief.md` and the `docs/` vendor proposals
-- Confidence-tagged claims (`[high]`, `[moderate]`, `[low]`) separate document facts, market inference, and open assumptions
-- No application source code lives in this repo — it is a planning-only project
+- **Authentication:** Must support MS 365, MS users, Google ID, and Indian phone number-based login (SMS and/or WhatsApp). A self-hosted solution is preferred (e.g., Logto, Zitadel), with the final vendor decision deferred.
+- **Target Scale:** 10-20 Requests Per Second (RPS) for the Early-Stage Pilot.
+- **Resilience:** Minimal live redundancy for high availability (HA). Zero enterprise bloat, extreme cost-discipline. Must avoid hard Single Point of Failure (SPOF).
+- **Offline-First:** Must support a fully secure, offline-first client architecture with active-active API nodes and a warm standby database.
 
-## Layers
+---
 
-**Source Evidence Layer:**
-- Purpose: Grounds all planning claims in vendor proposals, SOWs, and business analysis
-- Location: `docs/` and `Justo_CP_App_Business_Brief.md`
-- Contains: PDF vendor proposals from Auum, TSPL/Triazine, I9/Indexnine; Manthan project SOWs; business brief with market research and external references
-- Depends on: Nothing within the repo (externally sourced documents)
-- Used by: BRD draft, PRD draft, research artifacts
+## 2. Application Architecture (Lean Startup Model)
 
-**Extraction Layer:**
-- Purpose: Makes PDF/Word proposal content machine-readable for reference and search
-- Location: `.tmp_doc_extract/`
-- Contains: Plain-text extracts (`.txt`), flow analyses (`.flow.txt`), and normalized versions (`.norm.txt`) of each source document; a `manifest.json` tracks processed files
-- Depends on: `docs/` source documents
-- Used by: Planning agents (not exposed as final deliverables)
+### 2.1 Executive Summary & Scale Assessment
 
-**Planning Framework Layer (GSD):**
-- Purpose: Tracks project state, requirements, roadmap, and research artifacts for the artifact-generation workflow
-- Location: `.planning/`
-- Contains: `PROJECT.md` (scope, constraints, decisions), `STATE.md` (current focus, artifact status, next action), `REQUIREMENTS.md` (active requirements), `ROADMAP.md` (phase sequencing), `config.json` (workflow settings)
-- Depends on: Nothing — defines how the project operates
-- Used by: All artifact generation sessions
+At a target scale of 10-20 RPS, deploying enterprise-grade distributed infrastructure (Kafka, Redis Clusters, Managed Kubernetes) is a misallocation of startup capital. However, running a single Virtual Private Server (VPS) introduces a hard SPOF with a 15+ minute recovery time, which violates the requirement for minimal downtime.
 
-**Research Layer:**
-- Purpose: Captures domain analysis, architectural patterns, technology stack assumptions, feature mapping, and risk analysis
-- Location: `.planning/research/`
-- Contains: `ARCHITECTURE.md` (BRD structure pattern and business architecture layers), `STACK.md` (target tech ecosystem and evidence standards), `FEATURES.md` (capability mapping), `PITFALLS.md` (risk patterns), `SUMMARY.md` (research synthesis)
-- Depends on: Source Evidence Layer and external market research
-- Used by: BRD and PRD drafts
+**The Solution:** By strategically splitting the compute and data tiers using commodity cloud load balancers and lightweight deployment tooling, we achieve **Live Redundancy** without crossing the enterprise cost threshold. We can deliver a 100% complete, secure, offline-first architecture with active-active API nodes and a warm standby database for **under $30/month** in raw infrastructure costs.
 
-**Artifact Chain Layer:**
-- Purpose: Produces the four sequential planning deliverables that form the project output
-- Location: Project root
-- Contains: `Justo_CP_App_BRD_Draft.md` (business requirements), `Justo_CP_App_PRD.md` (product requirements), `Justo_CP_App_Journey_Maps.md` (persona-wise journey maps), `Justo_CP_App_UI_Stitch_Prompts.md` (Google Stitch-ready UI screen prompts)
-- Depends on: Each artifact depends on the prior one in the sequence; all depend on Source Evidence and Research layers
-- Used by: Stakeholder review; Stitch MCP tool for screen generation
+### 2.2 The Tech Stack & Redundancy Strategy
 
-**Tooling Layer:**
-- Purpose: Configures the OpenCode agent toolchain used for artifact generation
-- Location: `.opencode/`
-- Contains: `package.json` (tooling dependencies), `package-lock.json` (resolved versions), `magic-context/` (Magic Context plugin historian state)
-- Depends on: OpenCode runtime
-- Used by: All planning sessions
+| Component Category | Optimized "Startup" Reality | Live Redundancy Implementation | Monthly Cost Est. (Hetzner/DO) |
+| :--- | :--- | :--- | :--- |
+| **Routing / Edge** | **Cloudflare (DNS) + Managed LB** | A cheap managed Load Balancer distributes traffic to 2x App Nodes. | ~$6.00 |
+| **API Compute** | **2x Small VPS (Rust/Axum)** | Active-Active deployment. If one node dies, the LB seamlessly routes to the survivor. | ~$8.00 ($4 x 2) |
+| **Sync Engine** | **2x Self-Hosted PowerSync** | PowerSync runs on both App Nodes, connecting to the Primary DB. | $0.00 (Compute shared) |
+| **Cache / Queue** | **PostgreSQL (`SKIP LOCKED`)** | Replaces Redis/Kafka. Postgres handles queues transactionally. | $0.00 (Compute shared) |
+| **Database** | **Self-Hosted Postgres 16 (HA)** | 1x Primary DB VPS, 1x Replica DB VPS using streaming replication. | ~$10.00 ($5 x 2) |
+| **Object Storage** | **Cloudflare R2** | Multi-region HA by default. Zero egress fees. | ~$0.00 (Free tier) |
+| **Notifications** | **FCM (Firebase) + APNs** | Native to KMP. Highly available by Google/Apple. | $0.00 |
+| **Deployment Tool** | **Kamal 2** | Replaces Docker Compose. Handles rolling, zero-downtime deploys across the 2 App Nodes natively. | $0.00 |
+| **Total Cost** | | **Enterprise Resilience on Commodity Hardware** | **~$24.00 / month** |
 
-## Data Flow
+### 2.3 End-to-End System Architecture Topology
 
-**Artifact Generation Chain:**
+```mermaid
+graph TD
+    subgraph Client Edge ["Client Edge (KMP + Native UI)"]
+        UI["Native UI (Compose/SwiftUI)"]
+        Core["KMP Domain Core"]
+        LocalDB[("SQLite (SQLDelight)")]
+        
+        UI <--> Core
+        Core <--> LocalDB
+    end
 
-1. Source evidence is collected into `docs/` from external vendor proposals and SOWs — external input
-2. Business analysis written into `Justo_CP_App_Business_Brief.md` — `Justo_CP_App_Business_Brief.md`
-3. Research artifacts synthesized from source evidence and business brief — `.planning/research/*`
-4. BRD drafted from business brief, research artifacts, and GSD requirements — `Justo_CP_App_BRD_Draft.md`
-5. PRD derived from BRD requirements and decisions — `Justo_CP_App_PRD.md`
-6. Persona-wise journey maps traced from PRD personas and functional requirements — `Justo_CP_App_Journey_Maps.md`
-7. Google Stitch UI screen prompts generated from journey map rows marked `Build Screen: Yes` — `Justo_CP_App_UI_Stitch_Prompts.md`
-8. Stitch screens generated via Stitch MCP tool from prompt files — external (Stitch project `16963605453633474186`)
+    subgraph Edge Routing ["Edge & Routing"]
+        CF["Cloudflare (DNS / DDoS)"]
+        LB["Managed Load Balancer (TCP/HTTP)"]
+        CF --> LB
+    end
 
-**Document Extraction Flow:**
+    subgraph Compute Tier ["App Nodes (Active-Active)"]
+        App1["App Node 1 (Rust API + PowerSync)"]
+        App2["App Node 2 (Rust API + PowerSync)"]
+        
+        LB --> App1
+        LB --> App2
+    end
 
-1. Source PDF/Word document placed in `docs/`
-2. Machine-readable extract written to `.tmp_doc_extract/{filename}.txt`
-3. Flow analysis written as `.flow.txt`
-4. Normalized version written as `.norm.txt`
-5. Manifest updated at `.tmp_doc_extract/manifest.json`
+    subgraph Data Tier ["Data Nodes (Active-Standby)"]
+        PG_Pri[("PostgreSQL Primary")]
+        PG_Rep[("PostgreSQL Replica (Hot Standby)")]
+        R2[("Cloudflare R2 (Object Storage)")]
+        
+        App1 --> PG_Pri
+        App2 --> PG_Pri
+        PG_Pri -->|"Streaming Replication"| PG_Rep
+        App1 --> R2
+        App2 --> R2
+    end
 
-## Key Abstractions
+    %% Client Connections
+    Core -->|"1. Command API (REST/gRPC)"| CF
+    Core -->|"2. Direct Upload"| R2
+    LocalDB <-->|"3. WebSocket Sync"| CF
+    App1 -->|"4. Direct Push"| FCM["FCM / APNs"]
+    App2 -->|"4. Direct Push"| FCM
+```
 
-**Three Operating Loops (Business Domain):**
-- Purpose: Defines the interconnected business cycles the CP app must support
-- Location: `Justo_CP_App_Business_Brief.md`, `Justo_CP_App_BRD_Draft.md`
-- Loops: CP Acquisition & Enablement Loop (source -> verify -> onboard -> train -> activate -> retain), Transaction Loop (project discovery -> lead capture -> lead lock -> site visit -> booking -> documents -> payout), Trust Loop (inventory transparency -> auditable lead ownership -> compliance -> payout ledger -> dispute resolution -> performance scoring)
+### 2.4 Data Flow Deep Dives
 
-**Launch MVP Trust Loop:**
-- Purpose: Defines the v1 scope boundary for the CP app
-- Location: `Justo_CP_App_BRD_Draft.md` (Scope Gatekeeper Addendum)
-- Flow: Verified CP onboarding -> Project access -> Lead protection -> Site-visit proof -> Booking visibility -> Payout status visibility
+#### The Write Path (Postgres-Backed Outbox)
+1. **Action:** CP Agent submits a lead offline. KMP saves it to the local SQLite outbox.
+2. **Sync:** KMP POSTs the batch to the edge. The Load Balancer routes to the healthiest App Node (Rust API).
+3. **Idempotency:** Rust attempts to `INSERT` the idempotency key into the Primary Postgres DB. If successful, it mutates tables and commits.
+4. **Job Queueing:** Rust inserts a push notification job into the `jobs` table within the same transaction.
+5. **Background Processing:** Both App Nodes run Tokio workers polling the `jobs` table using `SELECT ... FOR UPDATE SKIP LOCKED`. Only one worker grabs the job, processes it, and marks it complete.
 
-**Eleven Personas:**
-- Purpose: Defines user archetypes for requirements, journey maps, and screen generation
-- Location: `Justo_CP_App_PRD.md` (section 6), `Justo_CP_App_Journey_Maps.md`
-- Personas: Justo Leadership, CP Sourcing Head, RM/Sourcing Employee, Sales/Admin Ops, Finance, Developer/Project Team, CP Owner/Org Leader, CP Employee/Agent, CP Telecaller, Buyer/Customer, Compliance/Support
+#### The Read Path (Local-First via Self-Hosted PowerSync)
+1. **Connection:** KMP client connects via WebSockets to either App Node running the PowerSync container.
+2. **Replication:** PowerSync reads the Postgres WAL from the Primary DB. RLS filters the stream based on the JWT claims.
+3. **Failover:** If an App Node crashes, the KMP client's WebSocket drops, auto-reconnects to the LB, and hits the surviving App Node. Sync resumes instantly.
 
-**GSD State Machine:**
-- Purpose: Tracks which artifact is current, what is next, and what decisions are pending
-- Location: `.planning/STATE.md`
-- States: Artifact status per step (Not Started -> Drafted -> Drafted pending stakeholder review -> Complete); workflow state tracked in `STATE.md` under Current Focus
+### 2.5 Production Deployment Plan (Kamal & HA)
 
-**Scope Gatekeeper:**
-- Purpose: Enforces the Launch MVP boundary — every feature and journey map step must pass the trust-loop test
-- Location: `Justo_CP_App_BRD_Draft.md` (Scope Gatekeeper Addendum), `Justo_CP_App_PRD.md` (Scope Gatekeeper Addendum)
-- Rules: Features not directly improving CP onboarding, project enablement, lead ownership, site-visit proof, booking visibility, payout transparency, or operational control are deferred
+**Kamal Orchestration:**
+We reject Kubernetes (too complex) and Docker Compose (causes blips). We use **Kamal** (formerly MRISK / built by 37signals) to deploy web apps anywhere using raw Docker.
+* **Zero-Downtime:** Kamal spins up the new Rust container, waits for it to pass health checks, updates the local Traefik proxy, and gracefully kills the old container.
+* **Simplicity:** Managed via a single `deploy.yml` file in your repository.
 
-**Universal Screen State Contract:**
-- Purpose: Every Stitch-generated screen must handle these states
-- Location: `Justo_CP_App_Journey_Maps.md` (Universal Screen State Contract section)
-- States: Loading, Empty, Error, Access Denied, Offline Cached, Pending Sync, Conflict/Blocked, Audit Visible
+**Database High Availability:**
+* Deploy Postgres 16 on the Primary Node and Replica Node with asynchronous streaming replication.
+* In the event of Primary hardware failure, manually promote the Replica to Primary and update the `DATABASE_URL` via Kamal (`kamal env push && kamal app boot`). Downtime is reduced to < 2 minutes.
 
-**Evidence Confidence Tagging:**
-- Purpose: Separates verified facts from inference to support stakeholder review
-- Location: All planning artifacts
-- Tags: `[high]` (local document fact), `[moderate]` (reasonable inference), `[low]` (directional hypothesis), `[unknown]` (decision not yet available)
+### 2.6 Operational Risks & Remediation
 
-## Entry Points
+| Risk | Impact | Pragmatic Remediation (Minimal Downtime) |
+| --- | --- | --- |
+| **App Node Failure** | Zero downtime. | The Load Balancer routes 100% of traffic to the surviving App Node. |
+| **Primary DB Failure** | 1-2 mins downtime. | Promote Hot Standby Replica to Primary. |
+| **PowerSync WAL Lag** | Stale data read. | Monitor `pg_stat_replication`. Lag will be <10ms at 20 RPS. |
+| **Disk Exhaustion** | Node crash. | Strictly configure Docker log rotation (`max-size: 10m`) and cron jobs to prune tables. |
 
-**New reader:**
-- Location: `Justo_CP_App_Business_Brief.md`
-- Triggers: Anyone needing to understand the CP app strategy and evidence base
-- Responsibilities: Provides the strategic foundation, persona map, Manthan baseline, lifecycle analysis, and vendor comparison that all downstream artifacts reference
+---
 
-**Active contributor:**
-- Location: `.planning/STATE.md`
-- Triggers: Start of every planning session
-- Responsibilities: Shows current focus, artifact status, last completed action, and next action
+## 3. Planning Framework Architecture (GSD)
 
-**Stakeholder reviewer:**
-- Location: `Justo_CP_App_BRD_Draft.md` and `Justo_CP_App_PRD.md`
-- Triggers: Milestone review
-- Responsibilities: Contain the business case, requirements, scope gates, and acceptance criteria for stakeholder sign-off
+### 3.1 Pattern Overview
+**Overall:** Artifact-chain document planning project with a Goal-Structured Delivery (GSD) framework.
+- Artifact sequence produces BRD -> PRD -> journey maps -> Google Stitch UI screen prompts in lockstep.
+- GSD framework provides state tracking, requirements definition, roadmap sequencing, and research artifact management.
+- All planning artifacts anchor to source evidence in `Justo_CP_App_Business_Brief.md` and the `docs/` vendor proposals.
 
-## Error Handling
+### 3.2 Layers
+- **Source Evidence Layer:** Grounds all planning claims in vendor proposals, SOWs, and business analysis. Located in `docs/` and `Justo_CP_App_Business_Brief.md`.
+- **Extraction Layer:** Makes PDF/Word proposal content machine-readable for reference and search. Located in `.tmp_doc_extract/`.
+- **Planning Framework Layer (GSD):** Tracks project state, requirements, roadmap, and research artifacts for the artifact-generation workflow. Located in `.planning/`.
+- **Research Layer:** Captures domain analysis, architectural patterns, technology stack assumptions, feature mapping, and risk analysis. Located in `.planning/research/`.
+- **Artifact Chain Layer:** Produces the sequential planning deliverables that form the project output (BRD, PRD, Journey Maps, UI Prompts). Located in the project root.
+- **Tooling Layer:** Configures the agent toolchain used for artifact generation. Located in `.opencode/`.
 
-**Strategy:** Artifact validation is manual via GSD verifier checks. The planning framework uses `"verifier": true` in `.planning/config.json` to enable automated plan-check after each artifact update. Stitch MCP tool failures are captured as known issues (see CONOPS-identified gaps tracked in existing memories and `Justo_CP_App_UI_Stitch_Prompts.md`).
+### 3.3 Data Flow (Planning)
+1. Source evidence is collected into `docs/`.
+2. Business analysis written into `Justo_CP_App_Business_Brief.md`.
+3. Research artifacts synthesized from source evidence and business brief.
+4. BRD drafted from business brief, research artifacts, and GSD requirements.
+5. PRD derived from BRD requirements and decisions.
+6. Persona-wise journey maps traced from PRD personas and functional requirements.
+7. Google Stitch UI screen prompts generated from journey map rows.
 
-## Cross-Cutting Concerns
+### 3.4 Key Abstractions
+- **Three Operating Loops:** CP Acquisition & Enablement Loop, Transaction Loop, Trust Loop.
+- **Launch MVP Trust Loop:** Verified CP onboarding -> Project access -> Lead protection -> Site-visit proof -> Booking visibility -> Payout status visibility.
+- **Personas:** Radically simplified to focus on RM, CP, and Customer (Doc Upload) for MVP.
+- **GSD State Machine:** Tracks which artifact is current, what is next, and what decisions are pending in `.planning/STATE.md`.
+- **Scope Gatekeeper:** Enforces the Launch MVP boundary.
 
-**Evidence sourcing:** All claims trace to `Justo_CP_App_Business_Brief.md` or `docs/` source documents. No unsourced assertions in planning artifacts.
-**Confidence tagging:** Every non-trivial claim carries a `[high/moderate/low/unknown]` confidence tag per `Justo_CP_App_PRD.md` section 0.
-**Formatting:** All artifacts use Markdown. Artifacts are versioned with `Draft version: vX.Y` headers. Indian locale formatting (Rs, lakh/crore, dd/mm/yyyy, +91 phone) throughout.
-**Internationalization readiness:** UI prompts in `Justo_CP_App_UI_Stitch_Prompts.md` specify RTL-safe alignment, locale-safe date/currency labels, and text expansion safety for Middle East and ASEAN localization.
-**Artifact version correlation:** BRD, PRD, journey maps, and Stitch prompts are kept at the same minor version and reference each other by version number.
+### 3.5 Error Handling & Cross-Cutting Concerns
+- Artifact validation is manual via GSD verifier checks.
+- All claims trace to `Justo_CP_App_Business_Brief.md` or `docs/`.
+- Every non-trivial claim carries a `[high/moderate/low/unknown]` confidence tag.
+- All artifacts use Markdown. Indian locale formatting (Rs, lakh/crore, dd/mm/yyyy, +91 phone) throughout.

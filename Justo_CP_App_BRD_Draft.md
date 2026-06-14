@@ -804,36 +804,27 @@ The PRD should convert this BRD into requirements under these themes:
 14. Which payout actions are processed in Manthan versus finance/accounting systems, and what reconciliation event is authoritative?
 15. What file types, size limits, retry limits, and local retention rules apply to queued document uploads?
 
-## 15. Recommended MVP Definition
+## 15. Project Phases & MVP Definition
 
-MVP should be judged by whether CPs trust and use the app, not by number of modules.
+We are adopting a strictly UI-First methodology to ensure NFRs and User Journeys are fully aligned before any technical implementation begins. MVP should be judged by whether CPs trust and use the app, driven by these core phases:
 
-### MVP Must Include
+### Phase 1: UI/UX & Architecture Definition (No Code)
+**Goal:** Establish complete visual and architectural alignment.
+- Finalize Google Stitch UI journey screens for the 3 core flows (RM, CP, Customer Doc Upload).
+- Validate that the technical architecture strictly supports all NFRs (Auth, High Availability, Offline-First).
+- *Restriction: No technical implementation begins in Phase 1.*
 
-- CP firm onboarding and compliance status.
-- CP employee invitation, role, and deactivation.
-- Project catalog with current inventory and approved share collateral.
-- Lead submission with duplicate check and clear ownership status.
-- Site visit scheduling and proof, including geofence with QR/OTP/site-desk/admin fallback.
-- Lightweight communication and follow-up timeline.
-- CP-safe booking status visibility.
-- Full commission/payout processing with CP-visible ledger, finance approval, payment reference, reconciliation, clawback/dispute states, and audit.
-- Queued document uploads for onboarding/compliance with secure local storage, upload state, retry/resume, and server-side validation.
-- RM sourcing and activation view.
-- Admin/audit/dispute foundation for core trust workflows.
+### Phase 2: Core MVP Technical Implementation
+**Goal:** Build the prioritized flows based on Phase 1 approvals.
+- **RM Flow:** RM sourcing and activation views.
+- **CP Flow:** CP firm onboarding, project catalog, lead submission, site visits, and CP-safe booking/commission visibility.
+- **Customer Flow:** Queued document uploads for underwriting with secure local storage and server-side validation.
+- **Architecture:** Deploy Lean Startup architecture (Active-Active compute, Kamal, Self-hosted HA Postgres).
 
-### MVP Should Exclude Unless Already Cheap In Manthan
-
-- Full AI calling automation.
-- Advanced campaign budget optimization.
-- CP microsites.
-- Full marketplace features.
-- Advanced geo workforce surveillance.
-- Multi-tenant SaaS expansion.
-- Advanced telecaller operations and call intelligence.
-- Advanced analytics, gamification, loyalty, and CP health scoring beyond launch KPI reporting.
-- Full buyer portal expansion.
-- Workforce geo-tracking outside scheduled site-visit proof.
+### Phase 3+: Expansion & Deferred Capabilities
+**Goal:** Roll out advanced features and additional personas.
+- Expansion to remaining personas: Finance, Admin Ops, Justo Leadership, Telecallers.
+- Advanced capabilities: Gamification, CP health scoring, advanced AI automation, complex dashboards, multi-tenant SaaS.
 
 ## 16. Stakeholder Review Checklist
 

@@ -84,17 +84,10 @@ These handoffs define how screens connect across personas. Google Stitch should 
 
 | Persona | PRD Classification | Journey Status | Google Stitch Action |
 |---|---|---|---|
-| Justo Leadership | Launch control | Complete | Build lightweight dashboard/risk views only |
-| CP Sourcing Head | Launch control | Complete | Build sourcing and activation control views |
-| RM / Sourcing Employee | Launch core | Complete | Build RM field and activation views |
-| Sales/Admin Ops | Launch core | Complete | Build admin configuration and exception views |
-| Finance | Launch core | Complete | Build payout processing views |
-| Developer / Project Team | Launch control | Complete | Build project/collateral/visit input views |
-| CP Owner / Org Leader | Launch core | Complete | Build full CP owner flow |
-| CP Employee / Agent | Launch core | Complete | Build mobile selling flow |
-| CP Telecaller | Deferred specialist | Complete | Preserve basic queue flow; avoid AI/call intelligence |
-| Buyer / Customer | App-linked, not core app user | Complete | Build only safe link/confirmation views or reuse buyer portal |
-| Compliance / Support | Launch core | Complete | Build compliance, dispute, evidence, and audit views |
+| RM / Sourcing Employee | Launch MVP | Complete | Build RM field and activation views |
+| CP Owner / Employee | Launch MVP | Complete | Build full CP owner and mobile selling flow |
+| Buyer / Customer | Launch MVP (Doc Upload) | Complete | Build customer document submission views for underwriting |
+| *All Other Personas* | Deferred (Phase 3+) | Deferred | *Do not build screens for Phase 1* |
 
 ## Common App Foundation
 

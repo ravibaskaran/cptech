@@ -220,26 +220,17 @@ The CP app must solve these trust and operating-friction problems. A generic CRM
 
 | Persona | Role In Ecosystem | Primary Jobs-To-Be-Done | Key Pain Points Addressed |
 |---|---|---|---|
-| Justo leadership | Owns business growth and risk | Monitor CP growth, conversion, payout exposure, disputes, and vendor progress | Fragmented visibility, weak operating control |
-| CP sourcing head | Owns CP network acquisition and activation | Build CP pipeline, assign RMs, monitor activation, intervene on escalations | No unified sourcing funnel, weak CP health view |
 | RM / sourcing employee | Field relationship owner | Recruit CPs, onboard them, activate them, support lead/visit/booking flows | Manual follow-ups, unclear CP activation status |
-| Sales/admin ops | Operational control center | Manage master data, project access, exceptions, lead conflicts, collateral | Manual exception handling and inconsistent data |
-| Finance | Controls commission and payout | Validate eligibility, invoice, deductions, approval, payment, reconciliation | Payout queries, unclear eligibility evidence |
-| Developer/project team | Provides project inventory, offers, approvals | Keep project facts, inventory, collateral, and visit outcomes current | Stale material and inconsistent claims |
-| CP owner | Runs CP firm | Manage firm profile, employees, leads, visits, bookings, payout, disputes | Low team control, payout anxiety, lead disputes |
-| CP employee / agent | Sells to buyers | Search projects, share collateral, register leads, follow up, schedule visits | Stale info, slow lead capture, follow-up leakage |
-| CP telecaller | Qualifies and nurtures leads | Work call queue, record disposition, schedule follow-up/visit | Spreadsheet queues, missed follow-ups |
-| Buyer / customer | Receives project information and attends visits | Confirm interest, receive accurate info, complete KYC/payment where needed | Inconsistent claims, fragmented confirmation |
-| Compliance/support | Controls risk and issue resolution | Validate documents, monitor expiry, handle disputes, export evidence | Scattered evidence and non-repeatable decisions |
+| CP owner / employee | Runs CP firm and sells | Manage firm profile, leads, visits, bookings, payout, share collateral | Low team control, payout anxiety, stale info |
+| Buyer / customer | Customer applying for underwriting | Submit documents for underwriting, receive accurate project info | Fragmented confirmation, slow KYC process |
+| *All Other Roles* | *Deferred (Finance, Admin, Leadership, etc)* | *Will be addressed in Phase 3+ expansion* | *N/A for Phase 1 MVP* |
 
 ### Launch Role Classification
 
 | Classification | Personas | Scope Rule |
 |---|---|---|
-| Launch core | CP owner, CP employee/agent, RM/sourcing employee, sales/admin ops, finance, compliance/support | Must be represented in the first journey-map set because they operate the trust loop. |
-| Launch control | CP sourcing head, Justo leadership, developer/project team | Need lightweight dashboards, approvals, or inputs only; avoid advanced analytics buildout. |
-| App-linked, not core app user | Buyer/customer | Use safe project links and existing buyer flows; do not expand buyer portal in launch scope. |
-| Deferred specialist | CP telecaller | Preserve persona context, but do not build advanced queues, call intelligence, or AI scoring in launch. |
+| Launch MVP | RM / sourcing employee, CP owner / employee, Buyer / customer (Doc Upload) | Must be completely represented in the first journey-map set and Google Stitch UI screens. |
+| Deferred (Phase 3+) | Justo Leadership, CP Sourcing Head, Sales/Admin Ops, Finance, Developer/Project Team, Telecaller, Compliance/Support | Excluded from Phase 1 MVP journey maps and screen generation. |
 
 ### Role-Based Entry Principle
 
